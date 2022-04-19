@@ -1,0 +1,37 @@
+@use 'breakpoints' as *;
+
+@mixin flexible() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-vertical() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-horizontal() {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin box-shadow($offset-x, $offset-y, $blur-radius, $spread-radius, $color) {
+  -webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+  -moz-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+  box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+}
+
+@mixin media($key) {
+  $size: map-get($breakpoints, $key);
+
+  @media only screen and (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin design-variables($name, $design-variable) {
+  @each $variable, $value in $design-variable {
+    --#{$name}-#{"" + $variable}: #{$value};
+  }
+}

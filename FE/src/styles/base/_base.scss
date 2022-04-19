@@ -1,0 +1,19 @@
+@use '../helpers/variables' as *;
+@use '../helpers/mixins' as *;
+
+html {
+  font-size: $font-size;
+}
+
+body {
+  @include flex-vertical();
+  justify-content: center;
+  flex-direction: column;
+  min-width: $min-width;
+  min-height: $min-height;
+  margin-top: 100px;
+  font-family: $font-family;
+  color: $primary-color;
+  background-color: $primary-bg-color;
+  line-height: $line-height;
+}
