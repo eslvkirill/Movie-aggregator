@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { ROUTES } from './../../../../constants/routes';
+import { ROUTES } from '../../../../constants/routes';
 import GenreItem from "../GenreItem/GenreItem";
 import "./GenreList.scss";
 
@@ -12,9 +12,9 @@ const GenreList = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchGenres = async (url) => {
+    const fetchGenres = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get('/api/v1/genres');
         const genres = response.data;
   
         // genres.map((genre) => {
@@ -32,8 +32,7 @@ const GenreList = () => {
         console.log(`Error ${error}`);
       }
     };
-
-    fetchGenres('/api/v1/genres');
+    fetchGenres();
   }, [isLoading]);
 
   const goToHomePage = () => navigate(ROUTES.HOME);

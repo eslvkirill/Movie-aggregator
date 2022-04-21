@@ -1,8 +1,9 @@
 import "./GenreItem.scss";
+import { Genre } from '../types/genre.interface';
 
-const GenreItem = (props) => (
+const GenreItem = (props: { genres: Genre[] }) => (
   <ul className="genre-item">
-    {props.genres.map((genre, index) => {
+    {props.genres.map((genre: Genre, index: number) => {
       return (
         <li key={index}>
           <div>{genre.name}</div>

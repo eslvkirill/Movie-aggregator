@@ -13,6 +13,7 @@
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "axios": "^0.26.1",
+    "http-proxy-middleware": "^2.0.6",
     "normalize.css": "^8.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -26,9 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "back-build": "cd ../BE/platform && mvn clean package -DDB_PASSWORD=password && java -jar target/platform-0.0.1-SNAPSHOT.jar --DB_PASSWORD=password"
   },
-  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": [
       "react-app",
