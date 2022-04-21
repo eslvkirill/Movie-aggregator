@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from './../../constants/routes';
+import { ROUTES } from '../../constants/routes';
 import "./ErrorPage.scss";
 
 const ErrorPage = () => {
