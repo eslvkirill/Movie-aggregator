@@ -8,7 +8,7 @@ import {
 	getGenresCreator,
 } from 'redux/actions/creators/genreCreator';
 import { validateInputs, validate } from 'shared/utils/validation';
-import { createNewInput } from 'shared/form-controls/createInput';
+import { createDefaultInput } from 'shared/form-controls/input/defaultInput';
 import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';
 import Input from 'components/shared/form-controls/Input/Input';
 import Button from 'components/shared/form-controls/Button/Button';
@@ -17,7 +17,7 @@ import GenreItem from '../GenreItem/GenreItem';
 import './GenreList.scss';
 
 const createFormInput = () => ({
-  genreInput: createNewInput(
+  genreInput: createDefaultInput(
     'Введите новый жанр',
     'Название жанра должно быть длинее 2-x букв',
     255, 
