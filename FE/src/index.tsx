@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client';
-import './styles/main.scss';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals';
+import App from './App';
+import './styles/main.scss';
 
 const root = document.getElementById('root') as HTMLElement
 
