@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from '../../constants/routes';
-import "./HomePage.scss";
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'shared/constants/routes';
+import './HomePage.scss';
 
 const HomePage = () => {
   const navigate = useNavigate();

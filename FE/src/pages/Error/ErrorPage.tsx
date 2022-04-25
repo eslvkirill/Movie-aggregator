@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from '../../constants/routes';
-import "./ErrorPage.scss";
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'shared/constants/routes';
+import './ErrorPage.scss';
 
 const ErrorPage = () => {
   const navigate = useNavigate();

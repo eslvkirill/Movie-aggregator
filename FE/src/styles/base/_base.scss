@@ -1,17 +1,17 @@
-@use "../helpers/variables" as *;
-@use "../helpers/mixins" as *;
+@use '../helpers/variables' as *;
+@use '../helpers/mixins' as *;
 
 html {
-  font-size: $font-size;
+	font-size: $font-size;
 }
 
 body {
-  @include flex-vertical();
-  flex-direction: column;
-  min-width: $min-width;
-  min-height: $min-height;
-  font-family: $font-family;
-  color: $primary-color;
-  background-color: $primary-bg-color;
-  line-height: $line-height;
+	@include flex-vertical();
+	flex-direction: column;
+	min-width: $min-width;
+	min-height: $min-height;
+	font-family: $font-family;
+	color: $primary-color;
+	background-color: $primary-bg-color;
+	line-height: $line-height;
 }

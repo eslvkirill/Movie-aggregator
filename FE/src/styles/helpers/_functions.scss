@@ -2,17 +2,17 @@
 @use 'mixins' as *;
 
 :root {
-  @each $color, $shades in $colors {
-    @if ($color == black or $color == white or $color == transparent) {
-      --#{"" + $color}: #{$shades};
-    } @else {
-      @each $shade, $value in $shades {
-        --#{"" + $color}-#{"" + $shade}: #{$value};
-      }
-    }
-  }
+	@each $color, $shades in $colors {
+		@if ($color == black or $color == white or $color == transparent) {
+			--#{"" + $color}: #{$shades};
+		} @else {
+			@each $shade, $value in $shades {
+				--#{"" + $color}-#{"" + $shade}: #{$value};
+			}
+		}
+	}
 
-  @include design-variables('z-index', $z-index);
-  @include design-variables('font-size', $font-sizes);
-  @include design-variables('font-weight', $font-weight);
+	@include design-variables('z-index', $z-index);
+	@include design-variables('font-size', $font-sizes);
+	@include design-variables('font-weight', $font-weight);
 }
