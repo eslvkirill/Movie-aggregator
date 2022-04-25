@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import './AdminPage.scss';
 import { ROUTES } from '../../shared/constants/routes';
 
@@ -22,6 +22,7 @@ const AdminPage = () => {
           </li>
         ))}
       </ul>
+      <Outlet/>
     </div>
   );
 };
