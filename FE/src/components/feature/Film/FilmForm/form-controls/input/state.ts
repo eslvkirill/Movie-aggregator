@@ -5,7 +5,7 @@ import {
 import { createColorInput } from 'shared/form-controls/input/colorInput';
 import { createDefaultFileInput } from 'shared/form-controls/input/fileInput';
 
-export const createFormInput = () => ({
+export const inputState = {
 	rusTitle: createDefaultInput(
 		'Введите название на русском языке',
 		'Поле не должно быть пустым и превышать 255 символов'
@@ -84,4 +84,4 @@ export const createFormInput = () => ({
 		'Файл должен быть картинкой, не превышающей размер 1Мб',
 		2
 	),
-});
+};

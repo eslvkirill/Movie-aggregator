@@ -17,6 +17,7 @@ interface InputControl {
   valid?: boolean;
   touched?: boolean;
   shouldValidate?: boolean;
+  className?: string;
   onChange?: ChangeEventHandler<Element> | undefined;
   onKeyDown?: KeyboardEventHandler<Element> | undefined;
   onClick?: MouseEventHandler<Element> | undefined;

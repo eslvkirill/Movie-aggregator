@@ -1,6 +1,6 @@
-import { createDefaultSelect } from '../../../../../shared/form-controls/select/defaultSelect';
+import { createDefaultSelect } from 'shared/form-controls/select/defaultSelect';
 
-export const createFormSelect = () => ({
+export const selectState = {
 	genres: createDefaultSelect(
 		'Укажите жанры фильма',
 		'Жанр фильма должен быть указан'
@@ -31,4 +31,4 @@ export const createFormSelect = () => ({
 		false,
 		true
 	),
-});
+};
