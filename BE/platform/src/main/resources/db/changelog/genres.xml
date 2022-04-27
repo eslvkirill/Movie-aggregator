@@ -13,4 +13,12 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="add_creation_date_column" author="Befors">
+    <addColumn tableName="genres">
+      <column name="creation_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

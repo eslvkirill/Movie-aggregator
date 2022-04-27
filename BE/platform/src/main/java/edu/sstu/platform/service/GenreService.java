@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ public class GenreService {
 
   @Transactional(readOnly = true)
   public List<GenreResponseDto> findGenres() {
-    return genreMapper.toDto(genreRepo.findAll());
+    return genreMapper.toDto(genreRepo.findAll(Sort.by("creationDate")));
   }
 
   public UUID createGenre(GenreRequestDto genreRequestDto) {
