@@ -1,12 +1,11 @@
 @use '../helpers/variables' as *;
-@use '../helpers/mixins' as *;
 
 html {
 	font-size: $font-size;
 }
 
 body {
-	@include flex-vertical();
+	display: flex;
 	flex-direction: column;
 	min-width: $min-width;
 	min-height: $min-height;

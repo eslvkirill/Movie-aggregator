@@ -1,12 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from 'shared/constants/routes';
 import './HomePage.scss';
 
 const HomePage = () => {
-  const navigate = useNavigate();
-
-  const goToAdminPage = () => navigate(ROUTES.ADMIN.GENRES);
-
   return (
     <main className="home-page">
       <div className="home-page__description-wrapper description-wrapper">
@@ -18,8 +14,8 @@ const HomePage = () => {
           понравится и запомнится надолго.
         </div>
         <hr className="description-wrapper_second-line" />
+        <Link to={ROUTES.ADMIN}>Перейти на страницу администратора</Link>
       </div>
-      <button onClick={goToAdminPage}>Перейти к жанрам</button>
     </main>
   );
 };

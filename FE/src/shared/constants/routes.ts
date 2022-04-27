@@ -1,7 +1,7 @@
 export const ROUTES = {
-  HOME: '/',
-  ERROR: '*',
-  ADMIN: {
-    GENRES: '/admin-panel/genres',
-  },
+	HOME: '/',
+	ERROR: '*',
+	ADMIN: 'admin-panel',
+	GENRES: 'genres',
+	FILMS: 'films',
 };
