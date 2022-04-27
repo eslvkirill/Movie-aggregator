@@ -8,7 +8,7 @@ interface SelectControl {
   type?: any;
   styles?: {};
   options?: any;
-  isMulti?: boolean;
+  isMulti: boolean;
   value?: string | number;
   isSearchable?: boolean | undefined;
   placeholder?: string | undefined;
@@ -24,9 +24,10 @@ interface SelectControl {
 }
 
 const CustomSelect = (props: SelectControl) => {
-  const {type, styles, options, onChange, isMulti, value, isSearchable, placeholder, closeMenuOnSelect, noOptionsMessage, isClearable, defaultValue, errorMessage} = props;
+  const {type, styles, options, onChange, isMulti, value, isSearchable, placeholder, closeMenuOnSelect, isClearable, defaultValue, errorMessage} = props;
 
   const selectType = type || 'Select';
+  const noOptionsMessage = () => 'Список пуст';
 
   return (
     <div className="select">

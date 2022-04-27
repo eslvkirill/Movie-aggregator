@@ -1,17 +1,15 @@
 import Input from 'components/shared/form-controls/Input/Input';
-import { inputState } from './state';
 
-export const renderInputs = (onInputChangeHandler: any) => {
-	const inputControls = inputState;
-
-	console.log(inputControls);
+export const renderInputs = (inputControls: any, onInputChangeHandler: any) => {
+  const onAddFileClickHandler = (controlName: string) => 
+    (document.getElementById(controlName) as HTMLElement).click();
 
 	return Object.keys(inputControls).map((controlName, index) => {
 		const control = inputControls[controlName as keyof typeof inputControls];
 		const { id, type, placeholder, value, accept, valid, touched, label, autoComplete, validation, errorMessage, title } = control;
 
 		return (
-			<Input
+      <Input
 				key={controlName}
 				id={controlName}
 				className={controlName}
@@ -27,7 +25,7 @@ export const renderInputs = (onInputChangeHandler: any) => {
 				shouldValidate={!!validation}
 				errorMessage={errorMessage}
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => onInputChangeHandler(event, controlName)}
-				// onClick={() => onAddFileClickHandler(controlName)}
+				onClick={() => onAddFileClickHandler(controlName)}
 				title={title}
 			/>
 		);

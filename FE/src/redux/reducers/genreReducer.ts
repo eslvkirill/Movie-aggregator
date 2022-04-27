@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Genre } from 'components/feature/Genre/genre.interface';
-import { GenreState } from 'redux/types/genre';
+import { GenreState } from 'redux/types/genre.interface';
 import {
 	addGenreAction,
 	onChangeEventAction,
 	editGenreAction,
 	deleteGenreAction,
 } from 'redux/actions/genreActions';
-import { getGenresCreator } from 'redux/actions/creators/genreCreator';
+import { getGenresCreator } from 'redux/creators/genreCreator';
+import { REDUCERS } from '../types/reducers';
 
 const initialState: GenreState = {
 	genres: [],
@@ -16,7 +17,7 @@ const initialState: GenreState = {
 };
 
 const genreReducer = createSlice({
-	name: 'genre',
+	name: REDUCERS.GENRE,
 	initialState,
 	reducers: {
 		addGenre: addGenreAction,

@@ -4,25 +4,26 @@ import {
 } from 'shared/form-controls/input/defaultInput';
 import { createColorInput } from 'shared/form-controls/input/colorInput';
 import { createDefaultFileInput } from 'shared/form-controls/input/fileInput';
+import { FilmFormFileds } from '../../filmForm.enum';
 
 export const inputState = {
-	rusTitle: createDefaultInput(
+	[FilmFormFileds.rusTitle]: createDefaultInput(
 		'Введите название на русском языке',
 		'Поле не должно быть пустым и превышать 255 символов'
 	),
-	engTitle: createDefaultInput(
+	[FilmFormFileds.engTitle]: createDefaultInput(
 		'Название на языке оригинала',
 		'Поле не должно быть пустым и превышать 255 символов'
 	),
-	tagline: createDefaultInput(
+	[FilmFormFileds.tagline]: createDefaultInput(
 		'Введите слоган фильма',
 		'Поле не должно быть пустым и превышать 255 символов'
 	),
-	plot: createDefaultInput(
+	[FilmFormFileds.description]: createDefaultInput(
 		'Опишите краткий сюжет',
 		'Поле не может быть пустым'
 	),
-	year: createCustomizeInput(
+	[FilmFormFileds.year]: createCustomizeInput(
 		{
 			type: 'number',
 			placeholder: 'Введите год выхода фильма',
@@ -36,7 +37,7 @@ export const inputState = {
 			minValue: 1888,
 		}
 	),
-	time: createCustomizeInput(
+	[FilmFormFileds.duration]: createCustomizeInput(
 		{
 			type: 'time',
 			placeholder: 'Продолжительность:',
@@ -48,7 +49,7 @@ export const inputState = {
 			maxValue: '12:00',
 		}
 	),
-	trailerUrl: createCustomizeInput(
+	[FilmFormFileds.trailerUrl]: createCustomizeInput(
 		{
 			placeholder: 'Вставьте ссылку трейлера с YouTube',
 			errorMessage:
@@ -56,7 +57,7 @@ export const inputState = {
 		},
 		{ required: true, minLength: 1, youTube: true }
 	),
-	kinopoiskUrl: createCustomizeInput(
+	[FilmFormFileds.kinopoiskUrl]: createCustomizeInput(
 		{
 			placeholder: 'Вставьте ссылку на Kinopoisk',
 			errorMessage:
@@ -64,7 +65,7 @@ export const inputState = {
 		},
 		{ required: true, minLength: 1, kinopoisk: true }
 	),
-	imdbUrl: createCustomizeInput(
+	[FilmFormFileds.imdbUrl]: createCustomizeInput(
 		{
 			placeholder: 'Вставьте ссылку на IMDb',
 			errorMessage:
@@ -72,14 +73,14 @@ export const inputState = {
 		},
 		{ required: true, minLength: 1, IMDb: true }
 	),
-	pageColor1: createColorInput('Основной цвет оформления:'),
-	pageColor2: createColorInput('Побочный цвет оформления:'),
-	poster: createDefaultFileInput(
+	[FilmFormFileds.pageColor1]: createColorInput('Основной цвет оформления:'),
+	[FilmFormFileds.pageColor2]: createColorInput('Побочный цвет оформления:'),
+	[FilmFormFileds.poster]: createDefaultFileInput(
 		'Постер фильма',
 		'Файл должен быть картинкой, не превышающей размер 1Мб',
 		1
 	),
-	background: createDefaultFileInput(
+	[FilmFormFileds.background]: createDefaultFileInput(
 		'Фон страницы фильма',
 		'Файл должен быть картинкой, не превышающей размер 1Мб',
 		2

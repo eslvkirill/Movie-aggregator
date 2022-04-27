@@ -6,7 +6,7 @@ import {
 	deleteGenreCreator,
 	editGenreCreator,
 	getGenresCreator,
-} from 'redux/actions/creators/genreCreator';
+} from 'redux/creators/genreCreator';
 import { validateInputs, validate } from 'shared/utils/validation';
 import { createDefaultInput } from 'shared/form-controls/input/defaultInput';
 import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';

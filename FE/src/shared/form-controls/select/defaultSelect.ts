@@ -12,7 +12,6 @@ const createCustomizeSelect = (
 	isClearable: true,
 	value: '',
 	options: [],
-	noOptionsMessage: () => 'Список пуст',
 });
 
 export const createDefaultSelect = (

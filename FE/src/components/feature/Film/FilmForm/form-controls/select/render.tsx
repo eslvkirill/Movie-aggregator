@@ -1,15 +1,10 @@
 import Select from 'components/shared/form-controls/Select/Select';
 import selectStyles from 'shared/form-controls/select/styles';
-import { selectState } from './state';
 
-export const renderSelects = (onChangeSelectHandler: any) => {
-  const selectControls = selectState;
-
-	console.log(selectControls);
-
+export const renderSelects = (selectControls: any, onChangeSelectHandler: any) => {
   return Object.keys(selectControls).map((controlName, index) => {
     const control = selectControls[controlName as keyof typeof selectControls];
-		const { valid, touched, validation, errorMessage, options, isMulti, isSearchable, isClearable, placeholder, closeMenuOnSelect, noOptionsMessage, value } = control;
+		const { valid, touched, validation, errorMessage, options, isMulti, isSearchable, isClearable, placeholder, closeMenuOnSelect, value } = control;
 
     return (
       <Select
@@ -25,7 +20,6 @@ export const renderSelects = (onChangeSelectHandler: any) => {
         isClearable={isClearable}
         placeholder={placeholder}
         closeMenuOnSelect={closeMenuOnSelect}
-        noOptionsMessage={noOptionsMessage}
         value={value}
         styles={selectStyles()}
       />
