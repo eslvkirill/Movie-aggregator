@@ -7,6 +7,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindException;
@@ -24,6 +25,10 @@ public class RestControllerAdvisor extends ResponseEntityExceptionHandler {
   @ExceptionHandler(EntityNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public Map<String, Object> handleEntityNotFoundException(EntityNotFoundException e) {
+    return defaultExceptionHandling(e);
+  }
+
+  private Map<String, Object> defaultExceptionHandling(Exception e) {
     Map<String, Object> response = new HashMap<>();
     response.put("message", e.getMessage());
     response.put("timestamp", new Date());
@@ -55,7 +60,14 @@ public class RestControllerAdvisor extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(ValidationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Map<String, Object> handleValidationException(ValidationException e) {
     return Map.of("errors", e.getMessagesByField());
+  }
+
+  @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public Map<String, Object> handleValidationException(AuthenticationException e) {
+    return defaultExceptionHandling(e);
   }
 }

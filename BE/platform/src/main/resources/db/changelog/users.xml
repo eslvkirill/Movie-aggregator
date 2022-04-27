@@ -1,0 +1,74 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+  <changeSet id="create_tables_for_users_and_it's_relations" author="Befors">
+    <createTable tableName="users">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="email" type="varchar(255)">
+        <constraints unique="true" nullable="false"/>
+      </column>
+      <column name="password" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="first_name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="username" type="varchar(100)">
+        <constraints unique="true" nullable="false"/>
+      </column>
+      <column name="active" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="user_roles">
+      <column name="user_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="user_roles_to_users_fk" references="users(id)"/>
+      </column>
+      <column name="role" type="varchar(50)">
+        <constraints primaryKey="true" foreignKeyName="user_roles_to_roles_fk" references="roles(role)"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="insert_test_data" author="Befors">
+    <insert tableName="users">
+      <column name="id" value="951d5d96-c61d-11ec-9d64-0242ac120002"/>
+      <column name="email" value="admin@mail.ru"/>
+      <column name="password" value="$2a$12$upTKYWqz8w1BYSFudUB1fOMTnkrP8LZkQwmgSGuijtyPYhOO1jGrq"/>
+      <column name="first_name" value="Денис"/>
+      <column name="last_name" value="Бондаренко"/>
+      <column name="username" value="admin"/>
+      <column name="active" value="true"/>
+    </insert>
+    <insert tableName="user_roles">
+      <column name="user_id" value="951d5d96-c61d-11ec-9d64-0242ac120002"/>
+      <column name="role" value="USER"/>
+    </insert>
+    <insert tableName="user_roles">
+      <column name="user_id" value="951d5d96-c61d-11ec-9d64-0242ac120002"/>
+      <column name="role" value="ADMIN"/>
+    </insert>
+
+    <insert tableName="users">
+      <column name="id" value="771a6a14-c61d-11ec-9d64-0242ac120002"/>
+      <column name="email" value="user@mail.ru"/>
+      <column name="password" value="$2a$10$zBh8fhdupHJQsUwec96wY.8msLQnU27jwZbFXBI4OkPewrk79pMOa"/>
+      <column name="first_name" value="Аркадий"/>
+      <column name="last_name" value="Ветров"/>
+      <column name="username" value="user"/>
+      <column name="active" value="true"/>
+    </insert>
+    <insert tableName="user_roles">
+      <column name="user_id" value="771a6a14-c61d-11ec-9d64-0242ac120002"/>
+      <column name="role" value="USER"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>
