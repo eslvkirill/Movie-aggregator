@@ -1,0 +1,106 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+  <changeSet id="create_tables_for_movies_it's_relations" author="Befors">
+    <createTable tableName="movies">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="eng_title" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="rus_title" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="year" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="poster" type="blob"/>
+      <column name="background" type="blob"/>
+      <column name="page_color1" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="page_color2" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tagline" type="varchar(255)"/>
+      <column name="description" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="age_rating" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="trailer_url" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="oscars" type="int" defaultValue="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="duration" type="time">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    
+    <createTable tableName="movie_origin_countries">
+      <column name="movie_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="movie_origin_countries_to_movies_fk"
+          references="movies(id)"/>
+      </column>
+      <column name="country_name" type="varchar(255)">
+        <constraints primaryKey="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="movie_audio">
+      <column name="movie_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="movie_audio_to_movies_fk"
+          references="movies(id)"/>
+      </column>
+      <column name="language" type="varchar(255)">
+        <constraints primaryKey="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="movie_subtitles">
+      <column name="movie_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="movie_subtitles_to_movies_fk"
+          references="movies(id)"/>
+      </column>
+      <column name="language" type="varchar(255)">
+        <constraints primaryKey="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="movies_to_genres">
+      <column name="movie_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="movies_to_genres_to_movies_fk"
+          references="movies(id)"/>
+      </column>
+      <column name="genre_id" type="uuid">
+        <constraints primaryKey="true" foreignKeyName="movies_to_genres_to_genres_fk"
+          references="genres(id)"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="external_aggregator_movie_info">
+      <column name="aggregator" type="varchar(50)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="movie_id" type="uuid">
+        <constraints primaryKey="true"
+          foreignKeyName="external_aggregator_movie_info_to_movies_fk" references="movies(id)"/>
+      </column>
+      <column name="url" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="rating" type="real">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

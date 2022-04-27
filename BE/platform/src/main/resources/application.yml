@@ -5,7 +5,17 @@ spring:
     password: ${DB_PASSWORD:postgres}
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    show-sql: true
 
 springdoc:
   api-docs:
     path: /api/docs
+
+app:
+  api:
+    countries: https://namaztimes.kz/ru/api/country
+    omdb: http://www.omdbapi.com?i=tt%s&apikey=${OMDB_API_KEY}
+    kinopoisk: https://rating.kinopoisk.ru/%s.xml
+  url-pattern:
+    metacritic: https://www.metacritic.com/movie/%s/
