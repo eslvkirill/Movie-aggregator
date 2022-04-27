@@ -1,5 +1,6 @@
 package edu.sstu.platform.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,4 +22,5 @@ public class Genre {
   private UUID id;
 
   private String name;
+  private LocalDateTime creationDate;
 }
