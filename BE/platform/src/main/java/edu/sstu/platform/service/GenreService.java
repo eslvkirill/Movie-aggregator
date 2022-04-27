@@ -9,14 +9,17 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class GenreService {
 
   private final GenreMapper genreMapper;
   private final GenreRepo genreRepo;
 
+  @Transactional(readOnly = true)
   public List<GenreResponseDto> findGenres() {
     return genreMapper.toDto(genreRepo.findAll());
   }
@@ -31,7 +34,7 @@ public class GenreService {
 
   public void deleteGenreById(UUID id) {
     genreRepo.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Genre by id: " + id + " doesn't exists"));
+        .orElseThrow(() -> new EntityNotFoundException("Genre by id: " + id + " doesn't exist"));
 
     genreRepo.deleteById(id);
   }
