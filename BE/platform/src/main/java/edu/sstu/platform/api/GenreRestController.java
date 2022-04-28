@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/genres")
+@RequiredArgsConstructor
 public class GenreRestController {
 
   private final GenreService genreService;

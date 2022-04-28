@@ -7,4 +7,5 @@
   <include file="movies.xml" relativeToChangelogFile="true"/>
   <include file="roles.xml" relativeToChangelogFile="true"/>
   <include file="users.xml" relativeToChangelogFile="true"/>
+  <include file="reviews.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
-@Mapper(uses = {FileMapper.class, GenreRepo.class})
+@Mapper(uses = {FileMapper.class, GenreRepo.class, ReviewMapper.class})
 public interface MovieMapper {
 
   @Mappings({
@@ -29,7 +29,7 @@ public interface MovieMapper {
       @Mapping(target = "active", ignore = true),
       @Mapping(target = "oscars", ignore = true),
       @Mapping(target = "genres", qualifiedByName = "findGenresByIds"),
-      @Mapping(target = "externalAggregatorInfos", ignore = true),
+      @Mapping(target = "externalAggregatorInfos", ignore = true)
   })
   void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 
