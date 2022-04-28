@@ -1,11 +1,17 @@
 package edu.sstu.platform.api;
 
+import edu.sstu.platform.dto.request.UserRequestDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
 import edu.sstu.platform.service.UserPrincipalService;
 import edu.sstu.platform.service.UserService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,5 +25,11 @@ public class UserRestController {
   @GetMapping("/info")
   public UserInfoResponseDto getUserInfo() {
     return userService.findUserInfo(userPrincipalService.getCurrentUser().getId());
+  }
+
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public void createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+    userService.createUser(userRequestDto);
   }
 }
