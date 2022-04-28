@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +47,7 @@ public class MovieReviewRestController {
     reviewService.deleteReview(movieId, reviewId);
   }
 
-  @GetMapping@PreAuthorize("isAuthenticated()")
+  @GetMapping
   public Page<ReviewResponseDto> getReviews(@PathVariable UUID movieId, Pageable pageable) {
     return reviewService.getReviews(movieId, pageable);
   }

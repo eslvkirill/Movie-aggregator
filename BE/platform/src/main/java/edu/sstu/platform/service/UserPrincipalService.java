@@ -7,22 +7,33 @@ import edu.sstu.platform.model.QUser;
 import edu.sstu.platform.model.User;
 import edu.sstu.platform.repo.UserRepo;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class UserPrincipalService implements UserDetailsService {
 
   private final UserRepo userRepo;
+  private final PasswordEncoder passwordEncoder;
+  private final AuthenticationManager authenticationManager;
   private final QUser qUser = QUser.user;
+
+  public UserPrincipalService(UserRepo userRepo, PasswordEncoder passwordEncoder,
+      @Lazy AuthenticationManager authenticationManager) {
+    this.userRepo = userRepo;
+    this.passwordEncoder = passwordEncoder;
+    this.authenticationManager = authenticationManager;
+  }
 
   @Override
   @SneakyThrows
@@ -41,5 +52,16 @@ public class UserPrincipalService implements UserDetailsService {
         .filter(User.class::isInstance)
         .map(User.class::cast)
         .orElseThrow(AnonymousException::new);
+  }
+
+  public String encryptPassword(String rawPassword) {
+    return passwordEncoder.encode(rawPassword);
+  }
+
+  public void autoLogin(User user, String rawPassword) {
+    var authToken = new UsernamePasswordAuthenticationToken(user, rawPassword, user.getAuthorities());
+
+    authenticationManager.authenticate(authToken);
+    SecurityContextHolder.getContext().setAuthentication(authToken);
   }
 }
