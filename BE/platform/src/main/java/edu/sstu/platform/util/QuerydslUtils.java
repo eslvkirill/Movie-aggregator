@@ -15,4 +15,8 @@ public class QuerydslUtils {
         .map(path -> path.getMetadata().getName())
         .collect(Collectors.toList());
   }
+
+  public static String preparePath(Path<?> path) {
+    return path.getMetadata().getName();
+  }
 }

@@ -1,8 +1,11 @@
 package edu.sstu.platform.service;
 
+import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+
 import edu.sstu.platform.dto.request.GenreRequestDto;
 import edu.sstu.platform.dto.response.GenreResponseDto;
 import edu.sstu.platform.mapper.GenreMapper;
+import edu.sstu.platform.model.QGenre;
 import edu.sstu.platform.repo.GenreRepo;
 import java.util.List;
 import java.util.UUID;
@@ -19,10 +22,11 @@ public class GenreService {
 
   private final GenreMapper genreMapper;
   private final GenreRepo genreRepo;
+  private final QGenre qGenre = QGenre.genre;
 
   @Transactional(readOnly = true)
   public List<GenreResponseDto> findGenres() {
-    return genreMapper.toDto(genreRepo.findAll(Sort.by("creationDate")));
+    return genreMapper.toDto(genreRepo.findAll(Sort.by(preparePath(qGenre.creationDate))));
   }
 
   public UUID createGenre(GenreRequestDto genreRequestDto) {
@@ -30,12 +34,19 @@ public class GenreService {
   }
 
   public void updateGenre(UUID id, GenreRequestDto genreRequestDto) {
-    genreRepo.save(genreMapper.toEntity(genreRequestDto, id));
+    var genre = genreRepo.findById(id)
+        .orElseThrow(() -> entityNotFoundException(id));
+
+    genreMapper.update(genreRequestDto, genre);
+  }
+
+  private EntityNotFoundException entityNotFoundException(UUID id) {
+    return new EntityNotFoundException("Genre by id: " + id + " doesn't exist");
   }
 
   public void deleteGenreById(UUID id) {
     genreRepo.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Genre by id: " + id + " doesn't exist"));
+        .orElseThrow(() -> entityNotFoundException(id));
 
     genreRepo.deleteById(id);
   }

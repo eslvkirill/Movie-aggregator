@@ -77,7 +77,7 @@ public class Movie {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection
   @CollectionTable(name = "movie_audio",
       joinColumns = @JoinColumn(name = "movie_id"))
   @Enumerated(EnumType.STRING)
@@ -86,7 +86,7 @@ public class Movie {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection
   @CollectionTable(name = "movie_subtitles",
       joinColumns = @JoinColumn(name = "movie_id"))
   @Enumerated(EnumType.STRING)
@@ -95,7 +95,7 @@ public class Movie {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany
   @JoinTable(name = "movies_to_genres",
       joinColumns = @JoinColumn(name = "movie_id"),
       inverseJoinColumns = @JoinColumn(name = "genre_id"))
@@ -103,7 +103,7 @@ public class Movie {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.movie", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "id.movie", cascade = CascadeType.ALL)
   private Set<ExternalAggregatorInfo> externalAggregatorInfos = new HashSet<>();
 
   public void addExternalAggregatorInfo(ExternalAggregatorInfo info) {
