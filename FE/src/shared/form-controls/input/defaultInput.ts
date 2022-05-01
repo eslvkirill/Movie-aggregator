@@ -9,7 +9,6 @@ const createCustomizeInput = (
 	valid: !validation,
 	touched: false,
 	autoComplete: 'off',
-	type: 'text',
 	value: '',
 });
 
@@ -17,10 +16,12 @@ const createDefaultInput = (
 	placeholder: string,
 	errorMessage: string,
 	maxLength: number = 255,
-	minLength: number = 1
+	minLength: number = 1,
+	type: string = 'text'
 ) =>
 	createCustomizeInput(
 		{
+			type,
 			placeholder,
 			errorMessage: `* ${errorMessage}`,
 		},

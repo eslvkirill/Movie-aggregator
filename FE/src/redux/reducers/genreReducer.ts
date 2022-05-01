@@ -8,7 +8,7 @@ import {
 	deleteGenreAction,
 } from 'redux/actions/genreActions';
 import { getGenresCreator } from 'redux/creators/genreCreator';
-import { REDUCERS } from '../types/reducers';
+import { REDUCER } from '../types/reducers';
 
 const initialState: GenreState = {
 	genres: [],
@@ -17,7 +17,7 @@ const initialState: GenreState = {
 };
 
 const genreReducer = createSlice({
-	name: REDUCERS.GENRE,
+	name: REDUCER.GENRE,
 	initialState,
 	reducers: {
 		addGenre: addGenreAction,

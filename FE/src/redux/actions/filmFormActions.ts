@@ -1,4 +1,4 @@
-import { current, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
 import { validate, validateForm } from 'shared/utils/validation';
 

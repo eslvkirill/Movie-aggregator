@@ -16,7 +16,7 @@
 
 	h2 {
 		margin-bottom: 1.5rem;
-		color: rgb(252, 237, 220);
+		color: #fceddc;
 	}
 
 	.film-form {
@@ -32,7 +32,7 @@
 		&__creation-title {
 			font-size: 35px;
 			font-weight: normal;
-			color: rgb(199, 108, 4);
+			color: #c76c04;
 		}
 
 		&__controls {
@@ -62,12 +62,12 @@
 				width: 12.5%;
 				font-size: 20px;
 				padding: 10px 1px;
-				color: rgb(255, 244, 232);
-				background: rgb(151, 6, 151);
+				color: #fff4e8;
+				background: #970697;
 				transition: 0.3s;
 
 				&:hover {
-					background: rgb(173, 4, 173);
+					background: #ad04ad;
 					transition: 0.3s;
 				}
 
@@ -87,7 +87,7 @@
 				font-size: 20px;
 				padding: 10px 3px;
 				margin-right: 1rem;
-				color: rgb(255, 244, 232);
+				color: #fff4e8;
 			}
 		}
 
@@ -100,7 +100,7 @@
 			justify-content: center;
 			width: 22rem;
 			height: 48.8px;
-			color: rgb(168, 145, 118);
+			color: #a89176;
 			background-color: #fafafa;
 			border: 3px solid #c76c04;
 			border-radius: 10px;

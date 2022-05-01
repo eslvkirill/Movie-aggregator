@@ -2,21 +2,22 @@ const URL = 'http://localhost:3000';
 const API = 'api';
 const VERSION = 'v1';
 
-const ENDPOINTS = {
-  GENRES: 'genres',
+const ENDPOINT = {
+	GENRES: 'genres',
+	LOGIN: 'login',
+	USERS: 'users',
+	INFO: 'info',
 };
 
-const REQUESTS = {
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
+const REQUEST = {
+	POST: 'POST',
+	PUT: 'PUT',
+	DELETE: 'DELETE',
 };
 
-const TYPE = 'application/json';
-
-const HEADERS = {
-  Accept: TYPE,
-  'Content-Type': TYPE,
+const HEADER_TYPE = {
+	DEFAULT: 'application/json',
+	AUTH: 'application/x-www-form-urlencoded',
 };
 
-export { URL, API, VERSION, ENDPOINTS, REQUESTS, HEADERS };
+export { URL, API, VERSION, ENDPOINT, REQUEST, HEADER_TYPE };

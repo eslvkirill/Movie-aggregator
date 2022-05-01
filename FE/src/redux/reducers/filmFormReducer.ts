@@ -1,13 +1,13 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
 	onChangeFileInputEventAction,
 	onChangeInputEventAction,
 	onChangeSelectEventAction,
 	resetFileInputAction,
 } from 'redux/actions/filmFormActions';
-import { inputState } from '../../components/feature/Film/FilmForm/form-controls/input/state';
-import { selectState } from '../../components/feature/Film/FilmForm/form-controls/select/state';
-import { REDUCERS } from '../types/reducers';
+import { inputState } from 'redux/initial-state/filmFormState/input';
+import { selectState } from 'redux/initial-state/filmFormState/select';
+import { REDUCER } from '../types/reducers';
 
 const initialState: any = {
 	formControls: {
@@ -19,7 +19,7 @@ const initialState: any = {
 };
 
 const filmFormReducer = createSlice({
-	name: REDUCERS.FILM_FORM,
+	name: REDUCER.FILM_FORM,
 	initialState,
 	reducers: {
 		onChangeInputEvent: onChangeInputEventAction,

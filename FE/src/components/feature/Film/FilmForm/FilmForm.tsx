@@ -4,11 +4,10 @@ import { onChangeSelectEvent } from 'redux/reducers/filmFormReducer';
 import { resetCreator , onChangeEventCreator } from 'redux/creators/filmFormCreator';
 import Notification from 'components/shared/pop-ups/Notification/Notification';
 import Button from 'components/shared/form-controls/Button/Button';
-import { renderInputs } from './form-controls/input/render';
-import { renderSelects } from './form-controls/select/render';
+import { renderInputs } from './form-controls/input-render';
+import { renderSelects } from './form-controls/select-render';
 import { FilmFormFileds } from './filmForm.enum';
 import './FilmForm.scss';
-
 
 const FilmForm = () => {
   const dispatch = useAppDispatch();

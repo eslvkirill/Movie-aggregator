@@ -4,7 +4,7 @@ import Input from 'components/shared/form-controls/Input/Input';
 import { Genre, GenresProperties } from '../genre.interface';
 import './GenreItem.scss';
 
-const GenreItem = (props: GenresProperties | any) => {
+const GenreItem = (props: GenresProperties) => {
   const { dropdown, genres, updateGenre, saveAction, editAction, disabled, deleteGenre } = props;
 
   return (
