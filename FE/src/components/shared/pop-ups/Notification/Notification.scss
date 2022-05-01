@@ -1,6 +1,6 @@
 .notification {
 	border-radius: 10px;
-	background-color: rgb(151, 6, 151);
+	background-color: #970697;
 	/* width: 18%; */
 	max-width: 30%;
 	height: auto;
@@ -9,11 +9,11 @@
 	z-index: 10000;
 
 	right: 22px;
-	color: rgb(255, 244, 232);
+	color: #fff4e8;
 	top: 22px;
 	display: flex;
 	flex-wrap: wrap;
-	box-shadow: -8px 8px 9px 0px rgba(0, 0, 0, 0.33);
+	box-shadow: -8px 8px 9px 0px #00000054;
 	cursor: default;
 
 	h1 {

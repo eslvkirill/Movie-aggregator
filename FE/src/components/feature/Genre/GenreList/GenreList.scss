@@ -12,7 +12,7 @@ $primary-color: #fceddc;
 
 	h2 {
 		margin-bottom: 1.5rem;
-		color: rgb(252, 237, 220);
+		color: #fceddc;
 	}
 
 	form {
@@ -25,7 +25,7 @@ $primary-color: #fceddc;
 		height: 48.8px;
 
 		&::placeholder {
-			color: rgb(168, 145, 118);
+			color: #a89176;
 			transition: 0.3s;
 		}
 
@@ -80,7 +80,7 @@ $primary-color: #fceddc;
 		border: 2.5px solid #fafafa8a;
 		box-shadow: none;
 		border-radius: 5px;
-		color: rgb(255, 244, 232);
+		color: #fff4e8;
 		display: flex;
 		align-items: top;
 		justify-content: center;
@@ -88,7 +88,7 @@ $primary-color: #fceddc;
 		&:hover {
 			background: #aa5c02;
 			border: 2.5px solid #fafafaab;
-			color: rgb(255, 248, 241);
+			color: #fff8f1;
 		}
 
 		&:active {

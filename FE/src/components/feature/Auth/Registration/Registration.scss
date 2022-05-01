@@ -1,0 +1,60 @@
+.auth {
+	&__registration {
+		margin-top: calc(4.5rem + 106px);
+
+		.registration-form {
+			&__buttons {
+				display: flex;
+				align-items: center;
+				width: 100%;
+			}
+
+			.buttons {
+				&__back {
+					text-decoration: none;
+					margin-right: 10px;
+					width: 33%;
+
+					.primaryBack {
+						margin-left: 0;
+						min-width: 7rem;
+						width: 20%;
+						font-size: 19px;
+						padding: 9px 3px;
+						background: #970697;
+						color: #fceddc;
+
+						&:hover {
+							background: #ad04ad;
+							transition: 0.3s;
+						}
+					}
+				}
+
+				&__success {
+					width: 67%;
+					font-size: 19px;
+					padding: 9px 3px;
+					color: #fceddc;
+					background: #018522;
+					transition: 0.3s;
+
+					&:hover {
+						background: #019c28;
+						transition: 0.3s;
+					}
+
+					&:disabled {
+						background: #ccc;
+						color: #000;
+						cursor: not-allowed;
+
+						&:hover {
+							background: #ccc;
+						}
+					}
+				}
+			}
+		}
+	}
+}

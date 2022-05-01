@@ -1,0 +1,44 @@
+.auth {
+	font-family: 'Comic Sans MS', arial;
+	width: 346px;
+	display: flex;
+	flex-direction: column;
+	margin: calc(7.5rem + 106px) auto auto;
+
+	h1 {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #db6736;
+		margin-bottom: 1.3rem;
+	}
+
+	.buttons {
+		margin-top: 0.5rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.inputs {
+		input + span {
+			width: calc(100% - 12px);
+			justify-content: flex-start;
+			margin-left: 12px;
+			margin-right: 22px;
+			margin-bottom: 8px;
+		}
+
+		div {
+			margin-bottom: 7px;
+		}
+	}
+
+	.error {
+		color: #f01f30;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 0.7rem;
+		margin-top: -0.2rem;
+		font-size: 0.78rem;
+	}
+}

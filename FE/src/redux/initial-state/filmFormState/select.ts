@@ -1,5 +1,5 @@
 import { createDefaultSelect } from 'shared/form-controls/select/defaultSelect';
-import { FilmFormFileds } from '../../filmForm.enum';
+import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
 
 export const selectState = {
 	[FilmFormFileds.genres]: createDefaultSelect(

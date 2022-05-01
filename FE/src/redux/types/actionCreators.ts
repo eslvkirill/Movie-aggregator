@@ -1,5 +1,6 @@
 const MAIN_CREATORS = {
 	GENRE: 'genre/',
+	AUTH: 'auth/',
 };
 
 const GENRE_CREATOR = {
@@ -9,4 +10,9 @@ const GENRE_CREATOR = {
 	DELETE: `${MAIN_CREATORS.GENRE}deleteGenre`,
 };
 
-export { GENRE_CREATOR };
+const AUTH_CREATOR = {
+	LOGIN: `${MAIN_CREATORS.AUTH}login`,
+	REGISTRATION: `${MAIN_CREATORS.AUTH}registration`,
+};
+
+export { GENRE_CREATOR, AUTH_CREATOR };

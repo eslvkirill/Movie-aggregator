@@ -6,7 +6,7 @@ interface ButtonControl {
   id?: string;
   disabled?: boolean | undefined;
   children?: any;
-  onClick?: MouseEventHandler<Element> | undefined;
+  onClick?: MouseEventHandler<Element> | undefined | any;
 }
 
 const Button = (props: ButtonControl) => {

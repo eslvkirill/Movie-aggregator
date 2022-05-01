@@ -9,6 +9,7 @@ interface InputValidation {
 	maxLength?: number;
 	minLength?: number;
 	number?: boolean;
+	email?: boolean;
 	minValue?: number | string;
 	maxValue?: string;
 	youTube?: boolean;

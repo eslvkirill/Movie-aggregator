@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ROUTES } from 'shared/constants/routes';
+import { ROUTE } from 'shared/constants/routes';
 import './HomePage.scss';
 
 const HomePage = () => {
@@ -14,7 +14,7 @@ const HomePage = () => {
           понравится и запомнится надолго.
         </div>
         <hr className="description-wrapper_second-line" />
-        <Link to={ROUTES.ADMIN}>Перейти на страницу администратора</Link>
+        <Link to={ROUTE.ADMIN}>Перейти на страницу администратора</Link>
       </div>
     </main>
   );

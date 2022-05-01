@@ -4,7 +4,7 @@ import {
 } from 'shared/form-controls/input/defaultInput';
 import { createColorInput } from 'shared/form-controls/input/colorInput';
 import { createDefaultFileInput } from 'shared/form-controls/input/fileInput';
-import { FilmFormFileds } from '../../filmForm.enum';
+import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
 
 export const inputState = {
 	[FilmFormFileds.rusTitle]: createDefaultInput(
