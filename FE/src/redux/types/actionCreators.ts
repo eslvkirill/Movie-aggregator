@@ -1,6 +1,7 @@
 const MAIN_CREATORS = {
 	GENRE: 'genre/',
 	AUTH: 'auth/',
+	FILM: 'movie/',
 };
 
 const GENRE_CREATOR = {
@@ -15,4 +16,9 @@ const AUTH_CREATOR = {
 	REGISTRATION: `${MAIN_CREATORS.AUTH}registration`,
 };
 
-export { GENRE_CREATOR, AUTH_CREATOR };
+const FILM_CREATOR = {
+	GET_FORM_DATA: `${MAIN_CREATORS.FILM}getFormData`,
+	ADD: `${MAIN_CREATORS.FILM}add`,
+};
+
+export { GENRE_CREATOR, AUTH_CREATOR, FILM_CREATOR };
