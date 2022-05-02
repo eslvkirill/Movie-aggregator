@@ -19,7 +19,7 @@ const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 	}
 
 	inputControls[controlName] = control;
-	validateForm(formControls);
+	state.isFormValid = validateForm(formControls);
 };
 
 const onChangeFileInputEventAction = (
@@ -48,6 +48,7 @@ const onChangeFileInputEventAction = (
 	}
 
 	film[controlName] = value;
+	state.isFormValid = validateForm(formControls);
 };
 
 const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
@@ -86,7 +87,7 @@ const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
 	}
 
 	selectControls[controlName] = control;
-	validateForm(formControls);
+	state.isFormValid = validateForm(formControls);
 };
 
 const resetFileInputAction = (state: any) => {

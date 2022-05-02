@@ -10,10 +10,12 @@ const AuthService = {
 			[ENDPOINT.LOGIN],
 			`login=${login}&password=${password}`,
 			false,
+			false,
 			true
 		),
 
-	registration: (data: any) => api.post<string>(usersEndpoint, data, true),
+	registration: (data: any) =>
+		api.post<string>(usersEndpoint, data, false, true),
 
 	getUserInfo: () => api.get(usersEndpoint.concat(ENDPOINT.INFO)),
 };

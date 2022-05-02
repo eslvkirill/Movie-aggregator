@@ -21,7 +21,7 @@ enum FilmFormFileds {
 	ageRating = 'ageRating',
 }
 
-enum Language {
+enum FilmLanguage {
 	russian = 'Русский',
 	english = 'Английский',
 	french = 'Французский',
@@ -31,10 +31,10 @@ enum Language {
 	spanish = 'Испанский',
 }
 
-enum AgeRating {
+enum FilmAgeRating {
 	PG_13 = '12+',
 	R = '16+',
 	NC_17 = '18+',
 }
 
-export { FilmFormFileds, Language, AgeRating };
+export { FilmFormFileds, FilmLanguage, FilmAgeRating };

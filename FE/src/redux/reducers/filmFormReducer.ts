@@ -1,10 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
 import {
 	onChangeFileInputEventAction,
 	onChangeInputEventAction,
 	onChangeSelectEventAction,
 	resetFileInputAction,
 } from 'redux/actions/filmFormActions';
+import {
+	addFilmCreator,
+	getFilmFormDataCreator,
+} from 'redux/creators/filmFormCreator';
 import { inputState } from 'redux/initial-state/filmFormState/input';
 import { selectState } from 'redux/initial-state/filmFormState/select';
 import { REDUCER } from '../types/reducers';
@@ -16,6 +21,7 @@ const initialState: any = {
 	},
 	film: {},
 	isFormValid: false,
+	notificationMessage: '',
 };
 
 const filmFormReducer = createSlice({
@@ -27,6 +33,37 @@ const filmFormReducer = createSlice({
 		onChangeSelectEvent: onChangeSelectEventAction,
 		reset: () => initialState,
 		resetFileInput: resetFileInputAction,
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(
+				getFilmFormDataCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					Object.keys(action.payload).map((fieldName) => {
+						return (state.formControls.selectControls[fieldName].options =
+							action.payload[fieldName].map((control: any, index: number) => {
+								const isGenreField = fieldName === FilmFormFileds.genres;
+
+								return {
+									label: isGenreField ? control.name : control,
+									value: isGenreField ? control.id : index,
+								};
+							}));
+					});
+				}
+			)
+			.addCase(
+				addFilmCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.notificationMessage = action.payload;
+				}
+			)
+			.addCase(
+				addFilmCreator.rejected.type,
+				(state, action: PayloadAction<any>) => {
+					state.notificationMessage = action.payload;
+				}
+			);
 	},
 });
 

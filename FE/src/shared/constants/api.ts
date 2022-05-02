@@ -7,6 +7,8 @@ const ENDPOINT = {
 	LOGIN: 'login',
 	USERS: 'users',
 	INFO: 'info',
+	MOVIES: 'movies',
+	COUNTRIES: 'countries',
 };
 
 const REQUEST = {
@@ -17,7 +19,7 @@ const REQUEST = {
 
 const HEADER_TYPE = {
 	DEFAULT: 'application/json',
-	AUTH: 'application/x-www-form-urlencoded',
+	URL_ENCODED: 'application/x-www-form-urlencoded',
 };
 
 export { URL, API, VERSION, ENDPOINT, REQUEST, HEADER_TYPE };

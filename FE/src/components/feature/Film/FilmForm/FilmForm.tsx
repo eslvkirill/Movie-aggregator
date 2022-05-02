@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { onChangeSelectEvent } from 'redux/reducers/filmFormReducer';
-import { resetCreator , onChangeEventCreator } from 'redux/creators/filmFormCreator';
+import { resetCreator , onChangeEventCreator, getFilmFormDataCreator, addFilmCreator } from 'redux/creators/filmFormCreator';
 import Notification from 'components/shared/pop-ups/Notification/Notification';
 import Button from 'components/shared/form-controls/Button/Button';
 import { renderInputs } from './form-controls/input-render';
@@ -11,26 +11,22 @@ import './FilmForm.scss';
 
 const FilmForm = () => {
   const dispatch = useAppDispatch();
-  const { formControls, film, isFormValid } = useAppSelector(state => state.filmFormReducer);
-  const [isNotificationShow, setNotificationShow] = useState(false);
+  const { formControls, isFormValid, notificationMessage } = useAppSelector(state => state.filmFormReducer);
 
   useEffect(() => {
-    try {
-      console.log(formControls);
-    } catch (e) {
-      console.log(e);
-    }
+    dispatch(getFilmFormDataCreator());
   }, []);
 
-  const onResetHandlerClick = () => dispatch(resetCreator());
-  // setNotificationShow(false);
+  const onResetHandlerClick = () => {
+    dispatch(resetCreator());
+    dispatch(getFilmFormDataCreator());
+  };
 
   const submitNewFilm = (event: any) => {
     event.preventDefault();
     dispatch(resetCreator());
-    // setNotificationShow(true);
+    dispatch(getFilmFormDataCreator());
   };
-
 
   const onInputChangeHandler = (event: any, controlName: string) => {
     const isInputFileField = ([FilmFormFileds.poster, FilmFormFileds.background] as string[]).includes(controlName);
@@ -39,14 +35,14 @@ const FilmForm = () => {
     dispatch(onChangeEventCreator({ value, controlName, isInputFileField }));
   };
 
-  const onSelectChangeHandler = (event: any, controlName: string) => 
-    dispatch(onChangeSelectEvent({ value: event.target.value, controlName }));
+  const onSelectChangeHandler = (event: any, controlName: string) =>
+    dispatch(onChangeSelectEvent({ value: event, controlName }));
 
   return (
     <div className="film-wrapper">
       <Notification
-        showBlock={isNotificationShow}
-        rusTitle='film'
+        showBlock={!!notificationMessage}
+        rusTitle={notificationMessage}
         // rusTitle={film.rusTitle}
       />
       {/* <h2>Создание фильма</h2> */}
@@ -61,8 +57,8 @@ const FilmForm = () => {
         </div>
         <div className="film-form__buttons">
           <Button
-            // onClick={filmAddHandler}
-            disabled={!isFormValid}
+            onClick={() => dispatch(addFilmCreator())}
+            disabled={isFormValid}
             type="success"
           >
             Создать фильм
