@@ -1,0 +1,39 @@
+.home-page {
+	padding-top: 4rem;
+	margin-top: 106px;
+
+	&__description-wrapper {
+		text-align: center;
+		margin-top: -3%;
+
+		.hr-line {
+			margin: auto;
+			border: 0;
+			height: 1px;
+			background: #000;
+			background-image: linear-gradient(to left, #000, #fff, #000);
+		}
+
+		.description {
+			color: #ddcbbf;
+			margin: auto;
+			margin-bottom: 2%;
+			margin-top: 2%;
+			width: 80%;
+			font-family: 'Comic Sans MS', arial;
+			font-size: 20px;
+		}
+	}
+
+	.description-wrapper {
+		&_first-line {
+			width: 66%;
+			margin-top: 2%;
+		}
+
+		&_second-line {
+			width: 38%;
+			margin-bottom: 1.5%;
+		}
+	}
+}

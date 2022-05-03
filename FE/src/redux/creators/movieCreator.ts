@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import MovieService from 'components/feature/Movie/movie.service';
-import GenreService from 'components/feature/Genre/genre.service';
+import MovieService from 'components/features/Movie/movie.service';
+import GenreService from 'components/features/Genre/genre.service';
 import {
 	reset,
 	resetFileInput,
@@ -11,7 +11,7 @@ import { MOVIE_CREATOR } from 'redux/types/actionCreators';
 import {
 	MovieLanguage,
 	MovieAgeRating,
-} from 'components/feature/Movie/movie.enum';
+} from 'components/features/Movie/movie.enum';
 
 const movieService = MovieService;
 const genreService = GenreService;

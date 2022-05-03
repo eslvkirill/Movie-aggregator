@@ -1,0 +1,21 @@
+.logo {
+	padding-top: 2%;
+	padding-left: 3%;
+	font-size: 35px;
+
+	a {
+		text-decoration: none;
+		font-family: 'Comic Sans MS', arial;
+		text-transform: uppercase;
+		transition: 0.3s;
+		color: #f9f5fc;
+		text-shadow: 4px 4px 3px #bd5a31;
+
+		&:hover {
+			text-decoration: none;
+			transition: 0.3s;
+			color: #f4e1ff;
+			text-shadow: 4px 4px 3px #ff4d00;
+		}
+	}
+}

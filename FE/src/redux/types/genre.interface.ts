@@ -1,4 +1,4 @@
-import { Genre } from 'components/feature/Genre/genre.interface';
+import { Genre } from 'components/features/Genre/genre.interface';
 
 export interface GenreState {
 	genres: Genre[];

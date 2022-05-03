@@ -1,22 +1,24 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMediumM, faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
+import { faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
+import { faM } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
-import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
+import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import './MoviePage.scss';
 
-const MoviePage = (props: any) => {
+const MoviePage = () => {
+  const { id } = useParams() as { id: string };
+
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
 
   useEffect(() => {
-    console.log(props);
-    dispatch(getMovieByIdCreator('3d802a7e-5218-4f80-8379-6daa0aaed62e'));
+    dispatch(getMovieByIdCreator(id));
   }, []);
   
   const renderIcons = () =>
@@ -24,7 +26,7 @@ const MoviePage = (props: any) => {
       let icon!: IconProp;
 
       if (agregator.name === 'Metacritic') {
-        icon = faMediumM;
+        icon = faM;
       } else if (agregator.name === 'Kinopoisk') {
         icon = faKickstarterK;
       } else if (agregator.name === 'Imdb') {
@@ -113,7 +115,7 @@ const MoviePage = (props: any) => {
         <>
           <section
             className="FirstSection"
-            style={setBackgroundAction(MovieFormFileds.background)}
+            style={setBackgroundAction(movie[MovieFormFileds.background])}
           >
             <div className="Wrapper">
               <div className="Genres">

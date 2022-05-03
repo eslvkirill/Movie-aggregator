@@ -1,4 +1,4 @@
-import Login from 'components/feature/Auth/Login/Login';
+import Login from 'components/features/Auth/Login/Login';
 import './AuthPage.scss';
 
 const AuthPage = () => (

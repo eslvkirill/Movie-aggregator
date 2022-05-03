@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loginState } from 'redux/initial-state/authState/login';
 import { onChangeInputEventAction } from 'redux/actions/authActions';
 import { loginCreator, registrationCreator } from 'redux/creators/authCreator';
-import { StateName } from 'components/feature/Auth/auth.enum';
+import { StateName } from 'components/features/Auth/auth.enum';
 import { registrationState } from '../initial-state/authState/registration';
 import { REDUCER } from '../types/reducers';
 
@@ -47,7 +47,7 @@ const authReducer = createSlice({
 			.addCase(
 				registrationCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
-					state = initialState;
+					// state = initialState;
 					state.error = action.payload;
 				}
 			);

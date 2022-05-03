@@ -1,0 +1,47 @@
+.Layout {
+	padding: 0;
+	margin: 0;
+	background: #37104d;
+	// background: linear-gradient(200deg, #37104d 28%, #bd5a31);
+	font-family: 'Comic Sans MS', arial;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+		width: 11px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background: #bd5a31;
+		box-shadow: inset 0 0 6px #00000066;
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background: #37104d;
+	}
+
+	.Content {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		position: relative;
+		width: 100vw;
+		min-height: 100vh;
+		animation: loading 1s ease-in-out;
+		color: #fff;
+		margin-top: 0;
+	}
+}
+
+@keyframes loading {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
