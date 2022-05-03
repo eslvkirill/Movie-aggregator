@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AUTH_CREATOR } from 'redux/types/actionCreators';
-import AuthService from 'components/feature/Auth/auth.service';
+import AuthService from 'components/features/Auth/auth.service';
 
 const service = AuthService;
 

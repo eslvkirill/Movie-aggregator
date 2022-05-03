@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import GenreService from 'components/feature/Genre/genre.service';
-import { Genre } from 'components/feature/Genre/genre.interface';
+import GenreService from 'components/features/Genre/genre.service';
+import { Genre } from 'components/features/Genre/genre.interface';
 import { addGenre, deleteGenre, editGenre } from 'redux/reducers/genreReducer';
 import { GENRE_CREATOR } from 'redux/types/actionCreators';
 

@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { Genre } from 'components/feature/Genre/genre.interface';
+import { Genre } from 'components/features/Genre/genre.interface';
 import { GenreState } from '../types/genre.interface';
 
 const addGenreAction = (state: GenreState, action: PayloadAction<Genre>) => {

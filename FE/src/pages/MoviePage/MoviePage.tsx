@@ -7,7 +7,7 @@ import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
-import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
+import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import './MoviePage.scss';
 
 const MoviePage = (props: any) => {

@@ -7,9 +7,9 @@ import HomePage from 'pages/HomePage/HomePage';
 import ErrorPage from 'pages/ErrorPage/ErrorPage';
 import AuthPage from 'pages/AuthPage/AuthPage';
 import AdminPage from 'pages/AdminPage/AdminPage';
-import Registration from 'components/feature/Auth/Registration/Registration';
-import GenreList from 'components/feature/Genre/GenreList/GenreList';
-import MovieForm from 'components/feature/Movie/MovieForm/MovieForm';
+import Registration from 'components/features/Auth/Registration/Registration';
+import GenreList from 'components/features/Genre/GenreList/GenreList';
+import MovieForm from 'components/features/Movie/MovieForm/MovieForm';
 
 const store = setupStore();
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
+import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import {
 	setAggregatorsRatingsOnGeneralViewAction,
 	sortAggregatorsAction,

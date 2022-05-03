@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Genre } from 'components/feature/Genre/genre.interface';
+import { Genre } from 'components/features/Genre/genre.interface';
 import { GenreState } from 'redux/types/genre.interface';
 import {
 	addGenreAction,
