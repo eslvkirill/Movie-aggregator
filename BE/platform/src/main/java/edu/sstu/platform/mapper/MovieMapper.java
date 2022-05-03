@@ -33,7 +33,9 @@ public interface MovieMapper {
   })
   void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 
-  MovieInfoResponseDto toDto(Movie movie);
+  MovieInfoResponseDto toInfoDto(Movie movie);
 
-  List<MovieViewResponseDto> toDto(List<Movie> movie);
+  MovieViewResponseDto toViewDto(Movie movie);
+
+  List<MovieViewResponseDto> toViewDto(List<Movie> movie);
 }

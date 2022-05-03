@@ -1,0 +1,24 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+  <changeSet id="create_table_for_category_items" author="Befors">
+    <createTable tableName="category_items">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="category_id" type="uuid">
+        <constraints nullable="false" foreignKeyName="category_items_to_categories_fk"
+          references="categories(id)"/>
+      </column>
+      <column name="movie_id" type="uuid">
+        <constraints nullable="false" foreignKeyName="category_items_to_movies_fk"
+          references="movies(id)"/>
+      </column>
+      <column name="creation_date" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

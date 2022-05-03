@@ -22,10 +22,10 @@ public class ReviewService {
   private final ReviewMapper reviewMapper;
   private final QReview qReview = QReview.review;
 
-  public void createReview(MovieReviewRequestDto movieReviewRequestDto, UUID movieId, UUID userId) {
+  public UUID createReview(MovieReviewRequestDto movieReviewRequestDto, UUID movieId, UUID userId) {
     var review = reviewMapper.toEntity(movieReviewRequestDto, movieId, userId);
 
-    reviewRepo.save(review);
+    return reviewRepo.save(review).getId();
   }
 
   public void updateReview(MovieReviewRequestDto movieReviewRequestDto, UUID movieId, UUID reviewId) {

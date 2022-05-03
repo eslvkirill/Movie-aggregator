@@ -173,7 +173,7 @@ public class MovieService {
     var movie = movieRepo.findMovieById(id)
         .orElseThrow(() -> entityNotFoundException(id));
 
-    return movieMapper.toDto(movie);
+    return movieMapper.toInfoDto(movie);
   }
 
   private EntityNotFoundException entityNotFoundException(UUID id) {
@@ -184,7 +184,7 @@ public class MovieService {
   public Page<MovieViewResponseDto> findMovies(Pageable pageable) {
     var movieIds = movieRepo.findMovieIds(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
     var movies = movieRepo.findByIdIn(movieIds.getContent(), pageable.getSort());
-    var movieDtoList = movieMapper.toDto(movies);
+    var movieDtoList = movieMapper.toViewDto(movies);
 
     return new PageImpl<>(movieDtoList, pageable, movieIds.getTotalElements());
   }

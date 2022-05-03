@@ -30,13 +30,13 @@ public class MovieReviewRestController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public void createReview(@PathVariable UUID movieId, @Valid @RequestBody MovieReviewRequestDto reviewRequestDto) {
-    reviewService.createReview(reviewRequestDto, movieId, userPrincipalService.getCurrentUser().getId());
+  public UUID createReview(@PathVariable UUID movieId, @RequestBody @Valid MovieReviewRequestDto reviewRequestDto) {
+    return reviewService.createReview(reviewRequestDto, movieId, userPrincipalService.getCurrentUser().getId());
   }
 
   @PutMapping("/{reviewId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void updateReview(@PathVariable UUID movieId, @Valid @RequestBody MovieReviewRequestDto reviewRequestDto,
+  public void updateReview(@PathVariable UUID movieId, @RequestBody @Valid MovieReviewRequestDto reviewRequestDto,
       @PathVariable UUID reviewId) {
       reviewService.updateReview(reviewRequestDto, movieId, reviewId);
   }
