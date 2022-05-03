@@ -73,8 +73,12 @@ export const inputState = {
 		},
 		{ required: true, minLength: 1, IMDb: true }
 	),
-	[FilmFormFileds.pageColor1]: createColorInput('Основной цвет оформления:'),
-	[FilmFormFileds.pageColor2]: createColorInput('Побочный цвет оформления:'),
+	[FilmFormFileds.primaryPageColor]: createColorInput(
+		'Основной цвет оформления:'
+	),
+	[FilmFormFileds.secondaryPageColor]: createColorInput(
+		'Побочный цвет оформления:'
+	),
 	[FilmFormFileds.poster]: createDefaultFileInput(
 		'Постер фильма',
 		'Файл должен быть картинкой, не превышающей размер 1Мб',

@@ -72,9 +72,21 @@ const addFilmCreator = createAsyncThunk(
 	}
 );
 
+const getFilmByIdCreator = createAsyncThunk(
+	FILM_CREATOR.GET_BY_ID,
+	async (movieId: string, thunkAPI) => {
+		try {
+			return filmService.getFilmById(movieId);
+		} catch (e) {
+			return thunkAPI.rejectWithValue('Не удалось загрузить данные о фильме');
+		}
+	}
+);
+
 export {
 	resetCreator,
 	onChangeEventCreator,
 	getFilmFormDataCreator,
 	addFilmCreator,
+	getFilmByIdCreator,
 };

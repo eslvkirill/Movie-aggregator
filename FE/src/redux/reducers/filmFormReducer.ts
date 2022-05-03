@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
 import {
+	setAggregatorsRatingsOnGeneralViewAction,
+	sortAggregatorsAction,
+	setDefaultFieldsAppearanceAction,
+	setBackgroundAction,
+} from 'redux/actions/film/appearanceActions';
+import {
 	onChangeFileInputEventAction,
 	onChangeInputEventAction,
 	onChangeSelectEventAction,
 	resetFileInputAction,
-} from 'redux/actions/filmFormActions';
+} from 'redux/actions/film/formActions';
 import {
 	addFilmCreator,
+	getFilmByIdCreator,
 	getFilmFormDataCreator,
 } from 'redux/creators/filmFormCreator';
 import { inputState } from 'redux/initial-state/filmFormState/input';
@@ -22,6 +29,7 @@ const initialState: any = {
 	film: {},
 	isFormValid: false,
 	notificationMessage: '',
+	loading: true,
 };
 
 const filmFormReducer = createSlice({
@@ -62,6 +70,20 @@ const filmFormReducer = createSlice({
 				addFilmCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
 					state.notificationMessage = action.payload;
+				}
+			)
+			.addCase(
+				getFilmByIdCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.film = action.payload;
+					state.loading = false;
+
+					const aggregators = state.film.externalAggregatorsInfo;
+
+					setAggregatorsRatingsOnGeneralViewAction(aggregators);
+					sortAggregatorsAction(aggregators);
+					setDefaultFieldsAppearanceAction(state.film);
+					setBackgroundAction(state.film.background);
 				}
 			);
 	},
