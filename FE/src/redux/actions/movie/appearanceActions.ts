@@ -1,4 +1,4 @@
-import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
+import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
 
 const setAggregatorsRatingsOnGeneralViewAction = (aggregators: any) => {
 	aggregators.map((aggregator: any) => {
@@ -22,43 +22,43 @@ const sortAggregatorsAction = (aggregators: any) => {
 	[aggregators[0], aggregators[1]] = [aggregators[1], aggregators[0]];
 };
 
-const setDefaultFieldsAppearanceAction = (film: any) => {
+const setDefaultFieldsAppearanceAction = (movie: any) => {
 	const customFieldNames: string[] = [
-		FilmFormFileds.genres,
-		FilmFormFileds.actors,
-		FilmFormFileds.directors,
+		MovieFormFileds.genres,
+		MovieFormFileds.actors,
+		MovieFormFileds.directors,
 	];
 
-	Object.keys(film).map((name) => {
+	Object.keys(movie).map((name) => {
 		if (
-			Array.isArray(film[name]) &&
-			name !== FilmFormFileds.externalAggregatorsInfo
+			Array.isArray(movie[name]) &&
+			name !== MovieFormFileds.externalAggregatorsInfo
 		) {
-			film[name] = film[name]
+			movie[name] = movie[name]
 				.map((field: any) =>
 					customFieldNames.includes(name) ? field.name : field
 				)
 				.join(', ');
 			if ([customFieldNames[1], customFieldNames[2]].includes(name)) {
-				film[name] = film[name].split(', ').sort().join(', ');
+				movie[name] = movie[name].split(', ').sort().join(', ');
 			}
-		} else if (name === FilmFormFileds.duration) {
-			film[name] = `${film[name].hour}ч ${film[name].minute}м`;
+		} else if (name === MovieFormFileds.duration) {
+			movie[name] = `${movie[name].hour}ч ${movie[name].minute}м`;
 		}
-		// else if (name === 'userRating' && film[name] !== null) {
-		// 	film[name] = film[name].value;
+		// else if (name === 'userRating' && movie[name] !== null) {
+		// 	movie[name] = movie[name].value;
 		// }
-		return film[name];
+		return movie[name];
 	});
 };
 
-const setBackgroundAction = (filmBackground: string) => {
+const setBackgroundAction = (movieBackground: string) => {
 	let style = {};
 
-	if (filmBackground) {
+	if (movieBackground) {
 		style = {
 			backgroundImage: `linear-gradient(rgba(250, 250, 250, 0.1), rgba(0, 0, 0, 0.7)), 
-        url("data:image/*;base64,${filmBackground}")`,
+        url("data:image/*;base64,${movieBackground}")`,
 			backgroundSize: 'cover',
 			backgroundPosition: 'center center',
 			backgroundRepeat: 'no-repeat',

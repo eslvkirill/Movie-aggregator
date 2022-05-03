@@ -3,12 +3,12 @@ import Api from 'shared/utils/api';
 
 const api = new Api([URL, API, VERSION]);
 
-const FilmService = {
+const MovieService = {
 	getOriginCountries: () => api.get([ENDPOINT.COUNTRIES]),
 
-	addFilm: (data: any) => api.post([ENDPOINT.MOVIES], data, true),
+	addMovie: (data: any) => api.post([ENDPOINT.MOVIES], data, true),
 
-	getFilmById: (movieId: string) => api.get([ENDPOINT.MOVIES].concat(movieId)),
+	getMovieById: (movieId: string) => api.get([ENDPOINT.MOVIES].concat(movieId)),
 };
 
-export default FilmService;
+export default MovieService;

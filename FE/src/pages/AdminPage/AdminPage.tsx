@@ -6,7 +6,7 @@ const AdminPage = () => {
   const links = [
     { to: ROUTE.GENRES, label: 'Создание жанров' },
     // { to: '/adminPage/persons', label: 'Создание людей' },
-    { to: ROUTE.FILMS, label: 'Создание фильмов' },
+    { to: ROUTE.MOVIES, label: 'Создание фильмов' },
   ];
 
   return (

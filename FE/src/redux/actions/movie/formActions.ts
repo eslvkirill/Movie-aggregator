@@ -1,10 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
+import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
 import { REGEXP } from 'shared/constants/common';
 import { validate, validateForm } from 'shared/utils/validation';
 
 const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
-	const { film, formControls } = state;
+	const { movie, formControls } = state;
 	const { value, controlName } = action.payload;
 	const { inputControls } = formControls;
 	const control = { ...inputControls[controlName] };
@@ -13,10 +13,10 @@ const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 	control.touched = true;
 	control.valid = validate(control.value, control.validation);
 
-	film[controlName] = control.value;
+	movie[controlName] = control.value;
 
-	if (controlName === FilmFormFileds.trailerUrl) {
-		film[controlName] = control.value
+	if (controlName === MovieFormFileds.trailerUrl) {
+		movie[controlName] = control.value
 			.replace(REGEXP.YOU_TUBE.URL.FULL, REGEXP.YOU_TUBE.REPLACER.FULL)
 			.replace(REGEXP.YOU_TUBE.URL.SHORT, REGEXP.YOU_TUBE.REPLACER.SHORT);
 	}
@@ -29,7 +29,7 @@ const onChangeFileInputEventAction = (
 	state: any,
 	action: PayloadAction<any>
 ) => {
-	const { formControls, film } = state;
+	const { formControls, movie } = state;
 	const { value, controlName } = action.payload;
 	const { inputControls } = formControls;
 	const control = { ...inputControls[action.payload.controlName] };
@@ -50,12 +50,12 @@ const onChangeFileInputEventAction = (
 		span.style.color = 'rgb(168, 145, 118)';
 	}
 
-	film[controlName] = value;
+	movie[controlName] = value;
 	state.isFormValid = validateForm(formControls);
 };
 
 const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
-	const { film, formControls } = state;
+	const { movie, formControls } = state;
 	const { value, controlName } = action.payload;
 	const { selectControls } = formControls;
 	const control = { ...selectControls[controlName] };
@@ -70,19 +70,19 @@ const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
 	control.touched = true;
 
 	if (controlName && !control.isMulti && control.value) {
-		[film[controlName]] = Object.values(control.value);
+		[movie[controlName]] = Object.values(control.value);
 	}
 
 	if (controlName && control.isMulti && control.value) {
 		const isCreationedFields = [
-			FilmFormFileds.genres,
-			FilmFormFileds.actors,
-			FilmFormFileds.directors,
+			MovieFormFileds.genres,
+			MovieFormFileds.actors,
+			MovieFormFileds.directors,
 		].includes(controlName);
 
 		const controlValueLabel = isCreationedFields ? 'value' : 'label';
 
-		film[controlName] = control.value.map(
+		movie[controlName] = control.value.map(
 			(selectValue: any) => selectValue[controlValueLabel]
 		);
 	}

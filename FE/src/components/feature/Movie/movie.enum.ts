@@ -1,4 +1,4 @@
-enum FilmFormFileds {
+enum MovieFormFileds {
 	rusTitle = 'rusTitle',
 	engTitle = 'engTitle',
 	tagline = 'tagline',
@@ -22,7 +22,7 @@ enum FilmFormFileds {
 	externalAggregatorsInfo = 'externalAggregatorsInfo',
 }
 
-enum FilmLanguage {
+enum MovieLanguage {
 	russian = 'Русский',
 	english = 'Английский',
 	french = 'Французский',
@@ -32,10 +32,10 @@ enum FilmLanguage {
 	spanish = 'Испанский',
 }
 
-enum FilmAgeRating {
+enum MovieAgeRating {
 	PG_13 = '12+',
 	R = '16+',
 	NC_17 = '18+',
 }
 
-export { FilmFormFileds, FilmLanguage, FilmAgeRating };
+export { MovieFormFileds, MovieLanguage, MovieAgeRating };

@@ -1,32 +1,32 @@
 import { createDefaultSelect } from 'shared/form-controls/select/defaultSelect';
-import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
+import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
 
 export const selectState = {
-	[FilmFormFileds.genres]: createDefaultSelect(
+	[MovieFormFileds.genres]: createDefaultSelect(
 		'Укажите жанры фильма',
 		'Жанр фильма должен быть указан'
 	),
-	// [FilmFormFileds.actors]: createDefaultSelect(
+	// [MovieFormFileds.actors]: createDefaultSelect(
 	// 	'Выберите актёров',
 	// 	'Укажите хотя бы одного актёра'
 	// ),
-	// [FilmFormFileds.directors]: createDefaultSelect(
+	// [MovieFormFileds.directors]: createDefaultSelect(
 	// 	'Выберите режиссёров',
 	// 	'Укажите хотя бы одного режиссёра'
 	// ),
-	[FilmFormFileds.originCountries]: createDefaultSelect(
+	[MovieFormFileds.originCountries]: createDefaultSelect(
 		'Выберите страны производства',
 		'Укажите хотя-бы одну страну производства'
 	),
-	[FilmFormFileds.audioLanguages]: createDefaultSelect(
+	[MovieFormFileds.audioLanguages]: createDefaultSelect(
 		'Выберите языки аудиодорожек',
 		'У фильма должна быть хотя-бы одна аудиодорожка'
 	),
-	[FilmFormFileds.subtitleLanguages]: createDefaultSelect(
+	[MovieFormFileds.subtitleLanguages]: createDefaultSelect(
 		'Выберите языки субтитров',
 		'У фильма должен быть хотя-бы один язык для субтитров'
 	),
-	[FilmFormFileds.ageRating]: createDefaultSelect(
+	[MovieFormFileds.ageRating]: createDefaultSelect(
 		'Выберите возрастной рэйтинг',
 		'У фильма должен быть возрастной рейтинг',
 		false,

@@ -1,5 +1,5 @@
 export const REDUCER = {
 	GENRE: 'genre',
-	FILM_FORM: 'film-form',
+	MOVIE: 'movie',
 	AUTH: 'auth',
 };

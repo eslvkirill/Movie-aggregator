@@ -1,24 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
+import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
 import {
 	setAggregatorsRatingsOnGeneralViewAction,
 	sortAggregatorsAction,
 	setDefaultFieldsAppearanceAction,
 	setBackgroundAction,
-} from 'redux/actions/film/appearanceActions';
+} from 'redux/actions/movie/appearanceActions';
 import {
 	onChangeFileInputEventAction,
 	onChangeInputEventAction,
 	onChangeSelectEventAction,
 	resetFileInputAction,
-} from 'redux/actions/film/formActions';
+} from 'redux/actions/movie/formActions';
 import {
-	addFilmCreator,
-	getFilmByIdCreator,
-	getFilmFormDataCreator,
-} from 'redux/creators/filmFormCreator';
-import { inputState } from 'redux/initial-state/filmFormState/input';
-import { selectState } from 'redux/initial-state/filmFormState/select';
+	addMovieCreator,
+	getMovieByIdCreator,
+	getMovieFormDataCreator,
+} from 'redux/creators/movieCreator';
+import { inputState } from 'redux/initial-state/movieFormState/input';
+import { selectState } from 'redux/initial-state/movieFormState/select';
 import { REDUCER } from '../types/reducers';
 
 const initialState: any = {
@@ -26,14 +26,14 @@ const initialState: any = {
 		inputControls: inputState,
 		selectControls: selectState,
 	},
-	film: {},
+	movie: {},
 	isFormValid: false,
 	notificationMessage: '',
 	loading: true,
 };
 
-const filmFormReducer = createSlice({
-	name: REDUCER.FILM_FORM,
+const movieReducer = createSlice({
+	name: REDUCER.MOVIE,
 	initialState,
 	reducers: {
 		onChangeInputEvent: onChangeInputEventAction,
@@ -45,12 +45,12 @@ const filmFormReducer = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(
-				getFilmFormDataCreator.fulfilled.type,
+				getMovieFormDataCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
 					Object.keys(action.payload).map((fieldName) => {
 						return (state.formControls.selectControls[fieldName].options =
 							action.payload[fieldName].map((control: any, index: number) => {
-								const isGenreField = fieldName === FilmFormFileds.genres;
+								const isGenreField = fieldName === MovieFormFileds.genres;
 
 								return {
 									label: isGenreField ? control.name : control,
@@ -61,29 +61,29 @@ const filmFormReducer = createSlice({
 				}
 			)
 			.addCase(
-				addFilmCreator.fulfilled.type,
+				addMovieCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
 					state.notificationMessage = action.payload;
 				}
 			)
 			.addCase(
-				addFilmCreator.rejected.type,
+				addMovieCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
 					state.notificationMessage = action.payload;
 				}
 			)
 			.addCase(
-				getFilmByIdCreator.fulfilled.type,
+				getMovieByIdCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
-					state.film = action.payload;
+					state.movie = action.payload;
 					state.loading = false;
 
-					const aggregators = state.film.externalAggregatorsInfo;
+					const aggregators = state.movie.externalAggregatorsInfo;
 
 					setAggregatorsRatingsOnGeneralViewAction(aggregators);
 					sortAggregatorsAction(aggregators);
-					setDefaultFieldsAppearanceAction(state.film);
-					setBackgroundAction(state.film.background);
+					setDefaultFieldsAppearanceAction(state.movie);
+					setBackgroundAction(state.movie.background);
 				}
 			);
 	},
@@ -95,6 +95,6 @@ export const {
 	onChangeSelectEvent,
 	reset,
 	resetFileInput,
-} = filmFormReducer.actions;
+} = movieReducer.actions;
 
-export default filmFormReducer.reducer;
+export default movieReducer.reducer;

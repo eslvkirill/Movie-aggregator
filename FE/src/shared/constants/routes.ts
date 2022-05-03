@@ -3,8 +3,8 @@ export const ROUTE = {
 	ERROR: '*',
 	ADMIN: 'admin-panel',
 	GENRES: 'genres',
-	FILMS: 'films',
-	FILM_PAGE: 'movies/:id',
+	MOVIES: 'movies',
+	MOVIE_PAGE: 'movies/:id',
 	LOGIN: 'login',
 	REGISTRATION: 'registration',
 };
