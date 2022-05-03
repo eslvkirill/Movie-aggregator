@@ -1,0 +1,761 @@
+@use '../../styles/helpers/mixins' as *;
+
+.FilmPage {
+	font-family: 'Amatic SC', sans-serif;
+	min-height: 100vh;
+	min-width: 100vw;
+
+	.Center {
+		position: relative;
+		margin-top: 30vh;
+	}
+
+	.FirstSection {
+		height: 105vh;
+		width: 100vw;
+		display: flex;
+		align-items: center;
+
+		.totalRatingBlock {
+			cursor: default;
+			font-family: 'Nunito', sans-serif;
+			padding: 7% 3% 9.8% 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: flex-end;
+
+			.totalRating {
+				font-size: 55px;
+				font-weight: bold;
+				color: #fff4e8;
+				text-shadow: 0px 4px 1px #9b4724, 4px 2px 20px #9b4724,
+					0px 1px 3px #9b4724;
+				margin-bottom: -12px;
+			}
+
+			.numberOfRatings {
+				width: 7.7rem;
+				font-size: 18px;
+				color: #e0ddd9fd;
+				font-weight: 600;
+				letter-spacing: 0.1rem;
+				text-shadow: 0px 2px 1px #2b083f94, 0px 2px 33px #c25f35a9,
+					0px 1px 3px #2b083f94;
+				display: flex;
+				justify-content: flex-end;
+				padding: 3px 9px 3px 0px;
+				background-color: #621d9180;
+				border-radius: 15px 0 0 15px;
+			}
+		}
+
+		.Wrapper {
+			cursor: default;
+			display: flex;
+			flex-direction: column;
+			padding: 15% 2.8% 9.8% 13.5%;
+
+			.Genres {
+				font-size: 20px;
+				font-weight: bold;
+				color: #fff4e8;
+
+				p {
+					animation-delay: 0.1s;
+
+					&::before {
+						background: #bd5a31;
+					}
+				}
+			}
+
+			.Title {
+				margin-top: -8px;
+				text-transform: uppercase;
+				font-size: 50px;
+				font-weight: bold;
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+
+				p {
+					color: #fafafa;
+					animation-delay: 1.2s;
+
+					&::before {
+						margin-top: 8px;
+						height: 75%;
+						animation-delay: 2.7s;
+						background: #fff4e8;
+					}
+
+					span {
+						text-transform: uppercase;
+						font-size: 25px;
+						font-weight: bold;
+						color: #fafafa;
+					}
+				}
+
+				.RightSideOfTitle {
+					@include flexible();
+					font-weight: bold;
+					color: #fafafa;
+
+					.AgeRating {
+						display: flex;
+						padding-right: 25px;
+
+						span {
+							font-size: 30px;
+							border-radius: 50%;
+							border: 3px dashed #fff4e8;
+							padding: 10px 20px;
+						}
+					}
+
+					.Year {
+						display: flex;
+						align-items: flex-end;
+						background-color: transparent;
+						border-radius: 30px;
+						border: 5px ridge #fff4e8;
+						font-size: 25px;
+						padding: 18px 30px;
+						text-decoration: none;
+
+						span {
+							font-size: 20px;
+							text-transform: none;
+						}
+					}
+				}
+			}
+
+			.Time {
+				margin: -4px 0 0 5px;
+				font-size: 23px;
+				font-weight: bold;
+				color: #fafafa;
+			}
+
+			.Plot {
+				color: #fafafa;
+				font-size: 22px;
+				margin: -4px 0 1.2rem;
+			}
+
+			.AfterPlotBlock {
+				display: flex;
+				align-items: flex-start;
+			}
+
+			.Cast,
+			.Details {
+				color: #fafafa;
+				font-size: 1.4rem;
+				width: 40%;
+
+				span {
+					font-size: 1.2rem;
+				}
+
+				.People {
+					color: #fff4e8;
+					font-weight: 600;
+					cursor: pointer;
+				}
+			}
+
+			.Details {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				width: 60%;
+				margin-top: 0.8%;
+			}
+
+			.BottomOfSection {
+				@include flexible();
+				justify-content: space-between;
+				align-items: flex-end;
+				width: 100%;
+				margin-top: 1.6%;
+
+				.Links {
+					display: flex;
+					justify-content: space-between;
+					width: 45%;
+
+					.TrailerButton {
+						@include flexible();
+						cursor: pointer;
+						width: 46%;
+						opacity: 0.95;
+						background: #bd5b3174;
+						border: 3px outset;
+						border-radius: 15px;
+						color: #fafafa;
+						font-weight: bold;
+						font-size: 23px;
+						padding: 15px 8px;
+						text-decoration: none;
+						transition: 0.3s;
+
+						span {
+							padding-left: 20px;
+						}
+
+						&:hover {
+							transition: 0.3s;
+							transform: scale(0.98);
+							background: #2b083fe6;
+							background: #fff4e84d;
+							opacity: 0.9;
+						}
+
+						&:active {
+							transform: translateY(5px);
+							// transform: scale(0.95);
+							transition: 0.3s;
+						}
+					}
+				}
+
+				.BuyButton {
+					display: flex;
+					justify-content: flex-end;
+					width: 55%;
+
+					.filmWatch {
+						cursor: default;
+						@include gradient-animation(150deg, #bd5a31, #37104d, 10000s, 0px);
+
+						&:hover {
+							color: #fff4e8;
+							transform: scale(1);
+						}
+
+						&:active {
+							color: #fff4e8;
+							transform: scale(1);
+						}
+
+						span {
+							&:nth-child(1) {
+								position: absolute;
+								top: 0;
+								left: 0;
+								width: 100%;
+								height: 2px;
+								background: transparent;
+								animation: animate1 linear 2s infinite;
+							}
+
+							&:nth-child(2) {
+								position: absolute;
+								top: 0;
+								right: 0;
+								width: 0px;
+								height: 100%;
+								background: transparent;
+								animation: animate2 linear 2s infinite;
+								animation-delay: 1s;
+							}
+
+							&:nth-child(3) {
+								position: absolute;
+								bottom: 0;
+								left: 0;
+								width: 100%;
+								height: 0px;
+								background: transparent;
+								animation: animate3 linear 2s infinite;
+							}
+
+							&:nth-child(4) {
+								position: absolute;
+								top: 0;
+								left: 0;
+								width: 0px;
+								height: 100%;
+								background: transparent;
+								animation: animate4 linear 2s infinite;
+								animation-delay: 1s;
+							}
+						}
+					}
+
+					div {
+						cursor: pointer;
+						@include gradient-animation(150deg, #bd5a31, #37104d, 0.8s, 0px);
+						position: relative;
+						color: #fff4e8;
+						padding: 22px 50px;
+						font-size: 26px;
+						letter-spacing: 3px;
+						font-weight: bold;
+						text-transform: uppercase;
+						text-decoration: none;
+						box-shadow: 0 20px 50px #00000080;
+						overflow: hidden;
+						transition: 0.5s;
+
+						&:hover {
+							transition: 0.5s;
+							color: #fef8d7;
+							transform: scale(0.98);
+						}
+
+						&:active {
+							color: #c5b4ce;
+							transform: scale(0.95);
+						}
+
+						span {
+							&:nth-child(1) {
+								position: absolute;
+								top: 0;
+								left: 0;
+								width: 100%;
+								height: 2px;
+								background: linear-gradient(to right, #fef8d7, #dba03f);
+								animation: animate1 linear 2s infinite;
+							}
+
+							&:nth-child(2) {
+								position: absolute;
+								top: 0;
+								right: 0;
+								width: 2px;
+								height: 100%;
+								background: linear-gradient(to bottom, #fef8d7, #dba03f);
+								animation: animate2 linear 2s infinite;
+								animation-delay: 1s;
+							}
+
+							&:nth-child(3) {
+								position: absolute;
+								bottom: 0;
+								left: 0;
+								width: 100%;
+								height: 2px;
+								background: linear-gradient(to left, #fef8d7, #dba03f);
+								animation: animate3 linear 2s infinite;
+							}
+
+							&:nth-child(4) {
+								position: absolute;
+								top: 0;
+								left: 0;
+								width: 2px;
+								height: 100%;
+								background: linear-gradient(to top, #fef8d7, #dba03f);
+								animation: animate4 linear 2s infinite;
+								animation-delay: 1s;
+							}
+						}
+
+						.Price {
+							font-size: 30px;
+
+							span {
+								position: relative;
+								background: none;
+								font-size: 18px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.SecondSection {
+		height: 100vh;
+		width: 100vw;
+		display: flex;
+		cursor: default;
+
+		.Block {
+			color: #fafafa;
+			position: relative;
+			width: 100vw;
+			height: 100vh;
+
+			.LeftSide {
+				text-align: center;
+				width: 90%;
+				position: relative;
+				z-index: 99;
+
+				.Trailer {
+					margin: auto auto;
+					margin-top: 3%;
+					margin-bottom: 7%;
+					font-weight: bold;
+					font-size: 60px;
+				}
+
+				.VideoContainer {
+					max-width: 650px;
+
+					.Video {
+						position: relative;
+						padding-bottom: 56.25%;
+						padding-top: 0px;
+						height: 0;
+						width: 100%;
+						margin-left: 5%;
+
+						iframe {
+							position: absolute;
+							top: 0;
+							left: 0;
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+
+				.Oscars {
+					margin-top: 7%;
+					max-width: 650px;
+					@include flexible();
+					justify-content: space-around;
+
+					img {
+						display: flex;
+					}
+				}
+			}
+
+			.RightSide {
+				float: right;
+				@include flexible();
+				flex-direction: column;
+				width: 90%;
+				position: relative;
+				top: 0;
+				z-index: 99;
+
+				.Title {
+					margin-bottom: 3%;
+					margin-top: 2%;
+					font-size: 66px;
+					font-weight: bold;
+				}
+
+				.Tagline {
+					text-align: center;
+					width: 85%;
+					margin-left: 0%;
+					font-size: 28px;
+					margin-bottom: 4%;
+				}
+
+				.RatingsWrapper {
+					@include flexible();
+
+					.RatingsContainer {
+						@include flexible();
+						margin: auto;
+						margin-right: 6%;
+						margin-top: 3%;
+						margin-bottom: 2%;
+						text-align: center;
+						display: flex;
+						max-width: 750px;
+						flex-wrap: wrap;
+
+						.ImdbStars,
+						.KinopoiskStars,
+						.MetacriticStars {
+							font-size: 22px;
+							// padding: 15px;
+							padding-bottom: 25px;
+							padding-right: 20px;
+							padding-left: 20px;
+
+							.StarsWrapper {
+								@include flexible();
+								min-width: 100px;
+
+								.Star {
+									padding: 0.5%;
+									// display: flex;
+									// flex-wrap: wrap;
+									// justify-content: center;
+									// max-width: 550px;
+
+									img {
+										width: 40px;
+									}
+								}
+							}
+						}
+						.StarsWrapper {
+							@include flexible();
+							max-width: 270px;
+
+							.Star {
+								padding: 0.5%;
+
+								img {
+									width: 40px;
+								}
+							}
+						}
+
+						.ImdbStars,
+						.MetacriticStars,
+						.KinopoiskStars {
+							margin-right: -2%;
+						}
+					}
+
+					.Rating {
+						font-size: 22px;
+						margin-bottom: 1%;
+					}
+
+					ul.Icons {
+						perspective: 100000000px;
+						@include flexible();
+						margin-top: 5%;
+						margin-right: 10%;
+						margin-left: 0%;
+						margin-bottom: 0;
+						list-style: none;
+						padding: 20px;
+						padding-top: 0;
+						padding-bottom: 0;
+						width: 550px;
+						max-width: 600px;
+						justify-content: space-between;
+
+						li {
+							display: inline-block;
+							margin: 0 0%;
+						}
+
+						a {
+							display: inline-block;
+							width: 100px;
+							height: 100px;
+							text-decoration: none;
+							cursor: pointer;
+							text-align: center;
+							line-height: 100px;
+							position: relative;
+							transition: 0.5s;
+							background: #5c5b5b;
+							transform-style: preserve-3d;
+
+							&:hover {
+								transform: rotateX(90deg);
+							}
+						}
+
+						a.Kinopoisk {
+							.Front {
+								background: #f19120;
+							}
+							.Back {
+								background: #fff;
+							}
+						}
+
+						a.Imdb {
+							.Front {
+								background: #e5b821;
+							}
+							.Back {
+								background: #232227;
+							}
+						}
+
+						a.Metacritic {
+							.Front {
+								background: #001a34;
+								border: 4px solid #f7c632;
+							}
+							.Back {
+								background: #fff;
+								border: 4px solid #f7c632;
+							}
+						}
+
+						.Front,
+						.Back {
+							width: 100px;
+							height: 100px;
+							position: absolute;
+							top: 0;
+							left: 0;
+							transform: translateZ(50px);
+							color: #212121;
+							font-size: 38px;
+						}
+
+						.Back {
+							transform: rotateX(-90deg) translateZ(50.25px);
+							backface-visibility: hidden;
+						}
+
+						.Kinopoisk {
+							.Front {
+								color: #fff;
+							}
+							.Back {
+								color: #f19120;
+							}
+						}
+
+						.Imdb {
+							.Front {
+								color: #232227;
+							}
+							.Back {
+								color: #e5b821;
+							}
+						}
+
+						.Metacritic {
+							.Front {
+								color: #fff;
+							}
+							.Back {
+								color: #001a34;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@keyframes animate1 {
+		0% {
+			transform: translateX(-100%);
+		}
+
+		100% {
+			transform: translateX(100%);
+		}
+	}
+
+	@keyframes animate2 {
+		0% {
+			transform: translateY(-100%);
+		}
+
+		100% {
+			transform: translateY(100%);
+		}
+	}
+
+	@keyframes animate3 {
+		0% {
+			transform: translateX(100%);
+		}
+
+		100% {
+			transform: translateX(-100%);
+		}
+	}
+
+	@keyframes animate4 {
+		0% {
+			transform: translateY(100%);
+		}
+
+		100% {
+			transform: translateY(-100%);
+		}
+	}
+}
+
+.Genres p,
+.Title p {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	transform-origin: left;
+	transform: scaleX(0);
+	animation: reveralTextReverse 1s ease-in-out forwards;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform-origin: right;
+		animation: reveralText 1s ease-in-out forwards;
+		animation-delay: 1.5s;
+	}
+}
+
+.Plot,
+.AfterPlotBlock,
+.Time,
+.filmRating,
+.totalRatingBlock {
+	opacity: 0;
+	animation: fadeIn 1s linear forwards;
+	animation-delay: 3s;
+}
+
+.BottomOfSection,
+.RightSideOfTitle {
+	opacity: 0;
+	display: inline-block;
+	animation: fadeInBottom 1s linear forwards;
+	animation-delay: 3s;
+}
+
+@keyframes reveralTextReverse {
+	0% {
+		transform: scaleX(0);
+	}
+
+	100% {
+		transform: scaleX(1);
+	}
+}
+
+@keyframes reveralText {
+	0% {
+		transform: scaleX(1);
+	}
+
+	100% {
+		transform: scaleX(0);
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInBottom {
+	0% {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

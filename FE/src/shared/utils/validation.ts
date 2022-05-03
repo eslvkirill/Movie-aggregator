@@ -1,38 +1,27 @@
+import { REGEXP } from 'shared/constants/common';
+
 interface ValidProperties {
 	valid: boolean;
 	touched: boolean;
 	shouldValidate: boolean;
 }
 
-const validateEmail = (email: string) => {
-	const re = /^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/;
-	return re.test(String(email).toLowerCase());
-};
+const validateEmail = (email: string) =>
+	REGEXP.EMAIL.test(String(email).toLowerCase());
 
-const validateYouTubeUrl = (youTube: string) => {
-	const regexp =
-		/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w?=]*)?/;
-	return regexp.test(String(youTube).toLowerCase());
-};
+const validateYouTubeUrl = (youTube: string) =>
+	REGEXP.YOU_TUBE.VALIDATION.test(String(youTube).toLowerCase());
 
-const validateIMDbUrl = (IMDb: string) => {
-	const regexp =
-		/http(?:s?):\/\/(?:www\.)?imdb.com\/title\/tt[\d]+\/?[\w?=_\-&]*/;
-	return regexp.test(String(IMDb).toLowerCase());
-};
+const validateIMDbUrl = (IMDb: string) =>
+	REGEXP.IMDB.test(String(IMDb).toLowerCase());
 
-const validateKinopoiskUrl = (kinopoisk: string) => {
-	const regexp = /http(?:s?):\/\/(?:www\.)?kinopoisk.ru\/film\/[\d]+\/?/;
-	return regexp.test(String(kinopoisk).toLowerCase());
-};
+const validateKinopoiskUrl = (kinopoisk: string) =>
+	REGEXP.KINOPOISK.test(String(kinopoisk).toLowerCase());
 
-export const isInvalid = ({
-	valid,
-	touched,
-	shouldValidate,
-}: ValidProperties) => !valid && shouldValidate && touched;
+const isInvalid = ({ valid, touched, shouldValidate }: ValidProperties) =>
+	!valid && shouldValidate && touched;
 
-export const validate = (value: any, validation: any = null) => {
+const validate = (value: any, validation: any = null) => {
 	if (!validation) {
 		return true;
 	}
@@ -91,21 +80,21 @@ export const validate = (value: any, validation: any = null) => {
 	}
 
 	if (validation.imageFile) {
-		isValid =
-			(value.type === 'image/png' ||
-				value.type === 'image/jpg' ||
-				value.type === 'image/jpeg' ||
-				value.type === 'image/gif' ||
-				value.type === 'image/webp' ||
-				value.type === 'image/svg') &&
-			value.size < 10485760 &&
-			isValid;
+		const maxImageSize = 10485760;
+		const image = 'image/';
+		const validTypes = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'];
+
+		const isImageValidType = validTypes
+			.map((type) => image + type)
+			.includes(value.type);
+
+		isValid = isImageValidType && value.size < maxImageSize && isValid;
 	}
 
 	return isValid;
 };
 
-export const validateForm = (formControls: any) => {
+const validateForm = (formControls: any) => {
 	let isFormValid = true;
 
 	Object.keys(formControls).forEach((name) => {
@@ -120,7 +109,7 @@ export const validateForm = (formControls: any) => {
 	return isFormValid;
 };
 
-export function validateInputs(formControls: any) {
+function validateInputs(formControls: any) {
 	let isFormValid = true;
 
 	Object.keys(formControls).forEach((name) => {
@@ -132,3 +121,5 @@ export function validateInputs(formControls: any) {
 
 	return isFormValid;
 }
+
+export { isInvalid, validate, validateForm, validateInputs };

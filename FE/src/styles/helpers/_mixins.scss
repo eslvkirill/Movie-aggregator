@@ -1,37 +1,65 @@
 @use 'breakpoints' as *;
 
 @mixin flexible() {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 @mixin flex-vertical() {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 @mixin flex-horizontal() {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 @mixin box-shadow($offset-x, $offset-y, $blur-radius, $spread-radius, $color) {
-  -webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
-  -moz-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
-  box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+	-webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+	-moz-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+	box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+}
+
+@mixin gradient-animation($deg, $start, $end, $transTime, $borderRadius) {
+	background-size: 100%;
+	background-image: linear-gradient($deg, $start, $end);
+	position: relative;
+	z-index: 100;
+
+	&:before {
+		background-image: linear-gradient($deg, $end, $start);
+		content: '';
+		display: block;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		width: 100%;
+		border-radius: $borderRadius;
+		z-index: -100;
+		transition: opacity $transTime;
+	}
+	&:hover {
+		&:before {
+			opacity: 1;
+		}
+	}
 }
 
 @mixin media($key) {
-  $size: map-get($breakpoints, $key);
+	$size: map-get($breakpoints, $key);
 
-  @media only screen and (min-width: $size) {
-    @content;
-  }
+	@media only screen and (min-width: $size) {
+		@content;
+	}
 }
 
 @mixin design-variables($name, $design-variable) {
-  @each $variable, $value in $design-variable {
-    --#{$name}-#{"" + $variable}: #{$value};
-  }
+	@each $variable, $value in $design-variable {
+		--#{$name}-#{"" + $variable}: #{$value};
+	}
 }

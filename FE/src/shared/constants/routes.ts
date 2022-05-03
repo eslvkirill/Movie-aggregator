@@ -4,6 +4,7 @@ export const ROUTE = {
 	ADMIN: 'admin-panel',
 	GENRES: 'genres',
 	FILMS: 'films',
+	FILM_PAGE: 'movies/:id',
 	LOGIN: 'login',
 	REGISTRATION: 'registration',
 };

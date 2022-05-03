@@ -8,8 +8,8 @@ enum FilmFormFileds {
 	trailerUrl = 'trailerUrl',
 	kinopoiskUrl = 'kinopoiskUrl',
 	imdbUrl = 'imdbUrl',
-	pageColor1 = 'pageColor1',
-	pageColor2 = 'pageColor2',
+	primaryPageColor = 'primaryPageColor',
+	secondaryPageColor = 'secondaryPageColor',
 	poster = 'poster',
 	background = 'background',
 	genres = 'genres',
@@ -19,6 +19,7 @@ enum FilmFormFileds {
 	audioLanguages = 'audioLanguages',
 	subtitleLanguages = 'subtitleLanguages',
 	ageRating = 'ageRating',
+	externalAggregatorsInfo = 'externalAggregatorsInfo',
 }
 
 enum FilmLanguage {

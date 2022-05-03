@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
+import { REGEXP } from 'shared/constants/common';
 import { validate, validateForm } from 'shared/utils/validation';
 
 const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
@@ -15,7 +16,9 @@ const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 	film[controlName] = control.value;
 
 	if (controlName === FilmFormFileds.trailerUrl) {
-		film[controlName] = control.value.replace(/watch\?v=/g, 'embed/');
+		film[controlName] = control.value
+			.replace(REGEXP.YOU_TUBE.URL.FULL, REGEXP.YOU_TUBE.REPLACER.FULL)
+			.replace(REGEXP.YOU_TUBE.URL.SHORT, REGEXP.YOU_TUBE.REPLACER.SHORT);
 	}
 
 	inputControls[controlName] = control;
@@ -67,9 +70,7 @@ const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
 	control.touched = true;
 
 	if (controlName && !control.isMulti && control.value) {
-		// eslint-disable-next-line prefer-destructuring
-		film[controlName] = Object.values(control.value)[0];
-		// [ film[controlName] ] = Object.values(control.value);
+		[film[controlName]] = Object.values(control.value);
 	}
 
 	if (controlName && control.isMulti && control.value) {
