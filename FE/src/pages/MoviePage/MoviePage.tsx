@@ -1,26 +1,26 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMediumM, faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getFilmByIdCreator } from 'redux/creators/filmFormCreator';
-import './FilmPage.scss';
+import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
-import { setBackgroundAction } from 'redux/actions/film/appearanceActions';
-import { FilmFormFileds } from 'components/feature/Film/FilmForm/filmForm.enum';
-import { Link } from 'react-router-dom';
+import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
+import { MovieFormFileds } from 'components/feature/Movie/movie.enum';
+import './MoviePage.scss';
 
-const FilmPage = (props: any) => {
+const MoviePage = (props: any) => {
   const dispatch = useAppDispatch();
-  const { film, loading } = useAppSelector(state => state.filmFormReducer);
+  const { movie, loading } = useAppSelector(state => state.movieReducer);
 
   useEffect(() => {
     console.log(props);
-    dispatch(getFilmByIdCreator('3d802a7e-5218-4f80-8379-6daa0aaed62e'));
+    dispatch(getMovieByIdCreator('3d802a7e-5218-4f80-8379-6daa0aaed62e'));
   }, []);
   
   const renderIcons = () =>
-    film.externalAggregatorsInfo.map((agregator: any) => {
+    movie.externalAggregatorsInfo.map((agregator: any) => {
       let icon!: IconProp;
 
       if (agregator.name === 'Metacritic') {
@@ -66,7 +66,7 @@ const FilmPage = (props: any) => {
     };
 
     const renderRatings = () =>
-      film.externalAggregatorsInfo.map((aggregator: any) => (
+      movie.externalAggregatorsInfo.map((aggregator: any) => (
         <div key={aggregator.name} className={`${aggregator.name}Stars`}>
           <div className="Rating">
             {aggregator.name} {aggregator.rating}
@@ -80,7 +80,7 @@ const FilmPage = (props: any) => {
       ));
 
     const renderOscars = () =>
-      renderImages(film.oscars, true, 'Оскаровская статуэтка');
+      renderImages(movie.oscars, true, 'Оскаровская статуэтка');
 
   const {
     genres,
@@ -100,11 +100,11 @@ const FilmPage = (props: any) => {
     trailerUrl,
     tagline,
     // reviews,
-  } = film;
+  } = movie;
 
   return (
     <div
-      className="FilmPage"
+      className="MoviePage"
       // style={authForm ? { position: "absolute" } : {}}
     >
       {loading ? (
@@ -113,7 +113,7 @@ const FilmPage = (props: any) => {
         <>
           <section
             className="FirstSection"
-            style={setBackgroundAction(FilmFormFileds.background)}
+            style={setBackgroundAction(MovieFormFileds.background)}
           >
             <div className="Wrapper">
               <div className="Genres">
@@ -138,10 +138,10 @@ const FilmPage = (props: any) => {
               {/* {authForm ? (
                 <Backdrop authForm={authForm} setAuthForm={setAuthForm} />
               ) : null} */}
-              {/* <FilmRating
+              {/* <MovieRating
                 user={user}
                 setAuthForm={setAuthForm}
-                filmId={props.match.params.id}
+                movieId={props.match.params.id}
                 userRating={userRating}
                 setUserRating={setUserRating}
                 setTotalRating={setTotalRating}
@@ -265,7 +265,7 @@ const FilmPage = (props: any) => {
             </div>
           </section>
           {/* <ReviewSection
-            filmId={props.match.params.id}
+            movieId={props.match.params.id}
             user={user}
             reviews={reviews}
             rusTitle={rusTitle}
@@ -281,4 +281,4 @@ const FilmPage = (props: any) => {
   );
 }
 
-export default FilmPage;
+export default MoviePage;

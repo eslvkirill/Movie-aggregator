@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import filmFormReducer from 'redux/reducers/filmFormReducer';
+import movieReducer from 'redux/reducers/movieReducer';
 import authReducer from 'redux/reducers/authReducer';
 import genreReducer from 'redux/reducers/genreReducer';
 
 const rootReducer = combineReducers({
 	genreReducer,
-	filmFormReducer,
+	movieReducer,
 	authReducer,
 });
 

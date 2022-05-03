@@ -1,6 +1,6 @@
 @use '../../styles/helpers/mixins' as *;
 
-.FilmPage {
+.MoviePage {
 	font-family: 'Amatic SC', sans-serif;
 	min-height: 100vh;
 	min-width: 100vw;
@@ -228,7 +228,7 @@
 					justify-content: flex-end;
 					width: 55%;
 
-					.filmWatch {
+					.movieWatch {
 						cursor: default;
 						@include gradient-animation(150deg, #bd5a31, #37104d, 10000s, 0px);
 
@@ -703,7 +703,7 @@
 .Plot,
 .AfterPlotBlock,
 .Time,
-.filmRating,
+.movieRating,
 .totalRatingBlock {
 	opacity: 0;
 	animation: fadeIn 1s linear forwards;

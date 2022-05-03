@@ -1,19 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import FilmService from 'components/feature/Film/film.service';
+import MovieService from 'components/feature/Movie/movie.service';
 import GenreService from 'components/feature/Genre/genre.service';
 import {
 	reset,
 	resetFileInput,
 	onChangeInputEvent,
 	onChangeFileInputEvent,
-} from 'redux/reducers/filmFormReducer';
-import { FILM_CREATOR } from 'redux/types/actionCreators';
+} from 'redux/reducers/movieReducer';
+import { MOVIE_CREATOR } from 'redux/types/actionCreators';
 import {
-	FilmLanguage,
-	FilmAgeRating,
-} from 'components/feature/Film/FilmForm/filmForm.enum';
+	MovieLanguage,
+	MovieAgeRating,
+} from 'components/feature/Movie/movie.enum';
 
-const filmService = FilmService;
+const movieService = MovieService;
 const genreService = GenreService;
 
 const resetCreator = () => (dispatch: any) => {
@@ -27,15 +27,15 @@ const onChangeEventCreator = (payload: any) => (dispatch: any) => {
 		: dispatch(onChangeInputEvent(payload));
 };
 
-const getFilmFormDataCreator = createAsyncThunk(
-	FILM_CREATOR.GET_FORM_DATA,
+const getMovieFormDataCreator = createAsyncThunk(
+	MOVIE_CREATOR.GET_FORM_DATA,
 	async (_, thunkAPI) => {
 		try {
 			const genres = await genreService.getGenres();
-			const originCountries = await filmService.getOriginCountries();
-			const audioLanguages = Object.values(FilmLanguage);
-			const subtitleLanguages = Object.values(FilmLanguage);
-			const ageRating = Object.values(FilmAgeRating);
+			const originCountries = await movieService.getOriginCountries();
+			const audioLanguages = Object.values(MovieLanguage);
+			const subtitleLanguages = Object.values(MovieLanguage);
+			const ageRating = Object.values(MovieAgeRating);
 
 			return {
 				genres,
@@ -52,31 +52,31 @@ const getFilmFormDataCreator = createAsyncThunk(
 	}
 );
 
-const addFilmCreator = createAsyncThunk(
-	FILM_CREATOR.ADD,
+const addMovieCreator = createAsyncThunk(
+	MOVIE_CREATOR.ADD,
 	async (_, thunkAPI) => {
 		try {
-			const { film } = (thunkAPI.getState() as any).filmFormReducer;
+			const { movie } = (thunkAPI.getState() as any).movieReducer;
 
-			const formData = Object.keys(film).reduce((formData, name) => {
-				formData.append(name, film[name]);
+			const formData = Object.keys(movie).reduce((formData, name) => {
+				formData.append(name, movie[name]);
 				return formData;
 			}, new FormData());
 
-			await filmService.addFilm(formData);
+			await movieService.addMovie(formData);
 
-			return film.rusTitle;
+			return movie.rusTitle;
 		} catch (e) {
 			return thunkAPI.rejectWithValue('Не удалось добавить фильм');
 		}
 	}
 );
 
-const getFilmByIdCreator = createAsyncThunk(
-	FILM_CREATOR.GET_BY_ID,
+const getMovieByIdCreator = createAsyncThunk(
+	MOVIE_CREATOR.GET_BY_ID,
 	async (movieId: string, thunkAPI) => {
 		try {
-			return filmService.getFilmById(movieId);
+			return movieService.getMovieById(movieId);
 		} catch (e) {
 			return thunkAPI.rejectWithValue('Не удалось загрузить данные о фильме');
 		}
@@ -86,7 +86,7 @@ const getFilmByIdCreator = createAsyncThunk(
 export {
 	resetCreator,
 	onChangeEventCreator,
-	getFilmFormDataCreator,
-	addFilmCreator,
-	getFilmByIdCreator,
+	getMovieFormDataCreator,
+	addMovieCreator,
+	getMovieByIdCreator,
 };
