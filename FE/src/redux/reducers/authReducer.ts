@@ -47,7 +47,7 @@ const authReducer = createSlice({
 			.addCase(
 				registrationCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
-					state = initialState;
+					// state = initialState;
 					state.error = action.payload;
 				}
 			);
