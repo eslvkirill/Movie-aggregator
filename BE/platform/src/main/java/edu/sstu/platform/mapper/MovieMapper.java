@@ -23,7 +23,6 @@ public interface MovieMapper {
   })
   Movie toEntity(MovieRequestDto movieRequestDto);
 
-
   @Mappings({
       @Mapping(target = "id", ignore = true),
       @Mapping(target = "active", ignore = true),
@@ -33,6 +32,7 @@ public interface MovieMapper {
   })
   void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 
+  @Mapping(target = "externalAggregatorsInfo", source = "externalAggregatorInfos")
   MovieInfoResponseDto toInfoDto(Movie movie);
 
   MovieViewResponseDto toViewDto(Movie movie);

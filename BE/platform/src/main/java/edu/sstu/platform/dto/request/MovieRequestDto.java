@@ -41,12 +41,12 @@ public class MovieRequestDto {
   @NotBlank
   @Pattern(regexp = "#[a-z\\d]{3,}")
   @Size(max = 20)
-  private String pageColor1;
+  private String primaryPageColor;
 
   @NotBlank
   @Pattern(regexp = "#[a-z\\d]{3,}")
   @Size(max = 20)
-  private String pageColor2;
+  private String secondaryPageColor;
 
   @NotBlank
   @Size(max = 255)

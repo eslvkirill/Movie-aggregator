@@ -103,4 +103,9 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="rename_page_color_fields" author="Befors">
+    <renameColumn tableName="movies" oldColumnName="page_color1" newColumnName="primary_page_color"/>
+    <renameColumn tableName="movies" oldColumnName="page_color2" newColumnName="secondary_page_color"/>
+  </changeSet>
 </databaseChangeLog>

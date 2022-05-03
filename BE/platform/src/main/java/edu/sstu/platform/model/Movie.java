@@ -54,8 +54,8 @@ public class Movie {
   @Basic(fetch = FetchType.LAZY)
   private byte[] background;
 
-  private String pageColor1;
-  private String pageColor2;
+  private String primaryPageColor;
+  private String secondaryPageColor;
   private String tagline;
   private String description;
 

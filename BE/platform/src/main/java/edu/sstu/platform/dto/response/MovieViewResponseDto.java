@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class MovieViewResponseDto extends MovieResponseDto {
 
   private byte[] poster;
-  private String pageColor1;
+  private String primaryPageColor;
   private Set<GenreResponseDto> genres;
   private LocalTime duration;
 }

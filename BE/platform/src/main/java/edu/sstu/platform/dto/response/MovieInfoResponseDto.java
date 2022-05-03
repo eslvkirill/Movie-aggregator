@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class MovieInfoResponseDto extends MovieResponseDto {
 
   private byte[] background;
-  private String pageColor1;
-  private String pageColor2;
+  private String primaryPageColor;
+  private String secondaryPageColor;
   private String tagline;
   private String description;
   private AgeRating ageRating;
@@ -28,5 +28,5 @@ public class MovieInfoResponseDto extends MovieResponseDto {
   private Set<Language> audioLanguages;
   private Set<Language> subtitleLanguages;
   private Set<GenreResponseDto> genres;
-  private Set<ExternalAggregatorInfoResponseDto> externalAggregatorInfos;
+  private Set<ExternalAggregatorInfoResponseDto> externalAggregatorsInfo;
 }
