@@ -1,6 +1,6 @@
 package edu.sstu.platform.validator;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+import static edu.sstu.platform.util.ExceptionUtils.addErrorMessageByField;
 
 import edu.sstu.platform.config.properties.ValidationProperties;
 import edu.sstu.platform.dto.request.UserRequestDto;
@@ -11,7 +11,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class UserValidator {
   private final QUser qUser = QUser.user;
 
   public void validate(UserRequestDto userRequestDto, UUID id) {
-    MultiValueMap<String, String> messagesByField = new LinkedMultiValueMap<>();
+    var messagesByField = new LinkedMultiValueMap<String, String>();
     var emailPredicate = qUser.email.equalsIgnoreCase(userRequestDto.getEmail());
     var usernamePredicate = qUser.username.equalsIgnoreCase(userRequestDto.getUsername());
 
@@ -32,12 +31,10 @@ public class UserValidator {
     }
 
     if (userRepo.exists(emailPredicate)) {
-      var fieldName = preparePath(qUser.email);
-      messagesByField.add(fieldName, validationProperties.getNonUniqueMessage(fieldName));
+      addErrorMessageByField(messagesByField, qUser.email, validationProperties::getDuplicateMessage);
     }
     if (userRepo.exists(usernamePredicate)) {
-      var fieldName = preparePath(qUser.username);
-      messagesByField.add(fieldName, validationProperties.getNonUniqueMessage(fieldName));
+      addErrorMessageByField(messagesByField, qUser.username, validationProperties::getDuplicateMessage);
     }
     if (!messagesByField.isEmpty()) {
       throw new ValidationException(messagesByField);

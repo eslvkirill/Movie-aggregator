@@ -19,3 +19,4 @@ app:
     kinopoisk: https://rating.kinopoisk.ru/%s.xml
   url-pattern:
     metacritic: https://www.metacritic.com/movie/%s/
+  default-categories: ${DEFAULT_CATEGORIES:Буду смотреть, Любимое}

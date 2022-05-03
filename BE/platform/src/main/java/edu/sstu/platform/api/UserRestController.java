@@ -29,7 +29,7 @@ public class UserRestController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public void createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+  public void createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
     userService.createUser(userRequestDto);
   }
 }

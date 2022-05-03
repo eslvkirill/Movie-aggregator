@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class MovieValidator {
 
   @SneakyThrows
   public void validate(MovieRequestDto movieRequestDto, UUID id) {
-    MultiValueMap<String, String> messagesByField = new LinkedMultiValueMap<>();
+    var messagesByField = new LinkedMultiValueMap<String, String>();
     var predicate = qMovie.engTitle.equalsIgnoreCase(movieRequestDto.getEngTitle())
         .and(qMovie.year.eq(movieRequestDto.getYear()));
 
@@ -34,13 +33,13 @@ public class MovieValidator {
     }
 
     if (movieRepo.exists(predicate)) {
-      messagesByField.add(preparePath(qMovie.engTitle), preparePath(qMovie));
+      messagesByField.add(preparePath(qMovie.engTitle), validationProperties.getDuplicateMessage(preparePath(qMovie)));
     }
     if (movieRequestDto.getPoster().isEmpty()) {
-      messagesByField.add(preparePath(qMovie.poster), validationProperties.getNonEmptyMessage(FILE_TYPE));
+      messagesByField.add(preparePath(qMovie.poster), validationProperties.getEmptyMessage(FILE_TYPE));
     }
     if (movieRequestDto.getBackground().isEmpty()) {
-      messagesByField.add(preparePath(qMovie.background), validationProperties.getNonEmptyMessage(FILE_TYPE));
+      messagesByField.add(preparePath(qMovie.background), validationProperties.getEmptyMessage(FILE_TYPE));
     }
     if (!messagesByField.isEmpty()) {
       throw new ValidationException(messagesByField);

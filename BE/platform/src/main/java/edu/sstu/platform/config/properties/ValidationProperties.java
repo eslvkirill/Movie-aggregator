@@ -15,14 +15,19 @@ public class ValidationProperties {
 
   public static final String FILE_TYPE = "file";
 
-  private final Map<String, String> unique;
+  private final Map<String, String> duplicate;
   private final Map<String, String> empty;
+  private final Map<String, String> notSupportedOperation;
 
-  public String getNonUniqueMessage(String path) {
-    return unique.get(path);
+  public String getDuplicateMessage(String path) {
+    return duplicate.get(path);
   }
 
-  public String getNonEmptyMessage(String type) {
+  public String getEmptyMessage(String type) {
     return empty.get(type);
+  }
+
+  public String getNotSupportedOperationMessage(String path) {
+    return notSupportedOperation.get(path);
   }
 }

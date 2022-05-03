@@ -8,4 +8,6 @@
   <include file="roles.xml" relativeToChangelogFile="true"/>
   <include file="users.xml" relativeToChangelogFile="true"/>
   <include file="reviews.xml" relativeToChangelogFile="true"/>
+  <include file="categories.xml" relativeToChangelogFile="true"/>
+  <include file="category-items.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
