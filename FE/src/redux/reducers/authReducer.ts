@@ -12,7 +12,7 @@ const initialState: any = {
 		[StateName.registration]: registrationState,
 	},
 	isFormValid: false,
-	user: {},
+	user: JSON.parse(localStorage.getItem('userInfo') as string) || {},
 	error: '',
 };
 
@@ -22,6 +22,11 @@ const authReducer = createSlice({
 	reducers: {
 		onChangeInputEvent: onChangeInputEventAction,
 		reset: () => initialState,
+		logout: (state) => {
+			localStorage.removeItem('userInfo');
+			state.user = {};
+			// TODO: Оставлять пользователя на той странице, на которой он находится
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -29,6 +34,7 @@ const authReducer = createSlice({
 				loginCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
 					state.user = action.payload;
+					localStorage.setItem('userInfo', JSON.stringify(state.user));
 				}
 			)
 			.addCase(
@@ -54,6 +60,6 @@ const authReducer = createSlice({
 	},
 });
 
-export const { onChangeInputEvent, reset } = authReducer.actions;
+export const { onChangeInputEvent, reset, logout } = authReducer.actions;
 
 export default authReducer.reducer;

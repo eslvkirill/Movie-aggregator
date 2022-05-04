@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
@@ -9,6 +9,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
+import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
 
 const MoviePage = () => {
@@ -17,8 +18,11 @@ const MoviePage = () => {
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
 
+  const [reviewButtonActive, setReviewButtonActive] = useState(false);
+
   useEffect(() => {
     dispatch(getMovieByIdCreator(id));
+    setReviewButtonActive(movie.userHasAlreadyWrittenReview);
   }, []);
   
   const renderIcons = () =>
@@ -101,7 +105,6 @@ const MoviePage = () => {
     secondaryPageColor,
     trailerUrl,
     tagline,
-    // reviews,
   } = movie;
 
   return (
@@ -266,17 +269,15 @@ const MoviePage = () => {
               </div>
             </div>
           </section>
-          {/* <ReviewSection
-            movieId={props.match.params.id}
-            user={user}
-            reviews={reviews}
+          <ReviewList
+            movieId={id}
             rusTitle={rusTitle}
             engTitle={engTitle}
             primaryPageColor={primaryPageColor}
             secondaryPageColor={secondaryPageColor}
             reviewButtonActive={reviewButtonActive}
             setReviewButtonActive={setReviewButtonActive}
-          /> */}
+          />
         </>
       )}
     </div>

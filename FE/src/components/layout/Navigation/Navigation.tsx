@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { reset } from 'redux/reducers/authReducer';
+import { logout } from 'redux/reducers/authReducer';
 import { isUserLoggIn } from 'shared/utils/common';
 import './Navigation.scss';
 
@@ -27,17 +27,12 @@ const Navigation = () => {
       : { to: '/login', label: '➤  Войти', visible: true },
   ];
 
-  const clickHandler = (linkTo: string) => {    
-    if (linkTo === '/logout') {
-      async () => {
-        try {
-          await axios.get('/logout').then(() => {
-            dispatch(reset());
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
+  const clickHandler = async () => {   
+    try { 
+      await axios.get('/logout').then(() => dispatch(logout()));
+    }
+    catch (e) {
+      console.log(e);
     }
   }
 
@@ -52,7 +47,7 @@ const Navigation = () => {
 
       if (visible) {
         return (
-          <li key={Math.random()}>
+          <li key={to}>
             <NavLink
               className={({ isActive }) => isActive ? 'active' : 'link'}
               to={to === '/logout' ? '/' : to}
@@ -78,7 +73,7 @@ const Navigation = () => {
                     }
                   : {}
               }
-              onClick={() => clickHandler(to)}
+              onClick={() => to === '/logout' && clickHandler()}
             >
               {label}
             </NavLink>

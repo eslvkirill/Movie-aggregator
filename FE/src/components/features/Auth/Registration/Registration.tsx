@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { onChangeInputEvent, reset } from 'redux/reducers/authReducer';
+import { isUserLoggIn } from 'shared/utils/common';
 import Input from 'components/shared/form-controls/Input/Input';
 import { Link, Navigate } from 'react-router-dom';
 import Button from 'components/shared/form-controls/Button/Button';
 import { registrationCreator } from 'redux/creators/authCreator';
 import { StateName } from '../auth.enum';
+import './Registration.scss';
 
 const Registration = () => {
   const dispatch = useAppDispatch();
@@ -44,23 +46,21 @@ const Registration = () => {
     });
   };
 
-  if (Object.keys(user).length) {
+  if (isUserLoggIn(user)) {
     return <Navigate to="/" />;
   }
 
   return (
     <div className="auth auth__registration">
       <h1>Регистрация</h1>
-      <form onSubmit={submitHandler} className="registration-form">
-        <div className="registration-form__inputs inputs">{renderInputs()}</div>
+      <form onSubmit={submitHandler} className="registration">
+        <div className="registration__inputs inputs">{renderInputs()}</div>
         {error && (
-          <span className="registration-form__error error">*{error}</span>
+          <span className="registration__error error">*{error}</span>
         )}
-        <div className="registration-form__buttons buttons">
+        <div className="registration__buttons buttons">
           <Link to="/login" className="buttons__back">
-            {/* <Button type="primary primaryBack"> */}
-              Назад
-            {/* </Button> */}
+            Назад
           </Link>
           <Button
             type="buttons__success success"

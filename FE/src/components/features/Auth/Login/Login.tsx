@@ -1,5 +1,6 @@
 import { Link, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { isUserLoggIn } from 'shared/utils/common';
 import Button from 'components/shared/form-controls/Button/Button';
 import Input from 'components/shared/form-controls/Input/Input';
 import { onChangeInputEvent } from 'redux/reducers/authReducer';
@@ -37,7 +38,7 @@ const Login = () => {
     });
   };
 
-  if (Object.keys(user).length) {
+  if (isUserLoggIn(user)) {
     return <Navigate to="/" />;
   }
 
@@ -60,10 +61,11 @@ const Login = () => {
           >
             Войти
           </Button>
-          <Link to="/registration" className="buttons__registration-form">
-            {/* <Button type="primary"> */}
-              Регистрация
-            {/* </Button> */}
+          <Link 
+            to="/registration" 
+            className="buttons__registration-form"
+          >
+            Регистрация
           </Link>
         </div>
       </form>

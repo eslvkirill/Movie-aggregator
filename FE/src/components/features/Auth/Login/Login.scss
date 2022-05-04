@@ -2,10 +2,13 @@
 	&__buttons {
 		display: flex;
 		align-items: center;
-		width: 100%;
 	}
 
 	.buttons {
+		width: 388px;
+		display: flex;
+		justify-content: space-around;
+
 		&__success {
 			margin-right: 0%;
 			width: 43%;
@@ -33,19 +36,17 @@
 
 		&__registration-form {
 			text-decoration: none;
-			width: 57%;
+			text-align: center;
+			width: 50%;
+			font-size: 19px;
+			padding: 6px 3px;
+			border-radius: 10px;
+			background: #970697;
+			color: #fceddc;
 
-			.primary {
-				width: 95%;
-				font-size: 19px;
-				padding: 9px 3px;
-				background: #970697;
-				color: #fceddc;
-
-				&:hover {
-					background: #ad04ad;
-					transition: 0.3s;
-				}
+			&:hover {
+				background: #ad04ad;
+				transition: 0.3s;
 			}
 		}
 	}
