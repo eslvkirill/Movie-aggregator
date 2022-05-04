@@ -26,13 +26,15 @@ const MovieList = (props: any) => {
       );
     }
     
-    // if (isFetch) {
-    return <PaginateLoader />;
-    // }
+    if (isFetch) {
+      return <PaginateLoader />;
+    }
+
+    return '';
   };
 
   return (
-    <section className="AllFilms">
+    <section className="AllMovies">
       {loading ? (
         <ContentLoader className="Loader" />
       ) : (
@@ -74,7 +76,7 @@ const MovieList = (props: any) => {
               {renderOnLoadButton()}
             </div>
           ) : (
-            <div className="emptyFilms">Ничего не найдено</div>
+            <div className="emptyMovies">Ничего не найдено</div>
           )}
         </ul>
       )}

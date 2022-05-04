@@ -19,18 +19,23 @@ const HomePage = () => {
   const [sortValue, setSortValue] = useState<any>();
   const [filterContent, setFilterContent] = useState<any>({});
 
-  function movieConstructor(data: any) {
+  const movieConstructor = (data: any) => {
     return [
       ...data.map((movie: any) => {
         Object.keys(movie).map((name) => {
           if (Array.isArray(movie[name]) && movie[name] !== 'poster') {
             movie[name] = movie[name].map((value: any) => value.name).join(', ');
           }
-          if (name === 'duration') {
-            movie[name] = `${movie[name].hour}ч ${movie[name].minute}м`;
+
+          else if (name === 'duration') {
+            const durationParts= movie[name].split(':');
+
+            movie[name] = `${durationParts[0]}ч ${durationParts[1]}м`;
           }
+
           return movie[name];
         });
+
         return movie;
       }),
     ];
@@ -47,85 +52,76 @@ const HomePage = () => {
 
   const paginate = async (pageNumber: number, sortFieldName: any, sortDirection: string) => {
     try {
+      const filtersQuery = `
+        ${filterContent[MovieFormFileds.genres] && `&${MovieFormFileds.genres}=${filterContent[MovieFormFileds.genres]}`}
+        ${filterContent[MovieFormFileds.originCountries] && `&${MovieFormFileds.originCountries}=${filterContent[MovieFormFileds.originCountries]}`}
+        ${filterContent[MovieFormFileds.directors] && `&${MovieFormFileds.directors}=${filterContent[MovieFormFileds.directors]}`}
+      `;
+
+      const sortQuery = sortFieldName && `&sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
+
       await axios
-        .get(
-          `/api/v1/movies?page=${pageNumber - 1}${
-            filterContent[MovieFormFileds.genres] !== undefined
-              ? `&${MovieFormFileds.genres}=${filterContent[MovieFormFileds.genres]}`
-              : ''
-          }${
-            filterContent[MovieFormFileds.originCountries] !== undefined
-              ? `&${MovieFormFileds.originCountries}=${filterContent[MovieFormFileds.originCountries]}`
-              : ''
-          }${
-            filterContent[MovieFormFileds.directors] !== undefined
-              ? `&${MovieFormFileds.directors}=${filterContent[MovieFormFileds.directors]}`
-              : ''
-          }${
-            sortFieldName
-              ? `&sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`
-              : ''
-          }`
-        )
-        .then((response) => {
-          const table: any = {};
-          const moviesData = response.data.content.filter(({ id }: any) =>(!table[id] && (table[id] = 1)));
-          console.log(moviesData);
+        .get(`/api/v1/movies?page=${pageNumber - 1}${filtersQuery}${sortQuery}`)
+          .then((response) => {
+            const table: any = {};
+            const moviesData = response.data.content.filter(({ id }: any) =>(!table[id] && (table[id] = 1)));
+            
+            console.log(moviesData);
 
-          if (sortFieldName === undefined) {
-            if (response.data.last === false) setActiveButton(false);
-            else setActiveButton(true);
+            if (sortFieldName === undefined) {
+              if (response.data.last === false) setActiveButton(false);
+              else setActiveButton(true);
 
-            setCurrentPage(() => currentPage + 1);
-            setNumberOfElements(
-              (prevNumber: number) => prevNumber + response.data.numberOfElements
-            );
-            setTotalElements(response.data.totalElements);
-            setMovies((movies: any) => [
-              ...movies,
-              ...movieConstructor(moviesData),
-            ]);
-            setLoading(false);
-            setFetch(false);
-          }
-
-          if (sortFieldName !== undefined) {
-            setSortValue(sortFieldName);
-            setNumberOfElements(response.data.numberOfElements);
-            setTotalElements(response.data.totalElements);
-            setMovies(movieConstructor(moviesData));
-            setCurrentPage((currentPage: number) => currentPage + 1);
-            setLoading(false);
-            setFetch(false);
-
-            if (!response.data.first) {
-              setNumberOfElements((prev: number) => prev + numberOfElements);
-            } else setNumberOfElements(response.data.numberOfElements);
-
-            if (response.data.totalPages > 1 && !response.data.first) {
+              setCurrentPage(() => currentPage + 1);
+              setNumberOfElements(
+                (prevNumber: number) => prevNumber + response.data.numberOfElements
+              );
               setTotalElements(response.data.totalElements);
-
-              setMovies(() => [
+              setMovies((movies: any) => [
                 ...movies,
                 ...movieConstructor(moviesData),
               ]);
+              setLoading(false);
+              setFetch(false);
+            }
 
-              if (response.data.last) {
-                setActiveButton(true);
-                setFetch(false);
+            if (sortFieldName !== undefined) {
+              setSortValue(sortFieldName);
+              setNumberOfElements(response.data.numberOfElements);
+              setTotalElements(response.data.totalElements);
+              setMovies(movieConstructor(moviesData));
+              setCurrentPage((currentPage: number) => currentPage + 1);
+              setLoading(false);
+              setFetch(false);
+
+              if (!response.data.first) {
+                setNumberOfElements((prev: number) => prev + numberOfElements);
+              } else setNumberOfElements(response.data.numberOfElements);
+
+              if (response.data.totalPages > 1 && !response.data.first) {
+                setTotalElements(response.data.totalElements);
+
+                setMovies(() => [
+                  ...movies,
+                  ...movieConstructor(moviesData),
+                ]);
+
+                if (response.data.last) {
+                  setActiveButton(true);
+                  setFetch(false);
+                }
               }
             }
-          }
 
-          if (
-            (response.data.first && !response.data.last) ||
-            (!response.data.first && !response.data.last)
-          ) {
-            setActiveButton(false);
-          }
+            if (
+              (response.data.first && !response.data.last) ||
+              (!response.data.first && !response.data.last)
+            ) {
+              setActiveButton(false);
+            }
 
-          if (response.data.first && response.data.last) setActiveButton(true);
-        });
+            if (response.data.first && response.data.last) setActiveButton(true);
+          });
     } catch (e) {
       console.log(e);
     }
@@ -161,7 +157,6 @@ const HomePage = () => {
         isFetch={isFetch}
         setFetch={setFetch}
         arrowDirection={arrowDirection}
-        // user={user}
       />
     </main>
   );

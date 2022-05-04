@@ -43,7 +43,9 @@ const setDefaultFieldsAppearanceAction = (movie: any) => {
 				movie[name] = movie[name].split(', ').sort().join(', ');
 			}
 		} else if (name === MovieFormFileds.duration) {
-			movie[name] = `${movie[name].hour}ч ${movie[name].minute}м`;
+			const durationParts = movie[name].split(':');
+
+			movie[name] = `${durationParts[0]}ч ${durationParts[1]}м`;
 		}
 		// else if (name === 'userRating' && movie[name] !== null) {
 		// 	movie[name] = movie[name].value;
