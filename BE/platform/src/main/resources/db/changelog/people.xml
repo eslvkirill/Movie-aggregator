@@ -1,0 +1,25 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+  <changeSet id="create_table_for_people" author="Befors">
+    <createTable tableName="people">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="first_name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="varchar(150)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="image" type="blob">
+        <constraints nullable="false"/>
+      </column>
+      <column name="biography" type="text">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

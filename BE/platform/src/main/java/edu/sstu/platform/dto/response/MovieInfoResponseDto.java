@@ -29,4 +29,6 @@ public class MovieInfoResponseDto extends MovieResponseDto {
   private Set<Language> subtitleLanguages;
   private Set<GenreResponseDto> genres;
   private Set<ExternalAggregatorInfoResponseDto> externalAggregatorsInfo;
+  private Set<PersonViewResponseDto> actors;
+  private Set<PersonViewResponseDto> directors;
 }

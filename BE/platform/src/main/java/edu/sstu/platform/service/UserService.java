@@ -1,6 +1,6 @@
 package edu.sstu.platform.service;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePaths;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.UserRequestDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
@@ -12,6 +12,7 @@ import edu.sstu.platform.validator.UserValidator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,16 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public UserInfoResponseDto findUserInfo(UUID id) {
-    var user = userRepo.findBy(qUser.id.eq(id), ffq -> ffq.project(preparePaths(qUser.roles)).all().get(0));
+    var user = userRepo.findBy(qUser.id.eq(id), ffq -> ffq.project(toDotPath(qUser.roles))
+        .stream()
+        .findFirst()
+        .orElseThrow(() -> entityNotFoundException(id)));
 
     return userMapper.toInfoDto(user);
+  }
+
+  private EntityNotFoundException entityNotFoundException(UUID id) {
+    return new EntityNotFoundException("User by id: " + id + " doesn't exist");
   }
 
   @Transactional

@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface GenreRepo extends JpaRepository<Genre, UUID> {
 
-  @Named("findGenresByIds")
   @Query("select g from Genre g where g.id in ?1")
   Set<Genre> findAllByIds(Iterable<UUID> ids);
 }

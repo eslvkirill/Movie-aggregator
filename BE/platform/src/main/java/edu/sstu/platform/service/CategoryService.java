@@ -1,6 +1,6 @@
 package edu.sstu.platform.service;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.CategoryRequestDto;
 import edu.sstu.platform.dto.response.CategoryItemResponseDto;
@@ -67,7 +67,7 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public List<CategoryResponseDto> findCategories(UUID userId) {
-    var sort = Sort.by(Order.by(preparePath(qCategory.custom)), Order.desc(preparePath(qCategory.creationDate)));
+    var sort = Sort.by(Order.by(toDotPath(qCategory.custom)), Order.desc(toDotPath(qCategory.creationDate)));
     var categories = categoryRepo.findBy(qCategory.userId.eq(userId), ffq -> ffq.sortBy(sort).all());
 
     return categoryMapper.toDto(categories);
@@ -96,9 +96,9 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public List<CategoryItemResponseDto> findCategoryItems(UUID categoryId) {
-    var sort = Sort.by(preparePath(qCategoryItem.creationDate)).descending();
+    var sort = Sort.by(toDotPath(qCategoryItem.creationDate)).descending();
     var categoryItems = categoryItemRepo.findBy(qCategoryItem.categoryId.eq(categoryId),
-        ffq -> ffq.project(preparePath(qCategoryItem.movie)).sortBy(sort).all());
+        ffq -> ffq.project(toDotPath(qCategoryItem.movie)).sortBy(sort).all());
 
     return categoryItemMapper.toDto(categoryItems);
   }

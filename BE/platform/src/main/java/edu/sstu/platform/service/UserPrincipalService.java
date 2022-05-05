@@ -1,6 +1,6 @@
 package edu.sstu.platform.service;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePaths;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.exception.AnonymousException;
 import edu.sstu.platform.model.QUser;
@@ -42,7 +42,7 @@ public class UserPrincipalService implements UserDetailsService {
     var predicate = qUser.email.eq(login)
         .or(qUser.username.eq(login));
 
-    return userRepo.findBy(predicate, ffq -> ffq.project(preparePaths(qUser.roles)).stream().findFirst())
+    return userRepo.findBy(predicate, ffq -> ffq.project(toDotPath(qUser.roles)).stream().findFirst())
         .orElseThrow(() -> new UsernameNotFoundException("Couldn't find user by login: " + login));
   }
 

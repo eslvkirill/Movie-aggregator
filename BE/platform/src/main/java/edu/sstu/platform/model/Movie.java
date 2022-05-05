@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -30,6 +29,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 @Data
 @AllArgsConstructor
@@ -47,11 +47,9 @@ public class Movie {
   private int year;
 
   @Lob
-  @Basic(fetch = FetchType.LAZY)
   private byte[] poster;
 
   @Lob
-  @Basic(fetch = FetchType.LAZY)
   private byte[] background;
 
   private String primaryPageColor;
@@ -105,6 +103,18 @@ public class Movie {
   @EqualsAndHashCode.Exclude
   @OneToMany(mappedBy = "id.movie", cascade = CascadeType.ALL)
   private Set<ExternalAggregatorInfo> externalAggregatorInfos = new HashSet<>();
+
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Where(clause = "person_role = 'ACTOR'")
+  private Set<MoviesToPeopleRelation> actorRelations = new HashSet<>();
+
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Where(clause = "person_role = 'DIRECTOR'")
+  private Set<MoviesToPeopleRelation> directorRelations = new HashSet<>();
 
   public void addExternalAggregatorInfo(ExternalAggregatorInfo info) {
     if (externalAggregatorInfos.contains(info)) {

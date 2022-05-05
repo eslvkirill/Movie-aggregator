@@ -1,7 +1,8 @@
 package edu.sstu.platform.validator;
 
 import static edu.sstu.platform.config.properties.ValidationProperties.FILE_TYPE;
-import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+import static edu.sstu.platform.util.ExceptionUtils.addErrorMessageByField;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.config.properties.ValidationProperties;
 import edu.sstu.platform.dto.request.MovieRequestDto;
@@ -33,13 +34,13 @@ public class MovieValidator {
     }
 
     if (movieRepo.exists(predicate)) {
-      messagesByField.add(preparePath(qMovie.engTitle), validationProperties.getDuplicateMessage(preparePath(qMovie)));
+      addErrorMessageByField(messagesByField, qMovie, validationProperties::getDuplicateMessage);
     }
     if (movieRequestDto.getPoster().isEmpty()) {
-      messagesByField.add(preparePath(qMovie.poster), validationProperties.getEmptyMessage(FILE_TYPE));
+      messagesByField.add(toDotPath(qMovie.poster), validationProperties.getEmptyMessage(FILE_TYPE));
     }
     if (movieRequestDto.getBackground().isEmpty()) {
-      messagesByField.add(preparePath(qMovie.background), validationProperties.getEmptyMessage(FILE_TYPE));
+      messagesByField.add(toDotPath(qMovie.background), validationProperties.getEmptyMessage(FILE_TYPE));
     }
     if (!messagesByField.isEmpty()) {
       throw new ValidationException(messagesByField);
