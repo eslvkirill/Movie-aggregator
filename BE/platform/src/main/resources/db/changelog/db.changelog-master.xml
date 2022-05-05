@@ -10,4 +10,6 @@
   <include file="reviews.xml" relativeToChangelogFile="true"/>
   <include file="categories.xml" relativeToChangelogFile="true"/>
   <include file="category-items.xml" relativeToChangelogFile="true"/>
+  <include file="people.xml" relativeToChangelogFile="true"/>
+  <include file="movies-to-people.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

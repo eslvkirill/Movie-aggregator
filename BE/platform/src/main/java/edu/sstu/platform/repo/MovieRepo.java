@@ -14,19 +14,24 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicateExecutor<Movie> {
 
+  // TODO: remove left joins
   @Query("select m from Movie m"
       + " join fetch m.originCountries"
       + " join fetch m.audioLanguages"
       + " join fetch m.subtitleLanguages"
       + " join fetch m.genres"
       + " join fetch m.externalAggregatorInfos"
+      + " left join fetch m.actorRelations actorRel"
+      + " left join fetch actorRel.person actor"
+      + " left join fetch m.directorRelations directorRel"
+      + " left join fetch directorRel.person director"
       + " where m.id = ?1")
   Optional<Movie> findMovieById(UUID id);
 
   @Query(value = "select m.id from Movie m")
   Page<UUID> findMovieIds(Pageable pageable);
 
-  @Query("select m from Movie m"
+  @Query("select distinct m from Movie m"
       + " join fetch m.genres"
       + " where m.id in (?1)")
   List<Movie> findByIdIn(List<UUID> ids, Sort sort);

@@ -85,4 +85,10 @@ public class MovieRequestDto {
 
   @NotEmpty
   private Set<UUID> genres;
+
+  @NotEmpty
+  private Set<UUID> actors;
+
+  @NotEmpty
+  private Set<UUID> directors;
 }

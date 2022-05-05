@@ -1,6 +1,7 @@
 package edu.sstu.platform.util;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
+import static org.springframework.util.StringUtils.hasText;
 
 import com.querydsl.core.types.Path;
 import java.util.function.UnaryOperator;
@@ -14,7 +15,12 @@ public class ExceptionUtils {
 
   public static void addErrorMessageByField(MultiValueMap<String, String> messagesByField, Path<?> path,
       UnaryOperator<String> messageExtractor) {
-    var fieldName = preparePath(path);
+    var fieldName = toDotPath(path);
+
+    if (!hasText(fieldName)) {
+      fieldName = path.toString();
+    }
+
     messagesByField.add(fieldName, messageExtractor.apply(fieldName));
   }
 

@@ -1,6 +1,6 @@
 package edu.sstu.platform.service;
 
-import static edu.sstu.platform.util.QuerydslUtils.preparePath;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.GenreRequestDto;
 import edu.sstu.platform.dto.response.GenreResponseDto;
@@ -26,7 +26,7 @@ public class GenreService {
 
   @Transactional(readOnly = true)
   public List<GenreResponseDto> findGenres() {
-    return genreMapper.toDto(genreRepo.findAll(Sort.by(preparePath(qGenre.creationDate))));
+    return genreMapper.toDto(genreRepo.findAll(Sort.by(toDotPath(qGenre.creationDate))));
   }
 
   public UUID createGenre(GenreRequestDto genreRequestDto) {

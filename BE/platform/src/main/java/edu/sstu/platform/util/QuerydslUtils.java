@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuerydslUtils {
 
-  public static List<String> preparePaths(Path<?>... paths) {
+  public static List<String> toDotPath(Path<?>... paths) {
     return Arrays.stream(paths)
-        .map(path -> path.getMetadata().getName())
+        .map(QuerydslUtils::toDotPath)
         .collect(Collectors.toList());
   }
 
-  public static String preparePath(Path<?> path) {
-    return path.getMetadata().getName();
+  public static String toDotPath(Path<?> path) {
+    return org.springframework.data.querydsl.QuerydslUtils.toDotPath(path);
   }
 }
