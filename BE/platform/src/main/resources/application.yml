@@ -7,6 +7,10 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
 
 springdoc:
   api-docs:
