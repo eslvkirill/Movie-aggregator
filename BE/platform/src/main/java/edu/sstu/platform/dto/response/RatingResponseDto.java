@@ -1,19 +1,17 @@
 package edu.sstu.platform.dto.response;
 
+import edu.sstu.platform.model.RatingType;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class MovieResponseDto {
+public class RatingResponseDto {
 
   private UUID id;
-  private String engTitle;
-  private String rusTitle;
-  private int year;
-  private double totalRating;
+  private RatingType ratingType;
+  private float score;
 }

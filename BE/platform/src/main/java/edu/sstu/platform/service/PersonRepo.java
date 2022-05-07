@@ -14,16 +14,16 @@ public interface PersonRepo extends JpaRepository<Person, UUID>, QuerydslPredica
   Set<Person> findAllByIds(Iterable<UUID> ids);
 
   @Query("select p from Person p"
-      + " join fetch p.starredMovieRelations starredMovies"
-      + " join fetch p.directedMovieRelations directedMovies"
-      + " join fetch starredMovies.movie starredMovie"
-      + " join fetch directedMovies.movie directedMovie"
-      + " join fetch starredMovie.genres"
-      + " join fetch directedMovie.genres"
-      + " join fetch starredMovie.directorRelations starredMovieDirectorRel"
-      + " join fetch directedMovie.directorRelations directedMovieDirectorRel"
-      + " join fetch starredMovieDirectorRel.person"
-      + " join fetch directedMovieDirectorRel.person"
+      + " left join fetch p.starredMovieRelations starredMovies"
+      + " left join fetch p.directedMovieRelations directedMovies"
+      + " left join fetch starredMovies.movie starredMovie"
+      + " left join fetch directedMovies.movie directedMovie"
+      + " left join fetch starredMovie.genres"
+      + " left join fetch directedMovie.genres"
+      + " left join fetch starredMovie.directorRelations starredMovieDirectorRel"
+      + " left join fetch directedMovie.directorRelations directedMovieDirectorRel"
+      + " left join fetch starredMovieDirectorRel.person"
+      + " left join fetch directedMovieDirectorRel.person"
       + " where p.id = ?1")
   Optional<Person> findPersonById(UUID id);
 }

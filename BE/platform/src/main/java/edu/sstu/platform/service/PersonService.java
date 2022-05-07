@@ -6,10 +6,14 @@ import edu.sstu.platform.dto.request.PersonRequestDto;
 import edu.sstu.platform.dto.response.PersonInfoResponseDto;
 import edu.sstu.platform.dto.response.PersonViewResponseDto;
 import edu.sstu.platform.mapper.PersonMapper;
+import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.QPerson;
+import edu.sstu.platform.model.RatingType;
 import edu.sstu.platform.validator.PersonValidator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -21,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PersonService {
 
+  private final RatingService ratingService;
   private final PersonRepo personRepo;
   private final PersonMapper personMapper;
   private final PersonValidator personValidator;
@@ -58,8 +63,17 @@ public class PersonService {
   public PersonInfoResponseDto findPerson(UUID id) {
     var person = personRepo.findPersonById(id)
         .orElseThrow(() -> entityNotFoundException(id));
+    var personMovieIds = Stream.concat(
+            person.getDirectedMovieRelations()
+                .stream()
+                .map(MoviesToPeopleRelation::getMovieId),
+            person.getStarredMovieRelations()
+                .stream()
+                .map(MoviesToPeopleRelation::getMovieId))
+        .collect(Collectors.toList());
+    var ratingsByMovieId = ratingService.findRatingsByMovieIds(personMovieIds, RatingType.values());
 
-    return personMapper.toInfoDto(person);
+    return personMapper.toInfoDto(person, ratingsByMovieId);
   }
 
   @Transactional(readOnly = true)

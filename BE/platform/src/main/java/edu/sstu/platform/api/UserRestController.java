@@ -24,7 +24,7 @@ public class UserRestController {
 
   @GetMapping("/info")
   public UserInfoResponseDto getUserInfo() {
-    return userService.findUserInfo(userPrincipalService.getCurrentUser().getId());
+    return userService.findUserInfo(userPrincipalService.getCurrentUserOrElseThrow().getId());
   }
 
   @PostMapping
