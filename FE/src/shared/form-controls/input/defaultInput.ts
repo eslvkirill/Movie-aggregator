@@ -14,7 +14,7 @@ const createCustomizeInput = (
 
 const createDefaultInput = (
 	placeholder: string,
-	errorMessage: string = 'Поле не должно быть пустым',
+	errorMessage: string,
 	maxLength: number = 255,
 	minLength: number = 1,
 	type: string = 'text'

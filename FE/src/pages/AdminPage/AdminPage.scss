@@ -1,4 +1,8 @@
 .admin-page {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
 	height: auto;
 	margin-top: calc(4.2rem + 106px);
 	margin-bottom: 5rem;

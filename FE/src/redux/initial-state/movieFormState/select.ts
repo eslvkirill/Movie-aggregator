@@ -6,14 +6,14 @@ export const selectState = {
 		'Укажите жанры фильма',
 		'Жанр фильма должен быть указан'
 	),
-	[MovieFormFileds.actors]: createDefaultSelect(
-		'Выберите актёров',
-		'Укажите хотя бы одного актёра'
-	),
-	[MovieFormFileds.directors]: createDefaultSelect(
-		'Выберите режиссёров',
-		'Укажите хотя бы одного режиссёра'
-	),
+	// [MovieFormFileds.actors]: createDefaultSelect(
+	// 	'Выберите актёров',
+	// 	'Укажите хотя бы одного актёра'
+	// ),
+	// [MovieFormFileds.directors]: createDefaultSelect(
+	// 	'Выберите режиссёров',
+	// 	'Укажите хотя бы одного режиссёра'
+	// ),
 	[MovieFormFileds.originCountries]: createDefaultSelect(
 		'Выберите страны производства',
 		'Укажите хотя-бы одну страну производства'

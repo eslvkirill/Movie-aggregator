@@ -23,26 +23,25 @@ const sortAggregatorsAction = (aggregators: any) => {
 };
 
 const setDefaultFieldsAppearanceAction = (movie: any) => {
-	const personFieldNames: string[] = [
+	const customFieldNames: string[] = [
+		MovieFormFileds.genres,
 		MovieFormFileds.actors,
 		MovieFormFileds.directors,
 	];
 
 	Object.keys(movie).map((name) => {
-		// if (personFieldNames.includes(name)) {
-		// 	movie[name].map(
-		// 		(field: any) => (field.name = field.name.split(', ').sort().join(', '))
-		// 	);
 		if (
 			Array.isArray(movie[name]) &&
 			name !== MovieFormFileds.externalAggregatorsInfo
 		) {
-			const movieFieldValue = movie[name].map((field: any) =>
-				name === MovieFormFileds.genres ? field.name : field
-			);
-			movie[name] = personFieldNames.includes(name)
-				? movieFieldValue
-				: movieFieldValue.join(', ');
+			movie[name] = movie[name]
+				.map((field: any) =>
+					customFieldNames.includes(name) ? field.name : field
+				)
+				.join(', ');
+			if ([customFieldNames[1], customFieldNames[2]].includes(name)) {
+				movie[name] = movie[name].split(', ').sort().join(', ');
+			}
 		} else if (name === MovieFormFileds.duration) {
 			const durationParts = movie[name].split(':');
 

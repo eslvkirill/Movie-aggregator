@@ -21,8 +21,7 @@ export const inputState = {
 	),
 	[MovieFormFileds.description]: createDefaultInput(
 		'Опишите краткий сюжет',
-		'Поле не может быть пустым',
-		500
+		'Поле не может быть пустым'
 	),
 	[MovieFormFileds.year]: createCustomizeInput(
 		{

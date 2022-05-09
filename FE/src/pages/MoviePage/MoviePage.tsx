@@ -24,17 +24,6 @@ const MoviePage = () => {
     dispatch(getMovieByIdCreator(id));
     setReviewButtonActive(movie.userHasAlreadyWrittenReview);
   }, []);
-
-
-  const renderPersons = (people: string) => 
-    movie[people].map((person: any) => (
-      <span key={person.name}>
-        <Link to={`/person/${person.id}`}>
-          {person.name}
-        </Link>
-        {!(movie[people][movie[people].length - 1] === person) && (<span>,&nbsp;</span>)}
-      </span>
-    ));
   
   const renderIcons = () =>
     movie.externalAggregatorsInfo.map((agregator: any) => {
@@ -107,6 +96,8 @@ const MoviePage = () => {
     year,
     duration,
     description,
+    // actors,
+    // directors,
     originCountries,
     audioLanguages,
     subtitleLanguages,
@@ -165,17 +156,15 @@ const MoviePage = () => {
               <div className="Time">{duration}</div>
               <div className="Plot">{description}</div>
               <div className="AfterPlotBlock">
-              <div className="Cast">
                 <div className="Cast">
-                  Режиссёр:&nbsp;
+                  Режиссёр: 
                   <span className="People">
-                    {renderPersons('directors')}
+                    {/* {directors} */}directors
                   </span>
-                  <br />В главных ролях:&nbsp;
+                  <br />В главных ролях:{' '}
                   <span className="People">
-                    {renderPersons('actors')}
+                    {/* {actors} */}actors
                   </span>
-                </div>
                 </div>
                 <div className="Details">
                   <div>

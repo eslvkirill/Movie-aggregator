@@ -50,17 +50,11 @@ const movieReducer = createSlice({
 					Object.keys(action.payload).map((fieldName) => {
 						return (state.formControls.selectControls[fieldName].options =
 							action.payload[fieldName].map((control: any, index: number) => {
-								const isCustomField = (
-									[
-										MovieFormFileds.genres,
-										MovieFormFileds.actors,
-										MovieFormFileds.directors,
-									] as string[]
-								).includes(fieldName);
+								const isGenreField = fieldName === MovieFormFileds.genres;
 
 								return {
-									label: isCustomField ? control.name : control,
-									value: isCustomField ? control.id : index,
+									label: isGenreField ? control.name : control,
+									value: isGenreField ? control.id : index,
 								};
 							}));
 					});

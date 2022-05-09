@@ -8,16 +8,25 @@ import {
 	getGenresCreator,
 } from 'redux/creators/genreCreator';
 import { validateInputs, validate } from 'shared/utils/validation';
+import { createDefaultInput } from 'shared/form-controls/input/defaultInput';
 import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';
 import Input from 'components/shared/form-controls/Input/Input';
 import Button from 'components/shared/form-controls/Button/Button';
-import { inputState } from 'redux/initial-state/genreState';
 import { GenreControls } from '../genre.interface';
 import GenreItem from '../GenreItem/GenreItem';
 import './GenreList.scss';
 
+const createFormInput = () => ({
+  genreInput: createDefaultInput(
+    'Введите новый жанр',
+    'Название жанра должно быть длинее 2-x букв',
+    255, 
+    3
+  ),
+});
+
 const GenreList = () => {
-  const [formControls, setFormControls] = useState<GenreControls>(inputState);
+  const [formControls, setFormControls] = useState<GenreControls>(createFormInput());
   const [genreName, setGenreName] = useState('');
   const [isFormValid, setFormValid] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);

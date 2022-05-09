@@ -2,14 +2,13 @@ const MAIN_CREATORS = {
 	GENRE: 'genre/',
 	AUTH: 'auth/',
 	MOVIE: 'movie/',
-	PERSON: 'person/',
 };
 
 const GENRE_CREATOR = {
 	GET_ALL: `${MAIN_CREATORS.GENRE}getAll`,
-	ADD: `${MAIN_CREATORS.GENRE}add`,
-	EDIT: `${MAIN_CREATORS.GENRE}edit`,
-	DELETE: `${MAIN_CREATORS.GENRE}delete`,
+	ADD: `${MAIN_CREATORS.GENRE}addGenre`,
+	EDIT: `${MAIN_CREATORS.GENRE}editGenre`,
+	DELETE: `${MAIN_CREATORS.GENRE}deleteGenre`,
 };
 
 const AUTH_CREATOR = {
@@ -23,9 +22,4 @@ const MOVIE_CREATOR = {
 	GET_BY_ID: `${MAIN_CREATORS.MOVIE}getById`,
 };
 
-const PERSON_CREATOR = {
-	GET: `${MAIN_CREATORS.PERSON}get`,
-	DELETE: `${MAIN_CREATORS.PERSON}delete`,
-};
-
-export { GENRE_CREATOR, AUTH_CREATOR, MOVIE_CREATOR, PERSON_CREATOR };
+export { GENRE_CREATOR, AUTH_CREATOR, MOVIE_CREATOR };
