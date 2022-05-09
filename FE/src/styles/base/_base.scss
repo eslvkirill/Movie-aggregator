@@ -12,4 +12,18 @@ body {
 	color: $primary-color;
 	background-color: $primary-bg-color;
 	line-height: $line-height;
+
+	&::-webkit-scrollbar {
+		width: 11px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background: #bd5a31;
+		box-shadow: inset 0 0 6px #00000066;
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background: #37104d;
+	}
 }

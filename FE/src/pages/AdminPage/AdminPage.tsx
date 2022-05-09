@@ -5,7 +5,7 @@ import { ROUTE } from '../../shared/constants/routes';
 const AdminPage = () => {
   const links = [
     { to: ROUTE.GENRES, label: 'Создание жанров' },
-    // { to: '/adminPage/persons', label: 'Создание людей' },
+    { to: ROUTE.PERSONS, label: 'Создание людей' },
     { to: ROUTE.MOVIES, label: 'Создание фильмов' },
   ];
 
@@ -23,6 +23,7 @@ const AdminPage = () => {
           </li>
         ))}
       </ul>
+      
       <Outlet/>
     </div>
   );
