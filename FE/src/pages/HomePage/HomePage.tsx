@@ -63,11 +63,6 @@ const HomePage = () => {
       await axios
         .get(`/api/v1/movies?page=${pageNumber - 1}${filtersQuery}${sortQuery}`)
           .then((response) => {
-            const table: any = {};
-            const moviesData = response.data.content.filter(({ id }: any) =>(!table[id] && (table[id] = 1)));
-            
-            console.log(moviesData);
-
             if (sortFieldName === undefined) {
               if (response.data.last === false) setActiveButton(false);
               else setActiveButton(true);
@@ -79,7 +74,7 @@ const HomePage = () => {
               setTotalElements(response.data.totalElements);
               setMovies((movies: any) => [
                 ...movies,
-                ...movieConstructor(moviesData),
+                ...movieConstructor(response.data.content),
               ]);
               setLoading(false);
               setFetch(false);
@@ -89,7 +84,7 @@ const HomePage = () => {
               setSortValue(sortFieldName);
               setNumberOfElements(response.data.numberOfElements);
               setTotalElements(response.data.totalElements);
-              setMovies(movieConstructor(moviesData));
+              setMovies(movieConstructor(response.data.content));
               setCurrentPage((currentPage: number) => currentPage + 1);
               setLoading(false);
               setFetch(false);
@@ -103,7 +98,7 @@ const HomePage = () => {
 
                 setMovies(() => [
                   ...movies,
-                  ...movieConstructor(moviesData),
+                  ...movieConstructor(response.data.content),
                 ]);
 
                 if (response.data.last) {

@@ -1,0 +1,67 @@
+.person {
+	margin-top: 170px;
+
+	.general-info {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		width: 94%;
+		margin: 0 auto 23px;
+		padding: 40px 20px 30px;
+		background: #ffffff05;
+		box-shadow: 10px 0 20px 5px rgb(0 0 0 / 33%);
+
+		&__delete-icon {
+			position: relative;
+			bottom: 25px;
+
+			&_submit {
+				min-width: 37px;
+				background: red;
+				font-size: 37px;
+				padding: 0 9px;
+			}
+		}
+
+		.person-bio {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+
+			&__photo {
+				width: 200px;
+				margin-bottom: 8px;
+				border-radius: 24px;
+			}
+
+			&__name {
+				font-size: 42px;
+				margin-bottom: 12px;
+			}
+
+			&__biography {
+				width: 80%;
+				font-size: 18px;
+				text-align: center;
+			}
+		}
+	}
+
+	.movies-section {
+		.buttons {
+			display: flex;
+			justify-content: space-evenly;
+		}
+
+		&__role {
+			&_actor {
+				background: orange;
+			}
+			&_director {
+				background: purple;
+			}
+		}
+	}
+}

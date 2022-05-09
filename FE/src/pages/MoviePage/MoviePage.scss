@@ -490,14 +490,14 @@
 									// max-width: 550px;
 
 									img {
-										width: 40px;
+										width: 47px;
 									}
 								}
 							}
 						}
 						.StarsWrapper {
 							@include flexible();
-							max-width: 270px;
+							max-width: 280px;
 
 							.Star {
 								padding: 0.5%;

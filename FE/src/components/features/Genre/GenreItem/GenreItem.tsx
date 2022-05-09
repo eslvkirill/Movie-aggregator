@@ -31,15 +31,16 @@ const GenreItem = (props: GenresProperties) => {
                 // autocomplete="off"
               />
               <Button
+                type="submit"
                 id={genre.id}
                 onClick={() => genre.open ? saveAction(genre.id) : editAction(genre.id)}
                 disabled={disabled}
               >
                 {genre.open ? 'Сохранить' : 'Редактировать'}
               </Button>
-              <button type="submit" onClick={() => deleteGenre(genre.id)}>
-                &times;
-              </button>
+              <Button type="submit" onClick={() => deleteGenre(genre.id)}>
+                Удалить
+              </Button>
             </li>
           );
         })}
