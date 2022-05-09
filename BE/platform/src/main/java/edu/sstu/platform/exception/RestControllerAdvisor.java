@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
@@ -29,8 +30,12 @@ public class RestControllerAdvisor extends ResponseEntityExceptionHandler {
   }
 
   private Map<String, Object> defaultExceptionHandling(Exception e) {
+    return defaultExceptionHandling(e.getMessage());
+  }
+
+  private Map<String, Object> defaultExceptionHandling(String message) {
     Map<String, Object> response = new HashMap<>();
-    response.put("message", e.getMessage());
+    response.put("message", message);
     response.put("timestamp", new Date());
 
     return response;
@@ -69,5 +74,11 @@ public class RestControllerAdvisor extends ResponseEntityExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Map<String, Object> handleValidationException(AuthenticationException e) {
     return defaultExceptionHandling(e);
+  }
+
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public Map<String, Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+    return defaultExceptionHandling(e.getMostSpecificCause().getMessage());
   }
 }

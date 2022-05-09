@@ -12,6 +12,7 @@ const initialState: any = {
 		[StateName.registration]: registrationState,
 	},
 	isFormValid: false,
+	isLoading: false,
 	user: JSON.parse(localStorage.getItem('userInfo') as string) || {},
 	error: '',
 };
@@ -33,14 +34,19 @@ const authReducer = createSlice({
 			.addCase(
 				loginCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
+					state.isLoading = false;
 					state.user = action.payload;
 					localStorage.setItem('userInfo', JSON.stringify(state.user));
 				}
 			)
+			.addCase(loginCreator.pending.type, (state) => {
+				state.isLoading = true;
+			})
 			.addCase(
 				loginCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
 					state.isFormValid = true;
+					state.isLoading = false;
 					state.error = action.payload;
 				}
 			)

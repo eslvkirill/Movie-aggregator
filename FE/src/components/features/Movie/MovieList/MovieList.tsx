@@ -64,7 +64,7 @@ const MovieList = (props: any) => {
               </li>
             );
           })}
-          {movies.length !== 0 ? (
+          {totalElements && movies.length !== 0 ? (
             <div className="buttonSection">
               <p>
                 Вы просмотрели{' '}
@@ -76,7 +76,7 @@ const MovieList = (props: any) => {
               {renderOnLoadButton()}
             </div>
           ) : (
-            <div className="emptyMovies">Ничего не найдено</div>
+            totalElements && <div className="emptyMovies">Ничего не найдено</div>
           )}
         </ul>
       )}

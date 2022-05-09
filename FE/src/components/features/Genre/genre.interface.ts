@@ -15,5 +15,5 @@ export interface GenresProperties {
 }
 
 export interface GenreControls {
-	genreInput: any;
+	genre: any;
 }
