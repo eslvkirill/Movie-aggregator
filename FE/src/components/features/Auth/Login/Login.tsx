@@ -1,6 +1,7 @@
 import { Link, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { isUserLoggIn } from 'shared/utils/common';
+import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';
 import Button from 'components/shared/form-controls/Button/Button';
 import Input from 'components/shared/form-controls/Input/Input';
 import { onChangeInputEvent } from 'redux/reducers/authReducer';
@@ -10,7 +11,7 @@ import { StateName } from '../auth.enum';
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { formControls, isFormValid, user, error } = useAppSelector(state => state.authReducer);
+  const { formControls, isFormValid, isLoading, user, error } = useAppSelector(state => state.authReducer);
 
   const submitHandler = (event: any) => event.preventDefault();
 
@@ -54,13 +55,18 @@ const Login = () => {
           </span>
         )}
         <div className="login__buttons buttons">
-          <Button
-            type="buttons__success"
-            onClick={() => dispatch(loginCreator())}
-            disabled={!isFormValid}
-          >
-            Войти
-          </Button>
+          {isLoading 
+            ? <div className="buttons__loader">
+                <PaginateLoader />
+              </div>
+            : <Button
+                type="buttons__success"
+                onClick={() => dispatch(loginCreator())}
+                disabled={!isFormValid}
+              >
+                Войти
+              </Button>
+          }
           <Link 
             to="/registration" 
             className="buttons__registration-form"
