@@ -8,6 +8,7 @@ import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.Person;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
@@ -49,4 +50,6 @@ public interface PersonMapper {
         .sorted(Comparator.comparing(PersonResponseDto::getName))
         .collect(Collectors.toCollection(LinkedHashSet::new));
   }
+
+  List<PersonViewResponseDto> toViewDto(List<Person> people);
 }
