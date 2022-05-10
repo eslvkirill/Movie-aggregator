@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+  <changeSet id="create_table_for_ratings" author="Befors">
+    <createTable tableName="ratings">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="movie_id" type="uuid">
+        <constraints nullable="false" foreignKeyName="ratings_to_movies_fk" references="movies(id)"/>
+      </column>
+      <column name="user_id" type="uuid">
+        <constraints nullable="false" foreignKeyName="ratings_to_users_fk" references="users(id)"/>
+      </column>
+      <column name="rating_type" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="score" type="float">
+        <constraints nullable="false"/>
+      </column>
+      <column name="rank" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

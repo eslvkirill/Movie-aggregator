@@ -4,6 +4,7 @@ import edu.sstu.platform.dto.request.MovieRequestDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
 import edu.sstu.platform.service.MovieService;
+import edu.sstu.platform.service.UserPrincipalService;
 import java.net.URI;
 import java.util.UUID;
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class MovieRestController {
 
   private final MovieService movieService;
+  private final UserPrincipalService userPrincipalService;
 
   @PostMapping
   public ResponseEntity<Void> createMovie(@Valid MovieRequestDto movieRequestDto) {
@@ -54,7 +56,7 @@ public class MovieRestController {
 
   @GetMapping("/{id}")
   public MovieInfoResponseDto getMovieById(@PathVariable UUID id) {
-    return movieService.findMovieById(id);
+    return movieService.findMovieById(id, userPrincipalService.getCurrentUserOrElse().getId());
   }
 
   @GetMapping

@@ -71,8 +71,8 @@ public class RestControllerAdvisor extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(AuthenticationException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Map<String, Object> handleValidationException(AuthenticationException e) {
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public Map<String, Object> handleAuthenticationException(AuthenticationException e) {
     return defaultExceptionHandling(e);
   }
 

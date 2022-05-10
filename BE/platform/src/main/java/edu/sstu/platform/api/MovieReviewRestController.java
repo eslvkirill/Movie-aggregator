@@ -31,7 +31,8 @@ public class MovieReviewRestController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public UUID createReview(@PathVariable UUID movieId, @RequestBody @Valid MovieReviewRequestDto reviewRequestDto) {
-    return reviewService.createReview(reviewRequestDto, movieId, userPrincipalService.getCurrentUser().getId());
+    return reviewService.createReview(reviewRequestDto, movieId,
+        userPrincipalService.getCurrentUserOrElseThrow().getId());
   }
 
   @PutMapping("/{reviewId}")

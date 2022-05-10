@@ -46,12 +46,21 @@ public class UserPrincipalService implements UserDetailsService {
         .orElseThrow(() -> new UsernameNotFoundException("Couldn't find user by login: " + login));
   }
 
-  public User getCurrentUser() {
+  public User getCurrentUserOrElseThrow() {
+    return getCurrentUser()
+        .orElseThrow(AnonymousException::new);
+  }
+
+  private Optional<User> getCurrentUser() {
     return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
         .map(Authentication::getPrincipal)
         .filter(User.class::isInstance)
-        .map(User.class::cast)
-        .orElseThrow(AnonymousException::new);
+        .map(User.class::cast);
+  }
+
+  public User getCurrentUserOrElse() {
+    return getCurrentUser()
+        .orElseGet(User::new);
   }
 
   public String encryptPassword(String rawPassword) {

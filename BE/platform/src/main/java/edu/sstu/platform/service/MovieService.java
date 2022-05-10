@@ -3,7 +3,9 @@ package edu.sstu.platform.service;
 import static edu.sstu.platform.model.ExternalAggregator.IMDB;
 import static edu.sstu.platform.model.ExternalAggregator.KINOPOISK;
 import static edu.sstu.platform.model.ExternalAggregator.METACRITIC;
+import static edu.sstu.platform.model.RatingType.TOTAL;
 import static edu.sstu.platform.util.ParsingUtils.findFirstMatching;
+import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 
@@ -17,10 +19,14 @@ import edu.sstu.platform.model.ExternalAggregator;
 import edu.sstu.platform.model.ExternalAggregatorInfo;
 import edu.sstu.platform.model.ExternalAggregatorInfo.IdClass;
 import edu.sstu.platform.model.Movie;
+import edu.sstu.platform.model.QRating;
+import edu.sstu.platform.model.Rating;
 import edu.sstu.platform.repo.MovieRepo;
+import edu.sstu.platform.repo.RatingRepo;
 import edu.sstu.platform.validator.MovieValidator;
 import java.io.StringReader;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,6 +40,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -55,11 +62,14 @@ public class MovieService {
   private static final String RATING_REG_EXP = "[\\d.]+";
   private static final String ID_REG_EXP = "[\\d]+";
 
+  private final RatingService ratingService;
+  private final RatingRepo ratingRepo;
+  private final MovieRepo movieRepo;
   private final MovieMapper movieMapper;
   private final MovieValidator movieValidator;
-  private final MovieRepo movieRepo;
   private final RestTemplate restClient;
   private final ObjectMapper objectMapper;
+  private final QRating qRating = QRating.rating;
 
   @Value("${app.api.omdb}")
   public String omdbApi;
@@ -169,11 +179,18 @@ public class MovieService {
   }
 
   @Transactional(readOnly = true)
-  public MovieInfoResponseDto findMovieById(UUID id) {
-    var movie = movieRepo.findMovieById(id)
-        .orElseThrow(() -> entityNotFoundException(id));
+  public MovieInfoResponseDto findMovieById(UUID movieId, UUID userId) {
+    var movie = movieRepo.findMovieById(movieId)
+        .orElseThrow(() -> entityNotFoundException(movieId));
+    var ratingsByMovieIds = ratingService.findRatingsByMovieIds(List.of(movieId), TOTAL).get(movieId);
+    var userRatings = List.<Rating>of();
 
-    return movieMapper.toInfoDto(movie);
+    if (userId != null) {
+      var predicate = qRating.movieId.eq(movieId).and(qRating.userId.eq(userId));
+      userRatings = ratingRepo.findBy(predicate, ffq -> ffq.sortBy(Sort.by(toDotPath(qRating.rank))).all());
+    }
+
+    return movieMapper.toInfoDto(movie, ratingsByMovieIds, userRatings);
   }
 
   private EntityNotFoundException entityNotFoundException(UUID id) {
@@ -182,10 +199,12 @@ public class MovieService {
 
   @Transactional(readOnly = true)
   public Page<MovieViewResponseDto> findMovies(Pageable pageable) {
-    var movieIds = movieRepo.findMovieIds(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
-    var movies = movieRepo.findByIdIn(movieIds.getContent(), pageable.getSort());
-    var movieDtoList = movieMapper.toViewDto(movies);
+    var movieIdPage = movieRepo.findMovieIds(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
+    var movieIds = movieIdPage.getContent();
+    var movies = movieRepo.findByIdIn(movieIds);
+    var ratingsByMovieId = ratingService.findRatingsByMovieIds(movieIds, TOTAL);
+    var movieDtoList = movieMapper.toViewDto(movies, ratingsByMovieId);
 
-    return new PageImpl<>(movieDtoList, pageable, movieIds.getTotalElements());
+    return new PageImpl<>(movieDtoList, pageable, movieIdPage.getTotalElements());
   }
 }

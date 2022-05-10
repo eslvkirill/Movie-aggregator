@@ -12,4 +12,5 @@
   <include file="category-items.xml" relativeToChangelogFile="true"/>
   <include file="people.xml" relativeToChangelogFile="true"/>
   <include file="movies-to-people.xml" relativeToChangelogFile="true"/>
+  <include file="ratings.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

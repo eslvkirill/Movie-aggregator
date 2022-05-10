@@ -6,8 +6,12 @@ import edu.sstu.platform.dto.response.MovieViewResponseDto;
 import edu.sstu.platform.model.Movie;
 import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.PersonRole;
+import edu.sstu.platform.model.Rating;
+import edu.sstu.platform.model.projection.RatingMapping;
 import edu.sstu.platform.service.PersonRepo;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -18,7 +22,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(uses = {FileMapper.class, ReviewMapper.class, PersonMapper.class}, imports = {PersonRole.class})
+@Mapper(uses = {FileMapper.class, ReviewMapper.class, PersonMapper.class, RatingMapper.class},
+    imports = {PersonRole.class})
 @DecoratedWith(MovieMapperDecorator.class)
 public abstract class MovieMapper {
 
@@ -63,14 +68,30 @@ public abstract class MovieMapper {
   public abstract void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 
   @Mappings({
-      @Mapping(target = "externalAggregatorsInfo", source = "externalAggregatorInfos"),
-      @Mapping(target = "actors", source = "actorRelations"),
-      @Mapping(target = "directors", source = "directorRelations")
+      @Mapping(target = "externalAggregatorsInfo", source = "movie.externalAggregatorInfos"),
+      @Mapping(target = "actors", source = "movie.actorRelations"),
+      @Mapping(target = "directors", source = "movie.directorRelations"),
+      @Mapping(target = "totalRating", ignore = true)
   })
-  public abstract MovieInfoResponseDto toInfoDto(Movie movie);
+  public abstract MovieInfoResponseDto toInfoDto(Movie movie, List<RatingMapping> averageRatings,
+      List<Rating> userRatings);
 
-  @Mapping(target = "directors", source = "directorRelations")
-  public abstract MovieViewResponseDto toViewDto(Movie movie);
+  @Mappings({
+      @Mapping(target = "directors", source = "movie.directorRelations"),
+      @Mapping(target = "totalRating",
+          expression = "java(extractAverageTotalRating(movie, ratingsByMovieId))")
+  })
+  public abstract MovieViewResponseDto toViewDto(Movie movie, Map<UUID, List<RatingMapping>> ratingsByMovieId);
 
-  public abstract List<MovieViewResponseDto> toViewDto(List<Movie> movies);
+  public List<MovieViewResponseDto> toViewDto(List<Movie> movies, Map<UUID, List<RatingMapping>> ratingsByMovieId) {
+    return movies.stream()
+        .map(movie -> toViewDto(movie, ratingsByMovieId))
+        .collect(Collectors.toList());
+  }
+
+  protected double extractAverageTotalRating(Movie movie, Map<UUID, List<RatingMapping>> ratingsByMovieId) {
+    return Optional.ofNullable(ratingsByMovieId.get(movie.getId()))
+        .map(rating -> rating.get(0).getAverageScore())
+        .orElse(0.0);
+  }
 }

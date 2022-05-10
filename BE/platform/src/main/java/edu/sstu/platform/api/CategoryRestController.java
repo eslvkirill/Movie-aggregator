@@ -30,7 +30,8 @@ public class CategoryRestController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public UUID createCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
-    return categoryService.createCategory(categoryRequestDto, userPrincipalService.getCurrentUser().getId());
+    return categoryService.createCategory(categoryRequestDto,
+        userPrincipalService.getCurrentUserOrElseThrow().getId());
   }
 
   @PutMapping("/{id}")
