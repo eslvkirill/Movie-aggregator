@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,12 +12,17 @@ import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
+import Rating from '../../components/features/Rating/Rating';
 
 const MoviePage = () => {
   const { id } = useParams() as { id: string };
 
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
+
+  const [userRating, setUserRating] = useState(0);
+  const [totalRating, setTotalRating] = useState(0);
+  const [numberOfRatings, setNumberOfRatings] = useState(0);
 
   useEffect(() => {
     dispatch(getMovieByIdCreator(id));
@@ -149,16 +154,14 @@ const MoviePage = () => {
               {/* {authForm ? (
                 <Backdrop authForm={authForm} setAuthForm={setAuthForm} />
               ) : null} */}
-              {/* <MovieRating
-                user={user}
-                setAuthForm={setAuthForm}
-                movieId={props.match.params.id}
+              <Rating
+                movieId={id}
                 userRating={userRating}
                 setUserRating={setUserRating}
                 setTotalRating={setTotalRating}
-                totalRating={props.totalRating}
+                totalRating={totalRating}
                 setNumberOfRatings={setNumberOfRatings}
-              /> */}
+              />
               <div className="Time">{duration}</div>
               <div className="Plot">{description}</div>
               <div className="AfterPlotBlock">
