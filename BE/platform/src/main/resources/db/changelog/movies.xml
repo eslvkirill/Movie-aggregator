@@ -108,4 +108,11 @@
     <renameColumn tableName="movies" oldColumnName="page_color1" newColumnName="primary_page_color"/>
     <renameColumn tableName="movies" oldColumnName="page_color2" newColumnName="secondary_page_color"/>
   </changeSet>
+
+  <changeSet id="add_cascade_on_delete_for_genre_relations" author="Befors">
+    <dropForeignKeyConstraint baseTableName="movies_to_genres" constraintName="movies_to_genres_to_genres_fk"/>
+    <addForeignKeyConstraint baseTableName="movies_to_genres" baseColumnNames="genre_id"
+      constraintName="movies_to_genres_to_genres_fk" referencedTableName="genres"
+      referencedColumnNames="id" onDelete="CASCADE"/>
+  </changeSet>
 </databaseChangeLog>

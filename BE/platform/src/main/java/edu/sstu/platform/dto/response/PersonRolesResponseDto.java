@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PersonRolesResponseDto {
 
-  private Set<PersonMovieResponseDto> actor;
-  private Set<PersonMovieResponseDto> director;
+  private Set<MovieViewResponseDto> actor;
+  private Set<MovieViewResponseDto> director;
 }

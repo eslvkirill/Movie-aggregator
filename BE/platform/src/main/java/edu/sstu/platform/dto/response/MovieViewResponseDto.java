@@ -17,4 +17,5 @@ public class MovieViewResponseDto extends MovieResponseDto {
   private String primaryPageColor;
   private Set<GenreResponseDto> genres;
   private LocalTime duration;
+  private Set<PersonViewResponseDto> directors;
 }

@@ -33,6 +33,8 @@ public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicate
 
   @Query("select distinct m from Movie m"
       + " join fetch m.genres"
+      + " join fetch m.directorRelations directorRel"
+      + " join fetch directorRel.person"
       + " where m.id in (?1)")
   List<Movie> findByIdIn(List<UUID> ids, Sort sort);
 
