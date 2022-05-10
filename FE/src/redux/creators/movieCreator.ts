@@ -35,17 +35,33 @@ const getMovieFormDataCreator = createAsyncThunk(
 			const originCountries = await movieService.getOriginCountries();
 			const actors = [
 				{
-					id: '56dd36b4-10fa-46a3-81b3-0a4c0b742c22',
+					id: '1237cbb9-8f97-43a6-9ac3-791f5ab97f02',
 					name: 'Брэд Питт',
 				},
 				{
-					id: '0cd236c1-8a73-4a25-ae17-d3b37ebb2016',
+					id: '174fb052-3d64-475e-a96a-ed7185ef6b01',
+					name: 'Том Круз',
+				},
+				{
+					id: '1943ab5b-3b18-49d5-b76a-35854400e3fb',
+					name: 'Том Круз',
+				},
+				{
+					id: '259b7b07-daf5-4dae-b13d-56c91d1fed1e',
+					name: 'Том Круз',
+				},
+				{
+					id: '839daa6f-5cec-44f3-a7c7-e8836e728c3e',
+					name: 'Том Круз',
+				},
+				{
+					id: '8d18d3fa-e239-456f-bc37-5911a4f7aa6d',
 					name: 'Том Круз',
 				},
 			];
 			const directors = [
 				{
-					id: 'a0453ea7-61f1-4080-977d-6c3fa428bd98',
+					id: '96bc15a5-ad37-4cf2-b885-a21a48356d54',
 					name: 'Уэс Андерсон',
 				},
 			];

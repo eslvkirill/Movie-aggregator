@@ -32,6 +32,8 @@ const ReviewForm = (props: any) => {
         body: formControls.formTextareaControls.body.value,
       };
 
+      console.log(review);
+
       const response = await axios({
         method: 'post',
         headers: {
@@ -52,6 +54,7 @@ const ReviewForm = (props: any) => {
         lastPageResponse.data.content.length === lastPageResponse.data.size
       ) {
         setReviewButtonActive((active: boolean) => !active);
+
         if (lastPageResponse.data.totalPages !== totalPages) {
           paginate(totalPages + 1);
           setTotalPages((totalPages: number) => totalPages + 1);
@@ -60,16 +63,15 @@ const ReviewForm = (props: any) => {
           setTotalPages((totalPages: number) => totalPages);
         }
       } else {
-        setReviews(() => [
-          ...lastPageResponse.data.content,
-          response.data,
-        ]);
+        setReviews(() => [ ...lastPageResponse.data.content ]);
+        
         if (totalPages !== currentPage) {
           setCurrentPage((currentPage: number) => currentPage + 1);
         } else {
           setCurrentPage((currentPage: number) => currentPage);
         }
       }
+      
       setReviewButtonActive(true);
     } catch (e) {
       console.log(e);

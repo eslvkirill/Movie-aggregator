@@ -21,6 +21,9 @@ $primary-color: #fceddc;
 	Input {
 		width: 22rem;
 		height: 48.8px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 
 		&::placeholder {
 			color: #a89176;

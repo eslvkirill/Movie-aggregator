@@ -44,26 +44,24 @@ const personReducer = createSlice({
 			.addCase(
 				getPersonCreator.pending.type,
 				(state: any, action: PayloadAction<any>) => {
+					console.log(action);
 					state.isLoading = true;
-					!action.payload && (state.isRedirect = true);
+					state.isRedirect = !!action.payload;
 				}
 			)
 			.addCase(
 				getPersonCreator.rejected.type,
 				(state, action: PayloadAction<string>) => {
-					console.log(11);
 					state.isLoading = false;
 					state.isRedirect = true;
 					state.error = action.payload;
 				}
 			)
-			.addCase(
-				deletePersonCreator.fulfilled.type,
-				(state, action: PayloadAction<string>) => {
-					state.person = {};
-					state.visibleMovies = [];
-				}
-			);
+			.addCase(deletePersonCreator.fulfilled.type, (state) => {
+				state.isRedirect = false;
+				state.person = {};
+				state.visibleMovies = [];
+			});
 	},
 });
 

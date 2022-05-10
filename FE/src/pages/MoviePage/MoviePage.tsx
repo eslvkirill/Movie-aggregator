@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
 import { faM } from '@fortawesome/free-solid-svg-icons';
@@ -18,11 +19,8 @@ const MoviePage = () => {
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
 
-  const [reviewButtonActive, setReviewButtonActive] = useState(false);
-
   useEffect(() => {
     dispatch(getMovieByIdCreator(id));
-    setReviewButtonActive(movie.userHasAlreadyWrittenReview);
   }, []);
 
 
@@ -135,8 +133,7 @@ const MoviePage = () => {
               </div>
               <div className="Title">
                 <p>
-                  {' '}
-                  {engTitle}
+                  &nbsp;{engTitle}
                   <span>&nbsp;{rusTitle}</span>
                 </p>
                 <div className="RightSideOfTitle">
@@ -166,17 +163,15 @@ const MoviePage = () => {
               <div className="Plot">{description}</div>
               <div className="AfterPlotBlock">
               <div className="Cast">
-                <div className="Cast">
-                  Режиссёр:&nbsp;
-                  <span className="People">
-                    {renderPersons('directors')}
-                  </span>
-                  <br />В главных ролях:&nbsp;
-                  <span className="People">
-                    {renderPersons('actors')}
-                  </span>
-                </div>
-                </div>
+                Режиссёр:&nbsp;
+                <span className="People">
+                  {renderPersons('directors')}
+                </span>
+                <br />В главных ролях:&nbsp;
+                <span className="People">
+                  {renderPersons('actors')}
+                </span>
+              </div>
                 <div className="Details">
                   <div>
                     Страна: <span>{originCountries}</span>
@@ -192,34 +187,33 @@ const MoviePage = () => {
 
               <div className="BottomOfSection">
                 <div className="Links">
-                  <Link
+                  <ScrollLink
                     className="TrailerButton"
-                    // activeClass="active"
+                    activeClass="active"
                     to="trailer"
-                    // spy
-                    // smooth
-                    // hashSpy
-                    // offset={0}
-                    // duration={900}
-                    // isDynamic
+                    spy
+                    smooth
+                    hashSpy
+                    offset={0}
+                    duration={900}
+                    isDynamic
                   >
                     Посмотреть трейлер
-                  </Link>
-                  <Link
+                  </ScrollLink>
+                  <ScrollLink
                     className="TrailerButton ReviewButton"
-                    // activeClass="active"
-                    to="ReviewSection"
-                    // spy
-                    // smooth
-                    // hashSpy
-                    // offset={0}
-                    // duration={900}
-                    // isDynamic
+                    activeClass="active"
+                    to="reviews"
+                    spy
+                    smooth
+                    hashSpy
+                    offset={0}
+                    duration={900}
+                    isDynamic
                   >
                     Прочитать отзывы
-                  </Link>
+                  </ScrollLink>
                 </div>
-                {/* {renderBuyButton()} */}
               </div>
             </div>
             <div className="totalRatingBlock">
@@ -247,7 +241,7 @@ const MoviePage = () => {
                   className="Trailer"
                   style={{ color: secondaryPageColor }}
                 >
-                  Official Trailer
+                  Официальный трейлер
                 </div>
                 <div className="VideoContainer">
                   <div className="Video">
@@ -286,8 +280,6 @@ const MoviePage = () => {
             engTitle={engTitle}
             primaryPageColor={primaryPageColor}
             secondaryPageColor={secondaryPageColor}
-            reviewButtonActive={reviewButtonActive}
-            setReviewButtonActive={setReviewButtonActive}
           />
         </>
       )}
