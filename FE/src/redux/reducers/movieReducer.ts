@@ -26,7 +26,10 @@ const initialState: any = {
 		inputControls: inputState,
 		selectControls: selectState,
 	},
-	movie: {},
+	movie: {
+		primaryPageColor: '#bd5a31',
+		secondaryPageColor: '#bd5a31',
+	},
 	isFormValid: false,
 	notificationMessage: '',
 	loading: true,

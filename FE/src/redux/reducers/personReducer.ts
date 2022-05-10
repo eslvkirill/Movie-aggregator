@@ -14,6 +14,7 @@ const initialState = {
 	} as any,
 	visibleMovies: [],
 	isLoading: true,
+	isRedirect: false,
 	error: '',
 };
 
@@ -40,13 +41,19 @@ const personReducer = createSlice({
 						: state.movies.director;
 				}
 			)
-			.addCase(getPersonCreator.pending.type, (state: any) => {
-				state.isLoading = true;
-			})
+			.addCase(
+				getPersonCreator.pending.type,
+				(state: any, action: PayloadAction<any>) => {
+					state.isLoading = true;
+					!action.payload && (state.isRedirect = true);
+				}
+			)
 			.addCase(
 				getPersonCreator.rejected.type,
 				(state, action: PayloadAction<string>) => {
+					console.log(11);
 					state.isLoading = false;
+					state.isRedirect = true;
 					state.error = action.payload;
 				}
 			)

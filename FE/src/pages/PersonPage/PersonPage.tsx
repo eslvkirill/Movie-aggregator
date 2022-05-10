@@ -12,7 +12,7 @@ const PersonPage = () => {
   const { id } = useParams() as { id: string };
 
   const dispatch = useAppDispatch();
-  const { person, movies, visibleMovies, isLoading } = useAppSelector(state => state.personReducer);
+  const { person, movies, visibleMovies, isLoading, isRedirect } = useAppSelector(state => state.personReducer);
 
   useEffect(() => {
     dispatch(getPersonCreator(id));
@@ -36,6 +36,10 @@ const PersonPage = () => {
         </Button>
       ) : ''
     )
+
+  if (isRedirect) {
+    return <Navigate to="/person-not-found" />;
+  }
 
   return (
     isLoading ? (

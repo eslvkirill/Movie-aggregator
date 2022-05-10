@@ -5,7 +5,7 @@ import { ROUTE } from '../../shared/constants/routes';
 const AdminPage = () => {
   const links = [
     { to: ROUTE.GENRES, label: 'Создание жанров' },
-    { to: ROUTE.PERSONS, label: 'Создание людей' },
+    { to: ROUTE.PERSONS, label: 'Создание актёров / режиссёров' },
     { to: ROUTE.MOVIES, label: 'Создание фильмов' },
   ];
 

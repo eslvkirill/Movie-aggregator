@@ -37,6 +37,8 @@ const authReducer = createSlice({
 					state.isLoading = false;
 					state.user = action.payload;
 					localStorage.setItem('userInfo', JSON.stringify(state.user));
+					state.formControls = initialState.formControls;
+					state.isFormValid = initialState.isFormValid;
 				}
 			)
 			.addCase(loginCreator.pending.type, (state) => {
@@ -59,6 +61,7 @@ const authReducer = createSlice({
 			.addCase(
 				registrationCreator.rejected.type,
 				(state, action: PayloadAction<any>) => {
+					console.log(action);
 					// state = initialState;
 					state.error = action.payload;
 				}

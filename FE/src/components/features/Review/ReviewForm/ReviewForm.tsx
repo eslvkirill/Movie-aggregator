@@ -12,7 +12,7 @@ import { validate, validateForm } from 'shared/utils/validation';
 const ReviewForm = (props: any) => {
   const { dropdown, movieId, totalPages, reviews, setReviews, setTotalElements, paginate, currentPage, setCurrentPage, setReviewButtonActive, setTotalPages, setDropdawn } = props;
 
-  const [formControls, setFormControls] = useState({
+  const [formControls, setFormControls] = useState<any>({
     formInputControls: inputState,
     formTextareaControls: textareaState,
   });
@@ -88,15 +88,15 @@ const ReviewForm = (props: any) => {
 
   const onChangeInputHandler = (event: any, controlName: any) => {
     const { formInputControls } = formControls;
-    const control = { ...formInputControls[controlName as keyof typeof formInputControls]};
+    const control = { ...formInputControls[controlName]};
 
     control.value = event.target.value;
     control.touched = true;
     control.valid = validate(control.value, control.validation) as boolean;
     
-    formInputControls[controlName as keyof typeof formInputControls] = control;
+    formInputControls[controlName] = control;
 
-    setFormControls((prevState) => {
+    setFormControls((prevState: any) => {
       return { ...prevState, formInputControls };
     });
 
@@ -105,15 +105,15 @@ const ReviewForm = (props: any) => {
 
   const onChangeTextareaHandler = (event: any, controlName: string) => {
     const { formTextareaControls } = formControls;
-    const control = { ...formTextareaControls[controlName as keyof typeof formTextareaControls] };
+    const control = { ...formTextareaControls[controlName] };
 
     control.value = event.target.value;
     control.touched = true;
     control.valid = validate(control.value, control.validation) as boolean;
 
-    formTextareaControls[controlName as keyof typeof formTextareaControls] = control;
+    formTextareaControls[controlName] = control;
 
-    setFormControls((prevState) => {
+    setFormControls((prevState: any) => {
       return { ...prevState, formTextareaControls };
     });
 
@@ -124,7 +124,7 @@ const ReviewForm = (props: any) => {
     const { formInputControls } = formControls;
 
     return Object.keys(formInputControls).map((controlName) => {
-      const control = formInputControls[controlName as keyof typeof formInputControls];
+      const control = formInputControls[controlName];
 
       return (
         <Input

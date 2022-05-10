@@ -33,6 +33,7 @@
 					padding: 16px 34px;
 					cursor: pointer;
 				}
+
 				&:active {
 					color: #37104d;
 				}
@@ -45,6 +46,10 @@
 				cursor: pointer;
 				padding: 16px 34px;
 				color: #fafafa;
+
+				&:first-child {
+					color: #ffe7ee;
+				}
 
 				&:hover {
 					box-shadow: 1px 5px 10px -5px black;

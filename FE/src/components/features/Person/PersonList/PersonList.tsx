@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { inputState } from 'redux/initial-state/personState';
-import { validateInputs, validate } from 'shared/utils/validation';
+import { inputState } from 'redux/initial-state/personState/input';
+import { textareaState } from 'redux/initial-state/personState/textarea';
+import { validate, validateForm } from 'shared/utils/validation';
 import Input from 'components/shared/form-controls/Input/Input';
 import Button from 'components/shared/form-controls/Button/Button';
+import Textarea from 'components/shared/form-controls/Textarea/Textarea';
 import './PersonList.scss';
 
 const PersonList = () => {
-  const [formControls, setFormControls] = useState<any>(inputState);
+  const [formControls, setFormControls] = useState<any>({
+    inputControls: inputState,
+    textareaControls: textareaState,
+  });
   const [isFormValid, setFormValid] = useState(false);
   const [person, setPerson] = useState<any>({});
   
   useEffect(() => {
-    setFormControls(inputState);
+    setFormControls({
+      inputControls: inputState,
+      textareaControls: textareaState,
+    });
   }, []);
 
   const personAddHandler = async () => {
@@ -42,7 +50,9 @@ const PersonList = () => {
   };
 
   const clearInputs = () => {
-    Object.keys(formControls).map((controlName) => {
+    const { inputControls } = formControls;
+
+    Object.keys(inputControls).map((controlName) => {
       const control = formControls[controlName];
       control.idSpan = controlName + control.id;
       control.value = '';
@@ -54,7 +64,7 @@ const PersonList = () => {
         span.style.color = 'rgb(168, 145, 118)';
       }
 
-      return formControls;
+      return inputControls;
     });
   };
 
@@ -63,7 +73,9 @@ const PersonList = () => {
   };
 
   const onChangeInputHandler = (event: any, controlName: string) => {
-    const control = { ...formControls[controlName] };
+    const { inputControls } = formControls;
+
+    const control = { ...inputControls[controlName] };
     control.value = event.target.value;
     control.touched = true;
     control.valid = validate(control.value, control.validation);
@@ -92,16 +104,39 @@ const PersonList = () => {
       person[controlName] = control.value;
     }
 
-    formControls[controlName] = control;
+    inputControls[controlName] = control;
+
+    console.log(inputControls[controlName]);
 
     setPerson(person);
-    setFormControls((prev: any) => ({ ...prev, ...formControls }));
-    setFormValid(validateInputs(formControls));
+    setFormControls((prev: any) => ({ ...prev, ...inputControls }));
+    setFormValid(validateForm(formControls));
+  };
+
+  const onChangeTextareaHandler = (event: any, controlName: string) => {
+    const { textareaControls } = formControls;
+    const control = { ... textareaControls[controlName] };
+
+    control.value = event.target.value;
+    control.touched = true;
+    control.valid = validate(control.value, control.validation) as boolean;
+
+    textareaControls[controlName] = control;
+    person[controlName] = control.value;
+
+    console.log(textareaControls[controlName]);
+
+    setPerson(person);
+    setFormControls((prevState: any) => ({ ...prevState, ...textareaControls }));
+    setFormValid(validateForm(formControls));
   };
 
   const renderInputs = () => {
-    return Object.keys(formControls).map((controlName) => {
-      const control = formControls[controlName];
+    const { inputControls } = formControls;
+
+    return Object.keys(inputControls).map((controlName) => {
+      const control = inputControls[controlName];
+
       return (
         <Input
           key={controlName}
@@ -125,11 +160,41 @@ const PersonList = () => {
     });
   };
 
+  const renderTextarea = () => {
+    const { textareaControls } = formControls;
+    
+    return Object.keys(textareaControls).map((controlName) => {
+      const control = textareaControls[controlName];
+
+      return (
+        <Textarea
+          key={controlName}
+          id={controlName}
+          type={control.type}
+          placeholder={control.placeholder}
+          value={control.value}
+          valid={control.valid}
+          touched={control.touched}
+          shouldValidate={!!control.validation}
+          errorMessage={control.errorMessage}
+          onChange={(event: any) => onChangeTextareaHandler(event, controlName)}
+        />
+      );
+    });
+  };
+
   return (
-    <div className="personList">
-      <h2>Добавление актёров и режиссёров</h2>
-      <form onSubmit={(event) => personSubmitHandler(event)}>
-        <div className="renderInputs">{renderInputs()}</div>
+    <div className="person-list">
+      <form 
+        className="person-list__form from"
+        onSubmit={(event) => personSubmitHandler(event)}
+      >
+        <div className="from__controls controls">
+          <div className="controls__inputs">
+            {renderInputs()}
+          </div>
+          {renderTextarea()}
+          </div>
         <Button
           onClick={personAddHandler}
           type="addPerson"

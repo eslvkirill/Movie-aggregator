@@ -1,3 +1,4 @@
+import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import { REGEXP } from 'shared/constants/common';
 
 interface ValidProperties {
@@ -100,9 +101,13 @@ const validateForm = (formControls: any) => {
 	Object.keys(formControls).forEach((name) => {
 		for (const control in formControls[name]) {
 			isFormValid =
-				formControls[name][control].valid &&
-				formControls[name][control].value !== '' &&
-				isFormValid;
+				isFormValid &&
+				formControls[name][control]?.value !== '' &&
+				formControls[name][control]?.valid;
+		}
+
+		if (isFormValid === undefined) {
+			isFormValid = true;
 		}
 	});
 
@@ -114,6 +119,9 @@ function validateInputs(formControls: any) {
 
 	Object.keys(formControls).forEach((name) => {
 		isFormValid =
+			!(
+				[MovieFormFileds.background, MovieFormFileds.poster] as string[]
+			).includes(name) &&
 			formControls[name].valid &&
 			formControls[name].value !== '' &&
 			isFormValid;

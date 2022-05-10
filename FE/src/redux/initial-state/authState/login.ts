@@ -13,7 +13,7 @@ export const loginState = {
 		'Пароль',
 		'Пароль должен быть длиной от 6-ти символов',
 		defaultMaxLength,
-		5,
+		4,
 		'password'
 	),
 };

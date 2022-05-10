@@ -4,11 +4,8 @@ $primary-color: #fceddc;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 90%;
-	justify-content: center;
-	margin: auto;
-	margin-top: 2.5rem;
-	margin-right: -2rem;
+	margin: 280px 80px auto 0;
+	width: 60%;
 
 	h2 {
 		margin-bottom: 1.5rem;
@@ -18,6 +15,7 @@ $primary-color: #fceddc;
 	form {
 		display: flex;
 		justify-content: center;
+		align-items: center;
 	}
 
 	Input {
@@ -66,7 +64,7 @@ $primary-color: #fceddc;
 
 	hr {
 		background: $primary-color;
-		width: 50%;
+		width: 55%;
 		margin-top: 1rem;
 		border-width: 2px;
 	}
