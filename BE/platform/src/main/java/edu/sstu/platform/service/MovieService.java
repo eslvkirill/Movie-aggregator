@@ -21,6 +21,7 @@ import edu.sstu.platform.model.ExternalAggregatorInfo.IdClass;
 import edu.sstu.platform.model.Movie;
 import edu.sstu.platform.model.QRating;
 import edu.sstu.platform.model.Rating;
+import edu.sstu.platform.model.RatingType;
 import edu.sstu.platform.repo.MovieRepo;
 import edu.sstu.platform.repo.RatingRepo;
 import edu.sstu.platform.validator.MovieValidator;
@@ -182,7 +183,7 @@ public class MovieService {
   public MovieInfoResponseDto findMovieById(UUID movieId, UUID userId) {
     var movie = movieRepo.findMovieById(movieId)
         .orElseThrow(() -> entityNotFoundException(movieId));
-    var ratingsByMovieIds = ratingService.findRatingsByMovieIds(List.of(movieId), TOTAL).get(movieId);
+    var ratingsByMovieIds = ratingService.findRatingsByMovieIds(List.of(movieId), RatingType.values()).get(movieId);
     var userRatings = List.<Rating>of();
 
     if (userId != null) {

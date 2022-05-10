@@ -1,5 +1,6 @@
 package edu.sstu.platform.service;
 
+import static edu.sstu.platform.model.RatingType.TOTAL;
 import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.PersonRequestDto;
@@ -8,7 +9,6 @@ import edu.sstu.platform.dto.response.PersonViewResponseDto;
 import edu.sstu.platform.mapper.PersonMapper;
 import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.QPerson;
-import edu.sstu.platform.model.RatingType;
 import edu.sstu.platform.validator.PersonValidator;
 import java.util.List;
 import java.util.UUID;
@@ -71,7 +71,7 @@ public class PersonService {
                 .stream()
                 .map(MoviesToPeopleRelation::getMovieId))
         .collect(Collectors.toList());
-    var ratingsByMovieId = ratingService.findRatingsByMovieIds(personMovieIds, RatingType.values());
+    var ratingsByMovieId = ratingService.findRatingsByMovieIds(personMovieIds, TOTAL);
 
     return personMapper.toInfoDto(person, ratingsByMovieId);
   }
