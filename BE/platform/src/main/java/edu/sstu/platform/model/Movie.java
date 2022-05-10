@@ -2,6 +2,7 @@ package edu.sstu.platform.model;
 
 import static java.util.function.Function.identity;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class Movie {
   private int oscars;
   private boolean active;
   private LocalTime duration;
+  private LocalDateTime creationDate;
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude

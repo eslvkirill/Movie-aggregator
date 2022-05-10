@@ -19,6 +19,7 @@ import edu.sstu.platform.model.ExternalAggregator;
 import edu.sstu.platform.model.ExternalAggregatorInfo;
 import edu.sstu.platform.model.ExternalAggregatorInfo.IdClass;
 import edu.sstu.platform.model.Movie;
+import edu.sstu.platform.model.QMovie;
 import edu.sstu.platform.model.QRating;
 import edu.sstu.platform.model.Rating;
 import edu.sstu.platform.model.RatingType;
@@ -70,6 +71,7 @@ public class MovieService {
   private final MovieValidator movieValidator;
   private final RestTemplate restClient;
   private final ObjectMapper objectMapper;
+  private final QMovie qMovie = QMovie.movie;
   private final QRating qRating = QRating.rating;
 
   @Value("${app.api.omdb}")
@@ -202,7 +204,7 @@ public class MovieService {
   public Page<MovieViewResponseDto> findMovies(Pageable pageable) {
     var movieIdPage = movieRepo.findMovieIds(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
     var movieIds = movieIdPage.getContent();
-    var movies = movieRepo.findByIdIn(movieIds);
+    var movies = movieRepo.findByIdIn(movieIds, Sort.by(toDotPath(qMovie.creationDate)));
     var ratingsByMovieId = ratingService.findRatingsByMovieIds(movieIds, TOTAL);
     var movieDtoList = movieMapper.toViewDto(movies, ratingsByMovieId);
 
