@@ -9,6 +9,7 @@ import edu.sstu.platform.model.PersonRole;
 import edu.sstu.platform.model.Rating;
 import edu.sstu.platform.model.projection.RatingMapping;
 import edu.sstu.platform.service.PersonRepo;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,7 +24,7 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(uses = {FileMapper.class, ReviewMapper.class, PersonMapper.class, RatingMapper.class},
-    imports = {PersonRole.class})
+    imports = {PersonRole.class, LocalDateTime.class})
 @DecoratedWith(MovieMapperDecorator.class)
 public abstract class MovieMapper {
 
@@ -32,6 +33,7 @@ public abstract class MovieMapper {
 
   @Mappings({
       @Mapping(target = "active", constant = "true"),
+      @Mapping(target = "creationDate", expression = "java(LocalDateTime.now())"),
       @Mapping(target = "actorRelations",
           expression = "java(toEntity(movieRequestDto.getActors(), movie, PersonRole.ACTOR))"),
       @Mapping(target = "directorRelations",
@@ -63,7 +65,8 @@ public abstract class MovieMapper {
       @Mapping(target = "genres", ignore = true),
       @Mapping(target = "externalAggregatorInfos", ignore = true),
       @Mapping(target = "actorRelations", ignore = true),
-      @Mapping(target = "directorRelations", ignore = true)
+      @Mapping(target = "directorRelations", ignore = true),
+      @Mapping(target = "creationDate", ignore = true)
   })
   public abstract void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 

@@ -115,4 +115,12 @@
       constraintName="movies_to_genres_to_genres_fk" referencedTableName="genres"
       referencedColumnNames="id" onDelete="CASCADE"/>
   </changeSet>
+
+  <changeSet id="add_creation_date_column" author="Befors">
+    <addColumn tableName="movies">
+      <column name="creation_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

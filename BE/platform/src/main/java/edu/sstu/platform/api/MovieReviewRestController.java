@@ -50,6 +50,6 @@ public class MovieReviewRestController {
 
   @GetMapping
   public Page<ReviewResponseDto> getReviews(@PathVariable UUID movieId, Pageable pageable) {
-    return reviewService.getReviews(movieId, pageable);
+    return reviewService.findReviews(movieId, pageable);
   }
 }

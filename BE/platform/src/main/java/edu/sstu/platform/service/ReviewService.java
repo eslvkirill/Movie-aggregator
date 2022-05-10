@@ -47,7 +47,7 @@ public class ReviewService {
   }
 
   @Transactional(readOnly = true)
-  public Page<ReviewResponseDto> getReviews(UUID movieId, Pageable pageable) {
+  public Page<ReviewResponseDto> findReviews(UUID movieId, Pageable pageable) {
     var reviews = reviewRepo.findAll(qReview.movieId.eq(movieId), pageable);
 
     return reviewMapper.toDto(reviews);
