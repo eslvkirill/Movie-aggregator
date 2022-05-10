@@ -31,6 +31,7 @@ const personReducer = createSlice({
 				(state, action: PayloadAction<any>) => {
 					const { name, biography, image } = action.payload;
 					const { roles } = action.payload;
+					console.log(action);
 
 					state.isLoading = false;
 					state.person = { name, biography, image };
@@ -44,7 +45,6 @@ const personReducer = createSlice({
 			.addCase(
 				getPersonCreator.pending.type,
 				(state: any, action: PayloadAction<any>) => {
-					console.log(action);
 					state.isLoading = true;
 					state.isRedirect = !!action.payload;
 				}
@@ -57,7 +57,7 @@ const personReducer = createSlice({
 					state.error = action.payload;
 				}
 			)
-			.addCase(deletePersonCreator.fulfilled.type, (state) => {
+			.addCase(deletePersonCreator.fulfilled.type, (state, action) => {
 				state.isRedirect = false;
 				state.person = {};
 				state.visibleMovies = [];

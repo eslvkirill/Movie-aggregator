@@ -29,10 +29,6 @@ const setDefaultFieldsAppearanceAction = (movie: any) => {
 	];
 
 	Object.keys(movie).map((name) => {
-		// if (personFieldNames.includes(name)) {
-		// 	movie[name].map(
-		// 		(field: any) => (field.name = field.name.split(', ').sort().join(', '))
-		// 	);
 		if (
 			Array.isArray(movie[name]) &&
 			name !== MovieFormFileds.externalAggregatorsInfo
@@ -40,6 +36,7 @@ const setDefaultFieldsAppearanceAction = (movie: any) => {
 			const movieFieldValue = movie[name].map((field: any) =>
 				name === MovieFormFileds.genres ? field.name : field
 			);
+
 			movie[name] = personFieldNames.includes(name)
 				? movieFieldValue
 				: movieFieldValue.join(', ');
