@@ -162,6 +162,27 @@
 					color: #fff3ddf3;
 					font-size: 18px;
 				}
+
+				.director-section {
+					.directors {
+						a {
+							color: #fff4e8;
+							font-size: 17px;
+							font-weight: 600;
+							cursor: pointer;
+							transition: 0.3s;
+
+							&:hover {
+								color: #ffdac1;
+								transition: 0.3s;
+							}
+
+							&:active {
+								color: #ffd2a1;
+							}
+						}
+					}
+				}
 			}
 
 			.linkToMoviePage {

@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
+import { renderPersons } from 'shared/utils/render';
 import './MovieCard.scss';
 
-const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgroundColor, genres, duration, directors}: any) => (
-  <div className="Cards">
+const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgroundColor, genres, duration, directors }: any) => {
+  const genresValue = Array.isArray(genres) && genres.map((field: any) => field.name).join(', ');
+
+  const durationParts = duration.split(':');
+  const durationValue = Array.isArray(genres) ? `${durationParts[0]}ч ${durationParts[1]}м` : false;
+
+  return (
+    <div className="Cards">
     <Link to={`/movies/${movieId}`}>
       <div
         className="FrontSide"
@@ -46,13 +53,13 @@ const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgrou
           <div className="bottomOfBackItem">
             <div className="details">
               <div className="genres">
-                жанр: <div>{genres}</div>
+                жанр: <div>{genresValue || genres}</div>
               </div>
               <div className="time">
-                длительность: <div>{duration}</div>
+                длительность: <div>{ durationValue || duration}</div>
               </div>
-              <div className="director">
-                режиссёр: <div>{directors}</div>
+              <div className="director-section">
+                режиссёр: {renderPersons(directors)}
               </div>
             </div>
             <div className="linkToMoviePage">➤ к фильму</div>
@@ -61,6 +68,7 @@ const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgrou
       </div>
     </Link>
   </div>
-);
+  );
+}
 
 export default MovieCard;

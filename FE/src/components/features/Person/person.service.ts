@@ -7,6 +7,8 @@ const endpoint = ENDPOINT.PERSON;
 const PersonService = {
 	getPerson: (personId: string) => api.get([endpoint, personId]),
 
+	getAllPersons: () => api.get([endpoint]),
+
 	deletePerson: (personId: string) => api.delete([endpoint, personId]),
 };
 

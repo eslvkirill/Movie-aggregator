@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import MovieService from 'components/features/Movie/movie.service';
 import GenreService from 'components/features/Genre/genre.service';
+import PersonService from 'components/features/Person/person.service';
 import {
 	reset,
 	resetFileInput,
@@ -15,6 +16,7 @@ import {
 
 const movieService = MovieService;
 const genreService = GenreService;
+const personService = PersonService;
 
 const resetCreator = () => (dispatch: any) => {
 	dispatch(resetFileInput());
@@ -31,40 +33,12 @@ const getMovieFormDataCreator = createAsyncThunk(
 	MOVIE_CREATOR.GET_FORM_DATA,
 	async (_, thunkAPI) => {
 		try {
+			const persons = await personService.getAllPersons();
+
 			const genres = await genreService.getGenres();
 			const originCountries = await movieService.getOriginCountries();
-			const actors = [
-				{
-					id: '1237cbb9-8f97-43a6-9ac3-791f5ab97f02',
-					name: 'Брэд Питт',
-				},
-				{
-					id: '174fb052-3d64-475e-a96a-ed7185ef6b01',
-					name: 'Том Круз',
-				},
-				{
-					id: '1943ab5b-3b18-49d5-b76a-35854400e3fb',
-					name: 'Том Круз',
-				},
-				{
-					id: '259b7b07-daf5-4dae-b13d-56c91d1fed1e',
-					name: 'Том Круз',
-				},
-				{
-					id: '839daa6f-5cec-44f3-a7c7-e8836e728c3e',
-					name: 'Том Круз',
-				},
-				{
-					id: '8d18d3fa-e239-456f-bc37-5911a4f7aa6d',
-					name: 'Том Круз',
-				},
-			];
-			const directors = [
-				{
-					id: '96bc15a5-ad37-4cf2-b885-a21a48356d54',
-					name: 'Уэс Андерсон',
-				},
-			];
+			const actors = persons;
+			const directors = persons;
 			const audioLanguages = Object.values(MovieLanguage);
 			const subtitleLanguages = Object.values(MovieLanguage);
 			const ageRating = Object.values(MovieAgeRating);

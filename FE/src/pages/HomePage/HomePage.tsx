@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import MovieList from 'components/features/Movie/MovieList/MovieList';
-import { ROUTE } from 'shared/constants/routes';
-import './HomePage.scss';
 import axios from 'axios';
+import { movieConstructor } from 'shared/utils/common';
+import MovieList from 'components/features/Movie/MovieList/MovieList';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
+import './HomePage.scss';
 
 const HomePage = () => {
   const [movies, setMovies] = useState<any>([]);
@@ -18,28 +17,6 @@ const HomePage = () => {
   const [arrowDirection, setArrowDirection] = useState<any>(true);
   const [sortValue, setSortValue] = useState<any>();
   const [filterContent, setFilterContent] = useState<any>({});
-
-  const movieConstructor = (data: any) => {
-    return [
-      ...data.map((movie: any) => {
-        Object.keys(movie).map((name) => {
-          if (Array.isArray(movie[name]) && movie[name] !== 'poster') {
-            movie[name] = movie[name].map((value: any) => value.name).join(', ');
-          }
-
-          else if (name === 'duration') {
-            const durationParts= movie[name].split(':');
-
-            movie[name] = `${durationParts[0]}ч ${durationParts[1]}м`;
-          }
-
-          return movie[name];
-        });
-
-        return movie;
-      }),
-    ];
-  }
   
   const sortOptions = [
     { value: 'id', label: 'Умолчанию' },
@@ -125,6 +102,8 @@ const HomePage = () => {
   useEffect(() => {
     paginate(currentPage, sortOptions[0], arrowDirection);
   }, []);
+
+  console.log(movies)
   
   return (
     <main className="home-page">

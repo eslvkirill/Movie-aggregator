@@ -28,7 +28,7 @@ const MoviePage = () => {
     dispatch(getMovieByIdCreator(id));
   }, []);
 
-
+  // TODO: dublicate
   const renderPersons = (people: string) => 
     movie[people].map((person: any) => (
       <span key={person.name}>
