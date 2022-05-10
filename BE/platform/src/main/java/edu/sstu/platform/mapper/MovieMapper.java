@@ -69,6 +69,7 @@ public abstract class MovieMapper {
   })
   public abstract MovieInfoResponseDto toInfoDto(Movie movie);
 
+  @Mapping(target = "directors", source = "directorRelations")
   public abstract MovieViewResponseDto toViewDto(Movie movie);
 
   public abstract List<MovieViewResponseDto> toViewDto(List<Movie> movies);

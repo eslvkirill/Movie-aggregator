@@ -4,12 +4,15 @@ import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.PersonRequestDto;
 import edu.sstu.platform.dto.response.PersonInfoResponseDto;
+import edu.sstu.platform.dto.response.PersonViewResponseDto;
 import edu.sstu.platform.mapper.PersonMapper;
 import edu.sstu.platform.model.QPerson;
 import edu.sstu.platform.validator.PersonValidator;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,13 +56,16 @@ public class PersonService {
 
   @Transactional(readOnly = true)
   public PersonInfoResponseDto findPerson(UUID id) {
-    var paths = toDotPath(qPerson.starredMovieRelations, qPerson.directedMovieRelations,
-        qPerson.starredMovieRelations.any().movie, qPerson.directedMovieRelations.any().movie);
-    var person = personRepo.findBy(qPerson.id.eq(id), ffq -> ffq.project(paths)
-        .stream()
-        .findFirst()
-        .orElseThrow(() -> entityNotFoundException(id)));
+    var person = personRepo.findPersonById(id)
+        .orElseThrow(() -> entityNotFoundException(id));
 
     return personMapper.toInfoDto(person);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PersonViewResponseDto> findPeople() {
+    var order = toDotPath(qPerson.firstName, qPerson.lastName).toArray(String[]::new);
+
+    return personMapper.toViewDto(personRepo.findAll(Sort.by(order)));
   }
 }

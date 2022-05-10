@@ -2,7 +2,9 @@ package edu.sstu.platform.api;
 
 import edu.sstu.platform.dto.request.PersonRequestDto;
 import edu.sstu.platform.dto.response.PersonInfoResponseDto;
+import edu.sstu.platform.dto.response.PersonViewResponseDto;
 import edu.sstu.platform.service.PersonService;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +46,10 @@ public class PersonRestController {
   @GetMapping("/{id}")
   public PersonInfoResponseDto getPerson(@PathVariable UUID id) {
     return personService.findPerson(id);
+  }
+
+  @GetMapping
+  public List<PersonViewResponseDto> getPeople() {
+    return personService.findPeople();
   }
 }
