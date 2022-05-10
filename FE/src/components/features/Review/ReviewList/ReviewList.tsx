@@ -10,7 +10,7 @@ import ReviewItem from '../ReviewItem/ReviewItem';
 import './ReviewList.scss';
 
 const ReviewList = (props: any) => {
-  const { movieId, setReviewButtonActive, secondaryPageColor, primaryPageColor, rusTitle, reviewButtonActive } = props;
+  const { movieId, secondaryPageColor, primaryPageColor, rusTitle } = props;
 
   const { user } = useAppSelector(state => state.authReducer);
   const authUser = isUserLoggIn(user);
@@ -21,11 +21,15 @@ const ReviewList = (props: any) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dropdown, setDropdawn] = useState(false);
   const [, setFormControls] = useState('');
+  const [reviewButtonActive, setReviewButtonActive] = useState(false);
 
   const paginate = async (pageNumber: number) => {
     const response = await axios.get(
       `/api/v1/movies/${movieId}/reviews?page=${pageNumber - 1}`
     );
+
+    response.data.content.some((review: any) => setReviewButtonActive(user.username === review.username));
+
     setReviews(response.data.content);
     setTotalElements(response.data.totalElements);
     setTotalPages(response.data.totalPages);
@@ -87,18 +91,21 @@ const ReviewList = (props: any) => {
         `/api/v1/movies/${movieId}/reviews?page=${currentPage - 1}`
       );
       const { content } = response.data;
-      const index = reviews.findIndex((review: any) => review.id === reviewId);
+      const index = content.findIndex((review: any) => review.id === reviewId);
 
-      if (reviews[index] !== undefined) reviews[index].open = false;
-
-      setReviews(content);
+      if (content[index]) {
+        content[index].open = false;
+      }
 
       const review = {
         title: reviews[index].title,
         body: reviews[index].body,
       };
-      setReviews(reviews);
 
+      reviews[index].open = false;
+      
+      setReviews([...reviews]);
+      
       await axios({
         method: 'put',
         url: `/api/v1/movies/${movieId}/reviews/${reviews[index].id}`,
@@ -134,7 +141,7 @@ const ReviewList = (props: any) => {
 
   return (
     <div
-      id="ReviewSection"
+      id="reviews"
       style={{
         background: `linear-gradient(200deg, 
         ${secondaryPageColor} 18%, 

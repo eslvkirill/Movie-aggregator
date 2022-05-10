@@ -50,7 +50,9 @@ const PersonList = () => {
   };
 
   const clearInputs = () => {
-    const { inputControls } = formControls;
+    const { inputControls, textareaControls } = formControls;
+
+    textareaControls.biography.value = '';
 
     Object.keys(inputControls).map((controlName) => {
       const control = formControls[controlName];
@@ -106,8 +108,6 @@ const PersonList = () => {
 
     inputControls[controlName] = control;
 
-    console.log(inputControls[controlName]);
-
     setPerson(person);
     setFormControls((prev: any) => ({ ...prev, ...inputControls }));
     setFormValid(validateForm(formControls));
@@ -123,8 +123,6 @@ const PersonList = () => {
 
     textareaControls[controlName] = control;
     person[controlName] = control.value;
-
-    console.log(textareaControls[controlName]);
 
     setPerson(person);
     setFormControls((prevState: any) => ({ ...prevState, ...textareaControls }));

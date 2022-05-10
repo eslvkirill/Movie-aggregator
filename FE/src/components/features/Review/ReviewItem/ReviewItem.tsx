@@ -57,7 +57,7 @@ const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChang
               />
             </div>
             {authUser && user.username === review.username ? (
-              <div className="reviewEdit">
+              <div className={!review.open ? 'reviewEdit' : 'reviewEdit reviewSave' }>
                 <div
                   id={review.id}
                   onClick={() =>

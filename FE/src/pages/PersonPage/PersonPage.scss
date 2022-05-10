@@ -1,3 +1,9 @@
+.person-loader {
+	.Center {
+		margin-top: 250px;
+	}
+}
+
 .person {
 	margin-top: 170px;
 
@@ -6,9 +12,9 @@
 		flex-direction: column;
 		align-items: flex-end;
 		width: 94%;
-		margin: 0 auto 23px;
+		margin: 0 auto 35px;
 		padding: 40px 20px 30px;
-		background: #ffffff05;
+		background: #9012c533;
 		box-shadow: 10px 0 20px 5px rgb(0 0 0 / 33%);
 
 		&__delete-icon {
@@ -31,7 +37,7 @@
 			width: 100%;
 
 			&__photo {
-				width: 200px;
+				width: 300px;
 				margin-bottom: 8px;
 				border-radius: 24px;
 			}
@@ -50,17 +56,33 @@
 	}
 
 	.movies-section {
+		margin-bottom: 85px;
+
 		.buttons {
 			display: flex;
 			justify-content: space-evenly;
 		}
 
 		&__role {
+			font-size: 21px;
+			border-radius: 0px;
+			padding: 13px 25px;
+
 			&_actor {
 				background: orange;
 			}
 			&_director {
 				background: purple;
+			}
+		}
+
+		.AllMovies {
+			min-height: 100%;
+
+			ul {
+				li {
+					margin-top: -10px;
+				}
 			}
 		}
 	}

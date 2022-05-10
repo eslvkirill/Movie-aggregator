@@ -155,16 +155,31 @@
 			.Details {
 				color: #fafafa;
 				font-size: 1.4rem;
-				width: 40%;
+				width: 42%;
 
 				span {
 					font-size: 1.2rem;
 				}
 
 				.People {
-					color: #fff4e8;
-					font-weight: 600;
-					cursor: pointer;
+					span {
+						a {
+							color: #fff4e8;
+							font-size: 23px;
+							font-weight: 600;
+							cursor: pointer;
+							transition: 0.3s;
+
+							&:hover {
+								color: #ffdac1;
+								transition: 0.3s;
+							}
+
+							&:active {
+								color: #ffd2a1;
+							}
+						}
+					}
 				}
 			}
 
@@ -191,7 +206,7 @@
 					.TrailerButton {
 						@include flexible();
 						cursor: pointer;
-						width: 46%;
+						width: 44%;
 						opacity: 0.95;
 						background: #bd5b3174;
 						border: 3px outset;

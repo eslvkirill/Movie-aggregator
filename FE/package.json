@@ -27,6 +27,7 @@
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-scroll": "^1.8.7",
     "react-select": "^5.3.0",
     "react-transition-group": "^4.4.2",
     "redux": "^4.2.0",
@@ -61,6 +62,7 @@
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {
+    "@types/react-scroll": "^1.8.3",
     "@types/react-transition-group": "^4.4.4",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
