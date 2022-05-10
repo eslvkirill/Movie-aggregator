@@ -20,4 +20,5 @@ public class ReviewResponseDto {
   private LocalDateTime creationDate;
 
   private String username;
+  private float userRating;
 }

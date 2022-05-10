@@ -4,12 +4,12 @@ import edu.sstu.platform.dto.request.MovieReviewRequestDto;
 import edu.sstu.platform.dto.response.ReviewResponseDto;
 import edu.sstu.platform.model.Review;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
-import org.springframework.data.domain.Page;
 
 @Mapper(imports = {LocalDateTime.class})
 public interface ReviewMapper {
@@ -18,24 +18,27 @@ public interface ReviewMapper {
       @Mapping(target = "creationDate", expression = "java(LocalDateTime.now())"),
       @Mapping(target = "id", ignore = true),
       @Mapping(target = "movie", ignore = true),
-      @Mapping(target = "user", ignore = true)
+      @Mapping(target = "user", ignore = true),
+      @Mapping(target = "ratings", ignore = true)
   })
   Review toEntity(MovieReviewRequestDto movieReviewRequestDto, UUID movieId, UUID userId);
 
   @Mappings({
-      @Mapping(target = "userId", ignore = true),
-      @Mapping(target = "user", ignore = true),
+      @Mapping(target = "id", ignore = true),
       @Mapping(target = "movieId", ignore = true),
       @Mapping(target = "movie", ignore = true),
+      @Mapping(target = "userId", ignore = true),
+      @Mapping(target = "user", ignore = true),
       @Mapping(target = "creationDate", ignore = true),
-      @Mapping(target = "id", ignore = true)
+      @Mapping(target = "ratings", ignore = true)
   })
   void update(MovieReviewRequestDto movieReviewRequestDto, @MappingTarget Review review);
 
-  @Mapping(target = "username", source = "user.username")
+  @Mappings({
+      @Mapping(target = "username", source = "user.username"),
+      @Mapping(target = "userRating", source = "rating.score")
+  })
   ReviewResponseDto toDto(Review review);
 
-  default Page<ReviewResponseDto> toDto(Page<Review> reviews) {
-    return reviews.map(this::toDto);
-  }
+  List<ReviewResponseDto> toDto(List<Review> reviews);
 }
