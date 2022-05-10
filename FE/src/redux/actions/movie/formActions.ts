@@ -1,7 +1,11 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { current, PayloadAction } from '@reduxjs/toolkit';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import { REGEXP } from 'shared/constants/common';
-import { validate, validateForm } from 'shared/utils/validation';
+import {
+	validate,
+	validateForm,
+	validateInputs,
+} from 'shared/utils/validation';
 
 const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 	const { movie, formControls } = state;
@@ -22,7 +26,8 @@ const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 	}
 
 	inputControls[controlName] = control;
-	state.isFormValid = validateForm(formControls);
+
+	state.isFormValid = validateInputs(inputControls);
 };
 
 const onChangeFileInputEventAction = (
@@ -51,7 +56,10 @@ const onChangeFileInputEventAction = (
 	}
 
 	movie[controlName] = value;
-	state.isFormValid = validateForm(formControls);
+
+	formControls.inputControls[controlName] = control;
+
+	state.isFormValid = validateInputs(formControls.inputControls);
 };
 
 const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
@@ -88,7 +96,8 @@ const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
 	}
 
 	selectControls[controlName] = control;
-	state.isFormValid = validateForm(formControls);
+
+	state.isFormValid = validateInputs(formControls.selectControls);
 };
 
 const resetFileInputAction = (state: any) => {

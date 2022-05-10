@@ -104,12 +104,10 @@ const MovieForm = () => {
         rusTitle={notificationMessage}
         // rusTitle={movie.rusTitle}
       />
-      {/* <h2>Создание фильма</h2> */}
       <form
         className="movie-form"
         onSubmit={(event) => submitNewMovie(event)}
       >
-        <div className="movie-form__creation-title">Создание фильма</div>
         <div className="movie-form__controls">
           {renderInputs(formControls.inputControls, onInputChangeHandler)}
           {renderSelects(formControls.selectControls, onSelectChangeHandler)}

@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { logout } from 'redux/reducers/authReducer';
+import { USER_ROLES } from 'shared/constants/common';
 import { isUserLoggIn } from 'shared/utils/common';
 import './Navigation.scss';
 
@@ -12,11 +13,15 @@ const Navigation = () => {
 
   const links = [
     authUser && {
-      to: '/',
+      to: '/personal-account',
       label: user.username,
       visible: false,
     },
-    // { to: "/myFilms", label: "Мои фильмы", visible: true },
+    // authUser && { 
+    //   to: '/my-collection', 
+    //   label: 'Моя коллекция', 
+    //   visible: true 
+    // },
     authUser && {
       to: '/admin-panel',
       label: 'Панель администратора',
@@ -43,6 +48,14 @@ const Navigation = () => {
 
       if (authUser) {
         visible = true;
+
+        if (!user.roles.includes(USER_ROLES.ADMIN) && to === '/admin-panel') {
+          visible = false;
+        }
+
+        // else if (to === '/admin-panel') {
+        //   to = '/admin-panel/movies';
+        // }
       }
 
       if (visible) {
@@ -64,7 +77,7 @@ const Navigation = () => {
                       boxShadow: '1px 5px 10px -5px black',
                       borderRadius: '10px 0 0 10px',
                     }
-                  : to === '/'
+                  : to === '/personal-account'
                   ? {
                       textTransform: 'none',
                       backgroundColor: '#b101b1',

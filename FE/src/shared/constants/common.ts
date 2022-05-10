@@ -16,4 +16,10 @@ const REGEXP = {
 	},
 };
 
-export { REGEXP };
+const USER_ROLES = {
+	USER: 'USER',
+	ADMIN: 'ADMIN',
+	CRITIC: 'CRITIC',
+};
+
+export { REGEXP, USER_ROLES };

@@ -28,12 +28,11 @@ const registrationCreator = createAsyncThunk(
 			const { registrationState } = (thunkAPI.getState() as any).authReducer
 				.formControls;
 
-			const response = await service.registration(
-				fillDataFromControls(registrationState)
-			);
+			await service.registration(fillDataFromControls(registrationState));
 
 			return await service.getUserInfo();
 		} catch (e) {
+			console.log(e);
 			return thunkAPI.rejectWithValue('Не удалось войти в систему');
 		}
 	}

@@ -63,8 +63,6 @@ const Input = (props: InputControl) => {
             className="placeholder"
             style={{
               width: 352,
-              marginTop: -61,
-              marginRight: -12,
               color: 'rgb(168, 145, 118)',
               fontSize: 16,
               height: 10,

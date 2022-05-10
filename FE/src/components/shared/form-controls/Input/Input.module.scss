@@ -26,13 +26,13 @@ input {
 	transition: 0.3s;
 
 	&::placeholder {
-		color: rgb(168, 145, 118);
+		color: #a89176;
 		transition: 0.3s;
 		font-size: 18px;
 	}
 
 	&:focus {
-		background: rgb(255, 244, 232);
+		background: #fff4e8;
 		transition: 0.3s;
 	}
 
@@ -74,11 +74,13 @@ input {
 	box-shadow: none;
 	border: 2px solid #c76c04;
 	border-radius: 10px;
-	margin: 0 1.2rem 1.4rem 1.2rem;
+	margin-bottom: 1.2rem;
+	margin-left: 1.2rem;
+	margin-right: -3rem;
 
 	[type='file'] {
 		width: 400px;
-		height: 48.8px;
+		height: 72%;
 		opacity: 0;
 	}
 
@@ -90,7 +92,7 @@ input {
 		justify-content: center;
 		width: 160px;
 		background-color: #c76c04;
-		height: 46.8px;
+		height: 104%;
 		color: #fafafa;
 		position: absolute;
 		right: -0.8px;
