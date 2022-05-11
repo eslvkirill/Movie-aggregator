@@ -8,21 +8,27 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
+import { isUserLoggIn } from 'shared/utils/common';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
+import Backdrop from 'components/shared/pop-ups/Backdrop/Backdrop';
+import RatingList from 'components/features/Rating/RatingList/RatingList';
+import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
-import Rating from '../../components/features/Rating/Rating';
 
 const MoviePage = () => {
   const { id } = useParams() as { id: string };
 
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
+  const { user } = useAppSelector(state => state.authReducer);
+  const authUser = isUserLoggIn(user);
 
   const [userRating, setUserRating] = useState(0);
   const [totalRating, setTotalRating] = useState(0);
   const [numberOfRatings, setNumberOfRatings] = useState(0);
+  const [isOpenModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(getMovieByIdCreator(id));
@@ -151,17 +157,32 @@ const MoviePage = () => {
                   </div>
                 </div>
               </div>
-              {/* {authForm ? (
-                <Backdrop authForm={authForm} setAuthForm={setAuthForm} />
-              ) : null} */}
-              <Rating
-                movieId={id}
-                userRating={userRating}
-                setUserRating={setUserRating}
-                setTotalRating={setTotalRating}
-                totalRating={totalRating}
-                setNumberOfRatings={setNumberOfRatings}
-              />
+              {isOpenModal ? (
+                <Backdrop isOpenModal={isOpenModal}>
+                  <RatingList 
+                    isOpenModal={isOpenModal} 
+                    setOpenModal={setOpenModal} 
+                    movieId={id}
+                    userRating={userRating}
+                    setUserRating={setUserRating}
+                    setTotalRating={setTotalRating}
+                    totalRating={totalRating}
+                    setNumberOfRatings={setNumberOfRatings}
+                  />
+                </Backdrop>
+              ) : null}
+              <div className="total-rating">
+                <div className="caption">Ваше общее впечатление: </div>
+                <RatingItem
+                  movieId={id}
+                  userRating={userRating}
+                  setOpenModal={setOpenModal}
+                  setUserRating={setUserRating}
+                  setTotalRating={setTotalRating}
+                  totalRating={totalRating}
+                  setNumberOfRatings={setNumberOfRatings}
+                />
+              </div>
               <div className="Time">{duration}</div>
               <div className="Plot">{description}</div>
               <div className="AfterPlotBlock">
@@ -221,10 +242,12 @@ const MoviePage = () => {
             </div>
             <div className="totalRatingBlock">
               <div className="totalRating" title="Общий рейтинг">
+                8.8
                 {/* {totalRating.toFixed(2)} */}
               </div>
               <div className="numberOfRatings" title="Количество пользователей">
                 {/* {numberOfRatings} оценок */}
+                12 оценок
               </div>
             </div>
           </section>

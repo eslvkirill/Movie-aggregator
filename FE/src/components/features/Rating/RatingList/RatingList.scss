@@ -1,0 +1,64 @@
+.rating-form-wrapper {
+	border: 2px solid;
+	width: 60%;
+	margin: 0 auto;
+	display: flex;
+	height: 86%;
+	align-items: center;
+	justify-content: space-between;
+
+	.rating-form {
+		align-items: center;
+		margin: auto;
+		justify-content: center;
+		flex-direction: column;
+
+		.line {
+			margin-top: 10px;
+		}
+
+		.left-section {
+			display: flex;
+			align-items: baseline;
+
+			.line__name {
+				width: 90%;
+				text-align: center;
+				margin-right: 10px;
+				font-size: 42px;
+			}
+
+			.rating {
+				.ratingSection {
+					display: flex;
+					align-items: center;
+					flex-flow: initial;
+					margin: 24px 0 0 0.75rem;
+
+					.rating {
+						width: 65px;
+					}
+				}
+			}
+		}
+
+		.line__description {
+			font-size: 16px;
+			letter-spacing: 1.5px;
+			margin-left: 329px;
+			color: #fffc9e;
+			text-align: center;
+		}
+	}
+
+	.button-close {
+		height: 93%;
+		margin-right: 18px;
+
+		.icon-close {
+			min-width: 47px;
+			font-size: 27px;
+			background-color: red;
+		}
+	}
+}

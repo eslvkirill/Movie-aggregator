@@ -25,10 +25,10 @@ const ReviewList = (props: any) => {
 
   const paginate = async (pageNumber: number) => {
     const response = await axios.get(
-      `/api/v1/movies/${movieId}/reviews?page=${pageNumber - 1}`
+      `/api/v1/movies/${movieId}/reviews?size=4&page=${pageNumber - 1}`
     );
 
-    response.data.content.some((review: any) => setReviewButtonActive(user.username === review.username));
+    response.data.content.some((review: any) => setReviewButtonActive(!review.username && user.username !== review.username));
 
     setReviews(response.data.content);
     setTotalElements(response.data.totalElements);

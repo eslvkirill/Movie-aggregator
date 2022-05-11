@@ -32,8 +32,6 @@ const ReviewForm = (props: any) => {
         body: formControls.formTextareaControls.body.value,
       };
 
-      console.log(review);
-
       const response = await axios({
         method: 'post',
         headers: {
@@ -73,6 +71,9 @@ const ReviewForm = (props: any) => {
       }
       
       setReviewButtonActive(true);
+
+      inputState.title.value = '';
+      textareaState.body.value = '';
     } catch (e) {
       console.log(e);
     }

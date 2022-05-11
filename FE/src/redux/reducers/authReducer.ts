@@ -56,6 +56,7 @@ const authReducer = createSlice({
 				registrationCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
 					state.user = action.payload;
+					localStorage.setItem('userInfo', JSON.stringify(state.user));
 				}
 			)
 			.addCase(
