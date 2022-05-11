@@ -18,7 +18,7 @@
 
 		.totalRatingBlock {
 			cursor: default;
-			font-family: 'Nunito', sans-serif;
+			font-family: 'Nunito';
 			padding: 7% 3% 9.8% 0;
 			display: flex;
 			flex-direction: column;
@@ -180,6 +180,20 @@
 							}
 						}
 					}
+				}
+			}
+
+			.total-rating {
+				display: flex;
+				align-items: flex-end;
+
+				.caption {
+					margin-left: 12px;
+					width: 218px;
+					font-weight: 600;
+					font-size: 28px;
+					color: #fff8e0;
+					text-decoration: underline;
 				}
 			}
 
@@ -530,7 +544,7 @@
 						}
 					}
 
-					.Rating {
+					.RatingItem {
 						font-size: 22px;
 						margin-bottom: 1%;
 					}
@@ -718,7 +732,7 @@
 .Plot,
 .AfterPlotBlock,
 .Time,
-.rating,
+.total-rating,
 .totalRatingBlock {
 	opacity: 0;
 	animation: fadeIn 1s linear forwards;

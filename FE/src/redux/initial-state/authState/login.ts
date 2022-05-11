@@ -11,7 +11,7 @@ export const loginState = {
 	),
 	password: createDefaultInput(
 		'Пароль',
-		'Пароль должен быть длиной от 6-ти символов',
+		'Пароль должен быть длиной от 4-x символов',
 		defaultMaxLength,
 		4,
 		'password'

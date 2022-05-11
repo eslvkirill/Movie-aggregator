@@ -102,8 +102,6 @@ const HomePage = () => {
   useEffect(() => {
     paginate(currentPage, sortOptions[0], arrowDirection);
   }, []);
-
-  console.log(movies)
   
   return (
     <main className="home-page">

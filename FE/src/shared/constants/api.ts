@@ -10,6 +10,7 @@ const ENDPOINT = {
 	MOVIES: 'movies',
 	COUNTRIES: 'countries',
 	PERSON: 'people',
+	RATINGS: 'ratings',
 };
 
 const REQUEST = {

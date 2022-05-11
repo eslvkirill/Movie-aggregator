@@ -34,7 +34,7 @@ const Navigation = () => {
 
   const clickHandler = async () => {   
     try { 
-      await axios.get('/logout').then(() => dispatch(logout()));
+      await axios.post('/logout').then(() => dispatch(logout()));
     }
     catch (e) {
       console.log(e);

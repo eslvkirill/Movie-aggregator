@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { useAppSelector } from 'hooks/redux';
 import { isUserLoggIn } from 'shared/utils/common';
-import './Rating.scss';
+import './RatingItem.scss';
 
-const Rating = (props: any) => {
-  const { userRating, movieId, setUserRating, setTotalRating, setNumberOfRatings, } = props;
+const RatingItem = (props: any) => {
+  const { userRating, movieId, setUserRating, setTotalRating, setNumberOfRatings, setOpenModal, ratingCategoryType } = props;
 
   const { user } = useAppSelector(state => state.authReducer);
   const authUser = isUserLoggIn(user);
@@ -27,16 +27,22 @@ const Rating = (props: any) => {
     },
   })(MaterialUIRating);
 
-  const ratingHandler = (method: any) => async (newValue: any) => {
+  const ratingHandler = (method: any) => async (ratingType: string, newValue: any) => {
     try {
       const response = await axios({
         method: method,
         url: `/api/v1/movies/${movieId}/ratings`,
-        data: method !== 'delete' ? { value: newValue } : null
+        data: method !== 'delete' 
+        ? { ratingType, score: newValue } 
+        : null
       });
 
-      if (method === 'delete') setUserRating(null);
-      else setUserRating(newValue);
+      if (method === 'delete') {
+        setUserRating(null);
+      }
+      else {
+        setUserRating(newValue);
+      }
 
       setTotalRating(response.data.totalRating);
       setNumberOfRatings(response.data.numberOfRatings);
@@ -62,18 +68,20 @@ const Rating = (props: any) => {
             if (newValue) {
               setUserRating(newValue);
 
-              if (rating !== null) {
-                editRatingHandler(newValue);
-              }
+              // if (rating !== null) {
+              //   editRatingHandler(newValue);
+              // }
+              console.log(ratingCategoryType);
 
               if (rating === null) {
-                addRatingHandler(newValue);
+                console.log(ratingCategoryType);
+                addRatingHandler(ratingCategoryType, newValue);
               }
             }
+            setOpenModal(true);
 
-            // setAuthForm(false);
           } else {
-            // setAuthForm(true);
+            setOpenModal(false);
           }
         }}
         style={rating === null ? { order: 2 } : {}}
@@ -86,7 +94,8 @@ const Rating = (props: any) => {
             : {}
         }
       >
-        <div
+        {authUser ? (
+          <div
           className="removeRating"
           title={rating === null ? '' : 'Удалить оценку'}
           style={
@@ -108,7 +117,8 @@ const Rating = (props: any) => {
         >
           {rating !== null ? '✖' : 'Оценить ➤'}
         </div>
-        {authUser && (
+        ) : ''} 
+        {authUser ? (
           <div
             className="rating"
             title={`Ваша оценка: ${rating}`}
@@ -116,10 +126,10 @@ const Rating = (props: any) => {
           >
             {rating !== null ? rating : null}
           </div>
-        )}
+        ) : ''}
       </div>
     </div>
   );
 };
 
-export default Rating;
+export default RatingItem;
