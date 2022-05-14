@@ -90,12 +90,6 @@ const movieReducer = createSlice({
 					state.notificationMessage = action.payload;
 				}
 			)
-			// .addCase(
-			// 	updateMovieCreator.fulfilled.type,
-			// 	(state, action: PayloadAction<any>) => {
-			// 		console.log(state, action);
-			// 	}
-			// )
 			.addCase(
 				setImageFilesCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
@@ -110,6 +104,7 @@ const movieReducer = createSlice({
 				(state, action: PayloadAction<any>) => {
 					state.movie = action.payload;
 					state.loading = false;
+					state.isEdit = false;
 
 					const aggregators = state.movie.externalAggregatorsInfo;
 

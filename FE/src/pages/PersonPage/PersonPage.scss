@@ -17,15 +17,31 @@
 		background: #9012c533;
 		box-shadow: 10px 0 20px 5px rgb(0 0 0 / 33%);
 
-		&__delete-icon {
+		.action-buttons {
+			opacity: 1;
+			transition: none;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			position: relative;
 			bottom: 25px;
 
-			&_submit {
-				min-width: 37px;
-				background: red;
-				font-size: 37px;
-				padding: 0 9px;
+			&__delete-icon,
+			&__update-icon {
+				.update {
+					background: orange;
+					min-width: 55px;
+					font-size: 36px;
+					padding: 0 11px;
+				}
+
+				.delete {
+					background: red;
+					min-width: 37px;
+					font-size: 37px;
+					padding: 0 12px;
+				}
 			}
 		}
 
