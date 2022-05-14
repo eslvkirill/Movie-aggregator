@@ -1,4 +1,5 @@
 enum MovieFormFileds {
+	id = 'id',
 	rusTitle = 'rusTitle',
 	engTitle = 'engTitle',
 	tagline = 'tagline',
@@ -13,6 +14,7 @@ enum MovieFormFileds {
 	poster = 'poster',
 	background = 'background',
 	genres = 'genres',
+	displayGenres = 'displayGenres',
 	actors = 'actors',
 	directors = 'directors',
 	originCountries = 'originCountries',
@@ -20,6 +22,9 @@ enum MovieFormFileds {
 	subtitleLanguages = 'subtitleLanguages',
 	ageRating = 'ageRating',
 	externalAggregatorsInfo = 'externalAggregatorsInfo',
+	averageRatings = 'averageRatings',
+	oscars = 'oscars',
+	userRatings = 'userRatings',
 }
 
 enum MovieLanguage {

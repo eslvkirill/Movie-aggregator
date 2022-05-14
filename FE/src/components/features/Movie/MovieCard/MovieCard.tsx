@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { renderPersons } from 'shared/utils/render';
 import './MovieCard.scss';
 
 const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgroundColor, genres, duration, directors }: any) => {
+  const { id } = useParams() as { id: string };
+  
   const genresValue = Array.isArray(genres) && genres.map((field: any) => field.name).join(', ');
-
   const durationParts = duration.split(':');
   const durationValue = Array.isArray(genres) ? `${durationParts[0]}ч ${durationParts[1]}м` : false;
 
@@ -59,7 +60,7 @@ const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgrou
                 длительность: <div>{ durationValue || duration}</div>
               </div>
               <div className="director-section">
-                режиссёр: {renderPersons(directors)}
+                режиссёр: {renderPersons(directors, id)}
               </div>
             </div>
             <div className="linkToMoviePage">➤ к фильму</div>

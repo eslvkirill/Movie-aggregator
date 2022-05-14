@@ -6,11 +6,12 @@ interface ButtonControl {
   id?: string;
   disabled?: boolean | undefined;
   children?: any;
+  title?: string;
   onClick?: MouseEventHandler<Element> | undefined | any;
 }
 
 const Button = (props: ButtonControl) => {
-  const { id, type, onClick, disabled, children } = props;
+  const { id, type, onClick, disabled, title, children } = props;
 
   const buttonType = type || 'success';
   const cls = type && [classes.Button, classes[type], buttonType];
@@ -20,6 +21,7 @@ const Button = (props: ButtonControl) => {
       id={id}
       onClick={onClick}
       type={buttonType}
+      title={title}
       className={cls && cls.join(' ')}
       disabled={disabled}
     >

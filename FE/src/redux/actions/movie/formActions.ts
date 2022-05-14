@@ -120,9 +120,158 @@ const resetFileInputAction = (state: any) => {
 	});
 };
 
+const prefillMovieFormAction = (state: any) => {
+	const fileFields = [MovieFormFileds.poster, MovieFormFileds.background];
+	const customFields = [
+		MovieFormFileds.genres,
+		MovieFormFileds.actors,
+		MovieFormFileds.directors,
+	];
+
+	Object.keys(state.movie).map((movieField: any) => {
+		Object.keys(state.formControls.inputControls).map((inputField: any) => {
+			if (movieField === MovieFormFileds.externalAggregatorsInfo) {
+				state.movie[movieField].map((aggregator: any) => {
+					if (aggregator.name === 'Kinopoisk') {
+						state.formControls.inputControls[
+							MovieFormFileds.kinopoiskUrl
+						].value = aggregator.url;
+					} else if (aggregator.name === 'Imdb') {
+						state.formControls.inputControls[MovieFormFileds.imdbUrl].value =
+							aggregator.url;
+					}
+
+					return state.formControls.inputControls;
+				});
+			} else if (
+				movieField === MovieFormFileds.trailerUrl &&
+				movieField === inputField
+			) {
+				state.formControls.inputControls[inputField].value = state.movie[
+					movieField
+				].replace('embed/', 'watch?v=');
+			} else if (
+				movieField === MovieFormFileds.duration &&
+				movieField === inputField
+			) {
+				state.formControls.inputControls[inputField].value = state.movie[
+					movieField
+				]
+					.replace(/[^+\d]/g, '')
+					.replace(/\s/g, '')
+					.replace(/(.{2})/g, '$1:')
+					.slice(0, -1);
+			} else if (
+				!fileFields.includes(movieField) &&
+				movieField === inputField
+			) {
+				state.formControls.inputControls[inputField].value =
+					state.movie[movieField];
+			} else if (fileFields.includes(movieField) && movieField === inputField) {
+				const control = state.formControls.inputControls[inputField];
+
+				control.idSpan = inputField + control.id;
+
+				const span = document.getElementById(control.idSpan) as HTMLElement;
+				span.textContent = 'Измените изображение';
+				span.style.right = '19%';
+				span.style.color = 'rgb(168, 145, 118)';
+			}
+
+			return state.formControls.inputControls;
+		});
+
+		Object.keys(state.formControls.selectControls).map((selectField: any) => {
+			if (!customFields.includes(movieField) && movieField === selectField) {
+				state.formControls.selectControls[selectField].value = state.movie[
+					movieField
+				]
+					.split(',')
+					.map((value: string, index: number) => ({
+						label: value,
+						value: index,
+					}));
+			} else if (
+				customFields.includes(movieField) &&
+				movieField === selectField
+			) {
+				state.formControls.selectControls[selectField].value = state.movie[
+					movieField
+				].map((person: any) => {
+					person.value = person.id;
+					person.label = person.name;
+
+					delete person.id;
+					delete person.name;
+
+					return person;
+				});
+			}
+
+			return state.formControls.selectControls;
+		});
+
+		return state.formControls;
+	});
+};
+
+const updateMovieAction = (state: any) => {
+	delete state.movie[MovieFormFileds.averageRatings];
+	delete state.movie[MovieFormFileds.oscars];
+	delete state.movie[MovieFormFileds.userRatings];
+	delete state.movie[MovieFormFileds.displayGenres];
+
+	Object.keys(state.movie).map((movieField: any) => {
+		const isCreationedFields = [
+			MovieFormFileds.genres,
+			MovieFormFileds.actors,
+			MovieFormFileds.directors,
+		].includes(movieField);
+
+		if (movieField === MovieFormFileds.externalAggregatorsInfo) {
+			state.movie[movieField].map((aggregator: any) => {
+				if (aggregator.name === 'Kinopoisk') {
+					state.movie.kinopoiskUrl = aggregator.url;
+				} else if (aggregator.name === 'Imdb') {
+					state.movie.imdbUrl = aggregator.url;
+				}
+
+				return state.formControls.inputControls;
+			});
+		} else if (movieField === MovieFormFileds.duration) {
+			state.movie[movieField] = state.movie[movieField]
+				.replace(/[^+\d]/g, '')
+				.replace(/\s/g, '')
+				.replace(/(.{2})/g, '$1:')
+				.concat('00');
+		}
+
+		const controlValueLabel = isCreationedFields ? 'value' : 'label';
+
+		Object.keys(state.formControls.selectControls).map((selectField: any) => {
+			if (movieField === selectField) {
+				state.movie[movieField] = state.formControls.selectControls[
+					movieField
+				].value.map((selectValue: any) => selectValue[controlValueLabel]);
+
+				if (movieField === MovieFormFileds.ageRating)
+					state.movie[movieField] = state.movie[movieField].join();
+			}
+
+			return state.movie;
+		});
+
+		return state.movie;
+	});
+
+	delete state.movie[MovieFormFileds.externalAggregatorsInfo];
+};
+
 export {
 	onChangeInputEventAction,
 	onChangeFileInputEventAction,
 	onChangeSelectEventAction,
 	resetFileInputAction,
+	prefillMovieFormAction,
+	updateMovieAction,
 };

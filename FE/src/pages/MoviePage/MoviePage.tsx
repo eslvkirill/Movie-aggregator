@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
 import { faM } from '@fortawesome/free-solid-svg-icons';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
-import { isUserLoggIn } from 'shared/utils/common';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { deleteMovieCreator, getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
+import { makeMovieEditable, reset } from 'redux/reducers/movieReducer';
+import { renderPersons } from 'shared/utils/render';
+import { USER_ROLES } from 'shared/constants/common';
+import { isUserLoggIn } from 'shared/utils/common';
+import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import Backdrop from 'components/shared/pop-ups/Backdrop/Backdrop';
+import Button from 'components/shared/form-controls/Button/Button';
 import RatingList from 'components/features/Rating/RatingList/RatingList';
 import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
@@ -19,6 +23,7 @@ import './MoviePage.scss';
 
 const MoviePage = () => {
   const { id } = useParams() as { id: string };
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const { movie, loading } = useAppSelector(state => state.movieReducer);
@@ -31,20 +36,20 @@ const MoviePage = () => {
   const [isOpenModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    dispatch(reset());
     dispatch(getMovieByIdCreator(id));
   }, []);
 
-  // TODO: dublicate
-  const renderPersons = (people: string) => 
-    movie[people].map((person: any) => (
-      <span key={person.name}>
-        <Link to={`/person/${person.id}`}>
-          {person.name}
-        </Link>
-        {!(movie[people][movie[people].length - 1] === person) && (<span>,&nbsp;</span>)}
-      </span>
-    ));
-  
+  const prefillMovieFormData = () => {
+    navigate('/admin-panel/movies');
+    dispatch(makeMovieEditable());
+  }
+
+  const deleteMovie = () => {
+    dispatch(deleteMovieCreator(id));
+    navigate('/');
+  }
+
   const renderIcons = () =>
     movie.externalAggregatorsInfo.map((agregator: any) => {
       let icon!: IconProp;
@@ -109,13 +114,13 @@ const MoviePage = () => {
       renderImages(movie.oscars, true, 'Оскаровская статуэтка');
 
   const {
-    genres,
     engTitle,
     rusTitle,
     ageRating,
     year,
     duration,
     description,
+    displayGenres,
     originCountries,
     audioLanguages,
     subtitleLanguages,
@@ -138,9 +143,31 @@ const MoviePage = () => {
             className="FirstSection"
             style={setBackgroundAction(movie[MovieFormFileds.background])}
           >
+            {authUser && user.roles.includes(USER_ROLES.ADMIN) &&
+              <div className="general-info__action-buttons action-buttons">
+                <div className="action-buttons__update-icon">
+                  <Button
+                    type="action-buttons__update-icon_submit update submit" 
+                    onClick={prefillMovieFormData}
+                    title="Редактирование"
+                  >
+                    &#9998;
+                  </Button>
+                </div>
+                <div className="action-buttons__delete-icon">
+                  <Button 
+                    type="action-buttons__delete-icon_submit delete submit" 
+                    onClick={deleteMovie}
+                    title="Удалить"
+                  >
+                    &times;
+                  </Button>
+                </div>
+              </div>
+            }
             <div className="Wrapper">
               <div className="Genres">
-                <p>{genres}</p>
+                <p>{displayGenres}</p>
               </div>
               <div className="Title">
                 <p>
@@ -189,11 +216,11 @@ const MoviePage = () => {
               <div className="Cast">
                 Режиссёр:&nbsp;
                 <span className="People">
-                  {renderPersons('directors')}
+                  {renderPersons(movie.directors)}
                 </span>
                 <br />В главных ролях:&nbsp;
                 <span className="People">
-                  {renderPersons('actors')}
+                  {renderPersons(movie.actors)}
                 </span>
               </div>
                 <div className="Details">
