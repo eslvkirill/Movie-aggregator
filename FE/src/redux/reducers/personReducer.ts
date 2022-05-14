@@ -1,12 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setMoviesByTypeAction } from 'redux/actions/personAction';
+import {
+	onChangeFileInputEventAction,
+	onChangeInputEventAction,
+	onChangeTextareaEventAction,
+	prefillPersonFormAction,
+	setMoviesByTypeAction,
+	updatePersonAction,
+} from 'redux/actions/personAction';
 import {
 	deletePersonCreator,
 	getPersonCreator,
+	setImageFilesCreator,
 } from 'redux/creators/personCreator';
+import { inputState } from 'redux/initial-state/personState/input';
+import { textareaState } from 'redux/initial-state/personState/textarea';
 import { REDUCER } from '../types/reducers';
 
 const initialState = {
+	formControls: {
+		inputControls: inputState,
+		textareaControls: textareaState,
+	},
 	person: {} as any,
 	movies: {
 		actor: [],
@@ -15,6 +29,8 @@ const initialState = {
 	visibleMovies: [],
 	isLoading: true,
 	isRedirect: false,
+	isFormValid: false,
+	isEdit: false,
 	error: '',
 };
 
@@ -22,19 +38,27 @@ const personReducer = createSlice({
 	name: REDUCER.PERSON,
 	initialState,
 	reducers: {
+		onChangeInputEvent: onChangeInputEventAction,
+		onChangeFileInputEvent: onChangeFileInputEventAction,
+		onChangeTextareaEvent: onChangeTextareaEventAction,
 		setMoviesByType: setMoviesByTypeAction,
+		reset: () => initialState,
+		makePersonEditable: (state) => {
+			state.isEdit = true;
+		},
+		prefillPersonForm: prefillPersonFormAction,
+		updatePerson: updatePersonAction,
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(
 				getPersonCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
-					const { name, biography, image } = action.payload;
+					const { name, biography, image, id } = action.payload;
 					const { roles } = action.payload;
-					console.log(action);
 
 					state.isLoading = false;
-					state.person = { name, biography, image };
+					state.person = { name, biography, image, id };
 					state.movies = roles;
 
 					state.visibleMovies = state.movies.actor.length
@@ -46,7 +70,7 @@ const personReducer = createSlice({
 				getPersonCreator.pending.type,
 				(state: any, action: PayloadAction<any>) => {
 					state.isLoading = true;
-					state.isRedirect = !!action.payload;
+					state.isRedirect = false;
 				}
 			)
 			.addCase(
@@ -57,14 +81,31 @@ const personReducer = createSlice({
 					state.error = action.payload;
 				}
 			)
-			.addCase(deletePersonCreator.fulfilled.type, (state, action) => {
-				state.isRedirect = false;
+			.addCase(
+				setImageFilesCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.person.image =
+						state.formControls.inputControls.image.value || action.payload;
+				}
+			)
+			.addCase(deletePersonCreator.fulfilled.type, (state) => {
+				state.isRedirect = true;
+				state.isLoading = false;
 				state.person = {};
 				state.visibleMovies = [];
 			});
 	},
 });
 
-export const { setMoviesByType } = personReducer.actions;
+export const {
+	setMoviesByType,
+	onChangeInputEvent,
+	onChangeFileInputEvent,
+	onChangeTextareaEvent,
+	reset,
+	makePersonEditable,
+	prefillPersonForm,
+	updatePerson,
+} = personReducer.actions;
 
 export default personReducer.reducer;

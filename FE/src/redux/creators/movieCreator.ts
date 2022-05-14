@@ -134,7 +134,9 @@ const setImageFilesCreator = createAsyncThunk(
 
 			return await getImageFileByUrl(url);
 		} catch (e) {
-			return thunkAPI.rejectWithValue('Не удалось обновить данные о фильме');
+			return thunkAPI.rejectWithValue(
+				'Не удалось подгрузить изображения фильма'
+			);
 		}
 	}
 );

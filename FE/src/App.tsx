@@ -12,7 +12,7 @@ import AuthPage from 'pages/AuthPage/AuthPage';
 import AdminPage from 'pages/AdminPage/AdminPage';
 import Registration from 'components/features/Auth/Registration/Registration';
 import GenreList from 'components/features/Genre/GenreList/GenreList';
-import PersonList from 'components/features/Person/PersonList/PersonList';
+import PersonForm from 'components/features/Person/PersonForm/PersonForm';
 import MovieForm from 'components/features/Movie/MovieForm/MovieForm';
 
 const store = setupStore();
@@ -29,7 +29,7 @@ const App = () => (
         <Route path={ROUTE.PERSON_PAGE} element={<PersonPage />} />
         <Route path={ROUTE.ADMIN} element={<AdminPage />}>
           <Route path={ROUTE.GENRES} element={<GenreList />} />
-          <Route path={ROUTE.PERSONS} element={<PersonList />} />
+          <Route path={ROUTE.PERSONS} element={<PersonForm />} />
           <Route path={ROUTE.MOVIES} element={<MovieForm />} />
         </Route>
         <Route path={ROUTE.ERROR} element={<ErrorPage />} />

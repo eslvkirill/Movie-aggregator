@@ -56,10 +56,9 @@ const onChangeFileInputEventAction = (
 	}
 
 	movie[controlName] = value;
+	inputControls[controlName] = control;
 
-	formControls.inputControls[controlName] = control;
-
-	state.isFormValid = validateInputs(formControls.inputControls);
+	state.isFormValid = validateInputs(inputControls);
 };
 
 const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {

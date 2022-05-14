@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { setMoviesByType } from 'redux/reducers/personReducer';
+import { makePersonEditable, setMoviesByType } from 'redux/reducers/personReducer';
 import { deletePersonCreator, getPersonCreator } from 'redux/creators/personCreator';
 import { USER_ROLES } from 'shared/constants/common';
 import { isUserLoggIn } from 'shared/utils/common';
@@ -13,6 +13,7 @@ import './PersonPage.scss';
 const PersonPage = () => {
   const { id } = useParams() as { id: string };
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { person, movies, visibleMovies, isLoading, isRedirect } = useAppSelector(state => state.personReducer);
   const { user } = useAppSelector(state => state.authReducer);
@@ -22,7 +23,14 @@ const PersonPage = () => {
     dispatch(getPersonCreator(id));
   }, [])
 
-  const deletePerson = () => dispatch(deletePersonCreator(id))
+  const redirectToAdminPanel = () => navigate('/admin-panel/persons');
+
+  const deletePerson = () => dispatch(deletePersonCreator(id));
+
+  const prefillPersonFormData = () => {
+    redirectToAdminPanel();
+    dispatch(makePersonEditable());
+  }
 
   const renderTypeButtons = () =>
     Object.keys(movies).map(type => 
@@ -38,8 +46,8 @@ const PersonPage = () => {
       ) : ''
     )
 
-  if (isRedirect) {
-    return <Navigate to="/person-not-found" />;
+  if (isRedirect && !isLoading) {
+    redirectToAdminPanel();
   }
 
   return (
@@ -51,13 +59,25 @@ const PersonPage = () => {
       <div className="person">
         <div className="person__general-info general-info">
           {authUser && user.roles.includes(USER_ROLES.ADMIN) &&
-            <div className="general-info__delete-icon">
-              <Button 
-                type="general-info__delete-icon_submit submit" 
-                onClick={deletePerson}
-              >
-                &times;
-              </Button>
+            <div className="general-info__action-buttons action-buttons">
+              <div className="action-buttons__update-icon">
+                <Button
+                  type="action-buttons__update-icon_submit update submit" 
+                  onClick={prefillPersonFormData}
+                  title="Редактирование"
+                >
+                  &#9998;
+                </Button>
+              </div>
+              <div className="action-buttons__delete-icon">
+                <Button 
+                  type="action-buttons__delete-icon_submit delete submit" 
+                  onClick={deletePerson}
+                  title="Удалить"
+                >
+                  &times;
+                </Button>
+              </div>
             </div>
           }
           <div className="general-info__person-bio person-bio">
