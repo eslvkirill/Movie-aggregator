@@ -23,4 +23,13 @@ const movieConstructor = (data: any) => {
 	];
 };
 
-export { isUserLoggIn, movieConstructor };
+const getImageFileByUrl = async (url: string) => {
+	const res: Response = await fetch(url);
+	const blob: Blob = await res.blob();
+
+	return new File([blob], 'fileName', {
+		type: 'image/png',
+	});
+};
+
+export { isUserLoggIn, movieConstructor, getImageFileByUrl };

@@ -25,7 +25,7 @@ class Api {
 
 	post = async <T>(
 		url: string[],
-		data: any,
+		data?: any,
 		isFormData?: boolean,
 		isRegistration?: boolean,
 		isLogin?: boolean,
@@ -46,9 +46,20 @@ class Api {
 	put = async (
 		url: string[],
 		data: any,
+		isFormData?: boolean,
 		method: string = REQUEST.PUT
-	): Promise<Response> =>
-		fetch(this.requestURL(url), this.config(data, method));
+	): Promise<Response> => {
+		const response = await fetch(
+			this.requestURL(url),
+			this.config(data, method, isFormData)
+		);
+
+		if (!response.ok) {
+			throw Error('Bad request: ' + response.json());
+		}
+
+		return isFormData ? response : response.json();
+	};
 
 	delete = async (url: string[]): Promise<Response> =>
 		fetch(this.requestURL(url), { method: REQUEST.DELETE });

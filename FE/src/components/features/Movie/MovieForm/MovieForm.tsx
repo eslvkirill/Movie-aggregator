@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { onChangeSelectEvent } from 'redux/reducers/movieReducer';
-import { resetCreator , onChangeEventCreator, getMovieFormDataCreator, addMovieCreator } from 'redux/creators/movieCreator';
+import { resetCreator , onChangeEventCreator, prefillMovieFormCreator, getMovieFormDataCreator, addMovieCreator, updateMovieCreator } from 'redux/creators/movieCreator';
 import selectStyles from 'shared/form-controls/select/styles';
 import Notification from 'components/shared/pop-ups/Notification/Notification';
 import Button from 'components/shared/form-controls/Button/Button';
@@ -12,16 +12,22 @@ import './MovieForm.scss';
 
 const MovieForm = () => {
   const dispatch = useAppDispatch();
-  const { formControls, isFormValid, notificationMessage } = useAppSelector(state => state.movieReducer);
+  const { formControls, isFormValid, notificationMessage, isEdit, movie } = useAppSelector(state => state.movieReducer);
 
   useEffect(() => {
     dispatch(getMovieFormDataCreator());
+
+    if (isEdit) {
+      dispatch(prefillMovieFormCreator());
+    }
   }, []);
 
   const onResetHandlerClick = () => {
     dispatch(resetCreator());
     dispatch(getMovieFormDataCreator());
   };
+
+  const updateMovie = () => dispatch(updateMovieCreator(movie.id));
 
   const submitNewMovie = (event: any) => {
     event.preventDefault();
@@ -114,11 +120,11 @@ const MovieForm = () => {
         </div>
         <div className="movie-form__buttons">
           <Button
-            onClick={() => dispatch(addMovieCreator())}
+            onClick={() => isEdit ? updateMovie() : dispatch(addMovieCreator())}
             disabled={isFormValid}
             type="success"
           >
-            Создать фильм
+            {isEdit ? 'Редактировать' : 'Создать фильм'}
           </Button>
           <Button 
             onClick={onResetHandlerClick} 

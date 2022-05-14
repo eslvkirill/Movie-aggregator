@@ -24,6 +24,7 @@ const sortAggregatorsAction = (aggregators: any) => {
 
 const setDefaultFieldsAppearanceAction = (movie: any) => {
 	const personFieldNames: string[] = [
+		MovieFormFileds.genres,
 		MovieFormFileds.actors,
 		MovieFormFileds.directors,
 	];
@@ -33,13 +34,15 @@ const setDefaultFieldsAppearanceAction = (movie: any) => {
 			Array.isArray(movie[name]) &&
 			name !== MovieFormFileds.externalAggregatorsInfo
 		) {
-			const movieFieldValue = movie[name].map((field: any) =>
-				name === MovieFormFileds.genres ? field.name : field
-			);
+			const movieFieldValue = movie[name].map((field: any) => field);
 
 			movie[name] = personFieldNames.includes(name)
 				? movieFieldValue
 				: movieFieldValue.join(', ');
+
+			movie.displayGenres = movie[MovieFormFileds.genres]
+				.map((field: any) => field.name)
+				.join(', ');
 		} else if (name === MovieFormFileds.duration) {
 			const durationParts = movie[name].split(':');
 

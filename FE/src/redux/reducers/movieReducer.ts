@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import {
 	setAggregatorsRatingsOnGeneralViewAction,
@@ -10,12 +10,15 @@ import {
 	onChangeFileInputEventAction,
 	onChangeInputEventAction,
 	onChangeSelectEventAction,
+	prefillMovieFormAction,
 	resetFileInputAction,
+	updateMovieAction,
 } from 'redux/actions/movie/formActions';
 import {
 	addMovieCreator,
 	getMovieByIdCreator,
 	getMovieFormDataCreator,
+	setImageFilesCreator,
 } from 'redux/creators/movieCreator';
 import { inputState } from 'redux/initial-state/movieFormState/input';
 import { selectState } from 'redux/initial-state/movieFormState/select';
@@ -33,6 +36,7 @@ const initialState: any = {
 	isFormValid: false,
 	notificationMessage: '',
 	loading: true,
+	isEdit: false,
 };
 
 const movieReducer = createSlice({
@@ -44,6 +48,11 @@ const movieReducer = createSlice({
 		onChangeSelectEvent: onChangeSelectEventAction,
 		reset: () => initialState,
 		resetFileInput: resetFileInputAction,
+		makeMovieEditable: (state) => {
+			state.isEdit = true;
+		},
+		prefillMovieForm: prefillMovieFormAction,
+		updateMovie: updateMovieAction,
 	},
 	extraReducers: (builder) => {
 		builder
@@ -81,6 +90,21 @@ const movieReducer = createSlice({
 					state.notificationMessage = action.payload;
 				}
 			)
+			// .addCase(
+			// 	updateMovieCreator.fulfilled.type,
+			// 	(state, action: PayloadAction<any>) => {
+			// 		console.log(state, action);
+			// 	}
+			// )
+			.addCase(
+				setImageFilesCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.movie.background =
+						state.formControls.inputControls.background.value || action.payload;
+					state.movie.poster =
+						state.formControls.inputControls.background.value || action.payload; // TODO: state.formControls.inputControls.poster
+				}
+			)
 			.addCase(
 				getMovieByIdCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
@@ -104,6 +128,9 @@ export const {
 	onChangeSelectEvent,
 	reset,
 	resetFileInput,
+	makeMovieEditable,
+	prefillMovieForm,
+	updateMovie,
 } = movieReducer.actions;
 
 export default movieReducer.reducer;
