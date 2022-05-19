@@ -1,43 +1,38 @@
-import { useState } from 'react';
-import { useAppSelector } from 'hooks/redux';
-import { ratingListCategories } from 'shared/utils/ratings';
-import { isUserLoggIn } from 'shared/utils/common';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { RATING } from 'redux/initial-state/ratingState/rating.enum';
+import { closeModal } from 'redux/reducers/backdropReducer';
 import Button from 'components/shared/form-controls/Button/Button';
 import RatingItem from '../RatingItem/RatingItem';
 import './RatingList.scss'
 
 const RatingList = (props: any) => {
-  const { setOpenModal, isOpenModal, id, userRating, setUserRating, setTotalRating, totalRating, setNumberOfRatings } = props;
-  const { user } = useAppSelector(state => state.authReducer);
-  const authUser = isUserLoggIn(user);
+  const { movieId } = props;
 
-  const [ratingType, setRatingType] = useState('');
+  const dispatch = useAppDispatch();
+  const { ratings } = useAppSelector(state => state.ratingReducer);
 
-  const handleClose = () => setOpenModal(false);
+  const renderRatings = () => {
+    return ratings.filter(rating => rating.type !== RATING.TOTAL)
+      .map(rating => {
+        const { id, type, score, averageScore, name, description } = rating;
 
-  const renderRatings = () => 
-    ratingListCategories.map(category => {
-      // setRatingType(category.type);
-
-      return (
-        <div key={category.type} className="rating-form__line line">
-          <div className="line__left-section left-section">
-            <div className="line__name">{category.name}: </div>
-            <RatingItem 
-              movieId={id}
-              ratingCategoryType={ratingType}
-              userRating={userRating}
-              setOpenModal={setOpenModal}
-              setUserRating={setUserRating}
-              setTotalRating={setTotalRating}
-              totalRating={totalRating}
-              setNumberOfRatings={setNumberOfRatings}
-            />
+        return (
+          <div key={type} className="rating-form__line line">
+            <div className="line__left-section left-section">
+              <div className="average-rating">{averageScore.toFixed(2)}</div>
+              <div className="line__name">{name}: </div>
+              <RatingItem
+                movieId={movieId}
+                score={score}
+                type={type}
+                ratingId={id}
+              />
+            </div>
+            <div className="line__description">{description}</div>
           </div>
-          <div className="line__description">{category.description}</div>
-        </div>
         );
       })
+  }
 
   return (
     <div className="rating-form-wrapper">
@@ -47,7 +42,7 @@ const RatingList = (props: any) => {
     <div className="button-close">
       <Button 
         type="icon-close submit" 
-        onClick={handleClose}
+        onClick={() => dispatch(closeModal())}
       >
         &times;
       </Button>

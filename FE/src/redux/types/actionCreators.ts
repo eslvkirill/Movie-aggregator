@@ -3,6 +3,7 @@ const MAIN_CREATORS = {
 	AUTH: 'auth/',
 	MOVIE: 'movie/',
 	PERSON: 'person/',
+	RATING: 'rating/',
 };
 
 const GENRE_CREATOR = {
@@ -34,4 +35,16 @@ const PERSON_CREATOR = {
 	SET_IMAGES: `${MAIN_CREATORS.PERSON}setImages`,
 };
 
-export { GENRE_CREATOR, AUTH_CREATOR, MOVIE_CREATOR, PERSON_CREATOR };
+const RATING_CREATOR = {
+	SET: `${MAIN_CREATORS.RATING}set`,
+	UPDATE: `${MAIN_CREATORS.RATING}update`,
+	DELETE: `${MAIN_CREATORS.GENRE}delete`,
+};
+
+export {
+	GENRE_CREATOR,
+	AUTH_CREATOR,
+	MOVIE_CREATOR,
+	PERSON_CREATOR,
+	RATING_CREATOR,
+};

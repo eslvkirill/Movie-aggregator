@@ -1,32 +1,34 @@
 import MaterialUIBackdrop from '@material-ui/core/Backdrop';
 import { makeStyles } from '@material-ui/core/styles';
-import './Backdrop.scss';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { closeModal } from 'redux/reducers/backdropReducer';
 
 const useStyles = makeStyles(() => ({
   backdrop: {
     background: 'linear-gradient(200deg, #280138e3, #382201fa)',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
     display: 'flex',
-    justifyContent: 'flex-end',
-    zIndex: 1000,
+    zIndex: 5,
   },
 }));
 
 const Backdrop = ({ children }: any) => {
-  const { isOpenModal } = children.props;
+  const dispatch = useAppDispatch();
+  const { isModalOpen } = useAppSelector(state => state.backdropReducer);
   const classes = useStyles();
 
   return (
     <div className="backdrop-wrapper">
       <MaterialUIBackdrop
-        open={isOpenModal}
+        open={isModalOpen}
+        onClick={() => dispatch(closeModal())}
         className={`${classes.backdrop}`}
       >
-        {children}
+        <div 
+          className="backdrop-content"
+          onClick={(event) => isModalOpen && event.stopPropagation()}
+        >
+          {children}
+        </div>
       </MaterialUIBackdrop>
     </div>
   );

@@ -42,8 +42,10 @@
 				}
 
 				.rating {
-					width: 3.2rem;
-					height: 2.9rem;
+					position: relative;
+					top: 17px;
+					width: 3rem;
+					height: 2.6rem;
 					border: 4px outset #bd5a31;
 					border-radius: 50%;
 					display: flex;

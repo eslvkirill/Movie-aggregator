@@ -35,7 +35,7 @@ const initialState: any = {
 	},
 	isFormValid: false,
 	notificationMessage: '',
-	loading: true,
+	isLoading: true,
 	isEdit: false,
 };
 
@@ -64,9 +64,9 @@ const movieReducer = createSlice({
 							action.payload[fieldName].map((control: any, index: number) => {
 								const isCustomField = (
 									[
-										MovieFormFileds.genres,
-										MovieFormFileds.actors,
-										MovieFormFileds.directors,
+										MovieFormFileds.GENRES,
+										MovieFormFileds.ACTORS,
+										MovieFormFileds.DIRECTORS,
 									] as string[]
 								).includes(fieldName);
 
@@ -103,7 +103,7 @@ const movieReducer = createSlice({
 				getMovieByIdCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
 					state.movie = action.payload;
-					state.loading = false;
+					state.isLoading = false;
 					state.isEdit = false;
 
 					const aggregators = state.movie.externalAggregatorsInfo;

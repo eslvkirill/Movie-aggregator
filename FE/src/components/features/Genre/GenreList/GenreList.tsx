@@ -62,7 +62,7 @@ const GenreList = () => {
   };
 
   const renderInputs = () => {
-    return Object.keys(formControls).map((controlName, index) => {
+    return Object.keys(formControls).map((controlName) => {
       const control = formControls[controlName as keyof GenreControls];
       const { type, placeholder, valid, touched, label, validation, errorMessage } = control;
       

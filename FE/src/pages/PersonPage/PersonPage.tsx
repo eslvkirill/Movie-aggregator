@@ -58,7 +58,7 @@ const PersonPage = () => {
     ) : (
       <div className="person">
         <div className="person__general-info general-info">
-          {authUser && user.roles.includes(USER_ROLES.ADMIN) &&
+          {!!(authUser && user.roles.includes(USER_ROLES.ADMIN)) &&
             <div className="general-info__action-buttons action-buttons">
               <div className="action-buttons__update-icon">
                 <Button

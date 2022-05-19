@@ -1,4 +1,4 @@
-import { current, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import { REGEXP } from 'shared/constants/common';
 import {
@@ -19,7 +19,7 @@ const onChangeInputEventAction = (state: any, action: PayloadAction<any>) => {
 
 	movie[controlName] = control.value;
 
-	if (controlName === MovieFormFileds.trailerUrl) {
+	if (controlName === MovieFormFileds.TRAILER_URL) {
 		movie[controlName] = control.value
 			.replace(REGEXP.YOU_TUBE.URL.FULL, REGEXP.YOU_TUBE.REPLACER.FULL)
 			.replace(REGEXP.YOU_TUBE.URL.SHORT, REGEXP.YOU_TUBE.REPLACER.SHORT);
@@ -82,9 +82,9 @@ const onChangeSelectEventAction = (state: any, action: PayloadAction<any>) => {
 
 	if (controlName && control.isMulti && control.value) {
 		const isCreationedFields = [
-			MovieFormFileds.genres,
-			MovieFormFileds.actors,
-			MovieFormFileds.directors,
+			MovieFormFileds.GENRES,
+			MovieFormFileds.ACTORS,
+			MovieFormFileds.DIRECTORS,
 		].includes(controlName);
 
 		const controlValueLabel = isCreationedFields ? 'value' : 'label';
@@ -120,37 +120,37 @@ const resetFileInputAction = (state: any) => {
 };
 
 const prefillMovieFormAction = (state: any) => {
-	const fileFields = [MovieFormFileds.poster, MovieFormFileds.background];
+	const fileFields = [MovieFormFileds.POSTER, MovieFormFileds.BACKGROUND];
 	const customFields = [
-		MovieFormFileds.genres,
-		MovieFormFileds.actors,
-		MovieFormFileds.directors,
+		MovieFormFileds.GENRES,
+		MovieFormFileds.ACTORS,
+		MovieFormFileds.DIRECTORS,
 	];
 
 	Object.keys(state.movie).map((movieField: any) => {
 		Object.keys(state.formControls.inputControls).map((inputField: any) => {
-			if (movieField === MovieFormFileds.externalAggregatorsInfo) {
+			if (movieField === MovieFormFileds.EXTERNAL_AGGREGATORS_INFO) {
 				state.movie[movieField].map((aggregator: any) => {
 					if (aggregator.name === 'Kinopoisk') {
 						state.formControls.inputControls[
-							MovieFormFileds.kinopoiskUrl
+							MovieFormFileds.KINOPOISK_URL
 						].value = aggregator.url;
 					} else if (aggregator.name === 'Imdb') {
-						state.formControls.inputControls[MovieFormFileds.imdbUrl].value =
+						state.formControls.inputControls[MovieFormFileds.IMDB_URL].value =
 							aggregator.url;
 					}
 
 					return state.formControls.inputControls;
 				});
 			} else if (
-				movieField === MovieFormFileds.trailerUrl &&
+				movieField === MovieFormFileds.TRAILER_URL &&
 				movieField === inputField
 			) {
 				state.formControls.inputControls[inputField].value = state.movie[
 					movieField
 				].replace('embed/', 'watch?v=');
 			} else if (
-				movieField === MovieFormFileds.duration &&
+				movieField === MovieFormFileds.DURATION &&
 				movieField === inputField
 			) {
 				state.formControls.inputControls[inputField].value = state.movie[
@@ -215,19 +215,19 @@ const prefillMovieFormAction = (state: any) => {
 };
 
 const updateMovieAction = (state: any) => {
-	delete state.movie[MovieFormFileds.averageRatings];
-	delete state.movie[MovieFormFileds.oscars];
-	delete state.movie[MovieFormFileds.userRatings];
-	delete state.movie[MovieFormFileds.displayGenres];
+	delete state.movie[MovieFormFileds.AVERAGE_RATINGS];
+	delete state.movie[MovieFormFileds.OSCARS];
+	delete state.movie[MovieFormFileds.USER_RATINGS];
+	delete state.movie[MovieFormFileds.DISPLAY_GENRES];
 
 	Object.keys(state.movie).map((movieField: any) => {
 		const isCreationedFields = [
-			MovieFormFileds.genres,
-			MovieFormFileds.actors,
-			MovieFormFileds.directors,
+			MovieFormFileds.GENRES,
+			MovieFormFileds.ACTORS,
+			MovieFormFileds.DIRECTORS,
 		].includes(movieField);
 
-		if (movieField === MovieFormFileds.externalAggregatorsInfo) {
+		if (movieField === MovieFormFileds.EXTERNAL_AGGREGATORS_INFO) {
 			state.movie[movieField].map((aggregator: any) => {
 				if (aggregator.name === 'Kinopoisk') {
 					state.movie.kinopoiskUrl = aggregator.url;
@@ -237,7 +237,7 @@ const updateMovieAction = (state: any) => {
 
 				return state.formControls.inputControls;
 			});
-		} else if (movieField === MovieFormFileds.duration) {
+		} else if (movieField === MovieFormFileds.DURATION) {
 			state.movie[movieField] = state.movie[movieField]
 				.replace(/[^+\d]/g, '')
 				.replace(/\s/g, '')
@@ -253,7 +253,7 @@ const updateMovieAction = (state: any) => {
 					movieField
 				].value.map((selectValue: any) => selectValue[controlValueLabel]);
 
-				if (movieField === MovieFormFileds.ageRating)
+				if (movieField === MovieFormFileds.AGE_RATING)
 					state.movie[movieField] = state.movie[movieField].join();
 			}
 
@@ -263,7 +263,7 @@ const updateMovieAction = (state: any) => {
 		return state.movie;
 	});
 
-	delete state.movie[MovieFormFileds.externalAggregatorsInfo];
+	delete state.movie[MovieFormFileds.EXTERNAL_AGGREGATORS_INFO];
 };
 
 export {

@@ -26,7 +26,7 @@ const Registration = () => {
     dispatch(onChangeInputEvent({event, stateName: StateName.registration, controlName}))
 
   const renderInputs = () => {
-    return Object.keys(formControls[StateName.registration]).map((controlName, index) => {
+    return Object.keys(formControls[StateName.registration]).map((controlName) => {
       const control = formControls[StateName.registration][controlName];
 
       return (

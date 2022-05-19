@@ -4,7 +4,7 @@ const VERSION = 'v1';
 
 const ENDPOINT = {
 	GENRES: 'genres',
-	LOGIN: 'login',
+	LOGIN: '/login',
 	USERS: 'users',
 	INFO: 'info',
 	MOVIES: 'movies',

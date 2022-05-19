@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { renderPersons } from 'shared/utils/render';
 import './MovieCard.scss';
 
-const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgroundColor, genres, duration, directors }: any) => {
+const MovieCard = ({ movieId, poster, year, totalRating, engTitle, rusTitle, backgroundColor, genres, duration, directors }: any) => {
   const { id } = useParams() as { id: string };
   
   const genresValue = Array.isArray(genres) && genres.map((field: any) => field.name).join(', ');
@@ -26,7 +26,7 @@ const MovieCard = ({ movieId, poster, year, rating, engTitle, rusTitle, backgrou
         <div className="contentCard">
           <div className="topOfCardContent">
             <div className="year">{year}г.</div>
-            {/* <div className="rating">{rating.toFixed(1)}</div> */}
+            <div className="rating">{totalRating.toFixed(1)}</div>
           </div>
           <div className="titles">
             <div className="engTitle">{engTitle}</div>

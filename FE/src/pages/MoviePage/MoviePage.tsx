@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKickstarterK, faImdb } from '@fortawesome/free-brands-svg-icons';
@@ -10,30 +10,29 @@ import { deleteMovieCreator, getMovieByIdCreator } from 'redux/creators/movieCre
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
 import { makeMovieEditable, reset } from 'redux/reducers/movieReducer';
 import { renderPersons } from 'shared/utils/render';
-import { USER_ROLES } from 'shared/constants/common';
 import { isUserLoggIn } from 'shared/utils/common';
+import { USER_ROLES } from 'shared/constants/common';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import Backdrop from 'components/shared/pop-ups/Backdrop/Backdrop';
 import Button from 'components/shared/form-controls/Button/Button';
+import Login from 'components/features/Auth/Login/Login';
 import RatingList from 'components/features/Rating/RatingList/RatingList';
 import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
+import { openModal } from 'redux/reducers/backdropReducer';
 
 const MoviePage = () => {
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const { movie, loading } = useAppSelector(state => state.movieReducer);
+  const { movie, isLoading } = useAppSelector(state => state.movieReducer);
+  const { ratings } = useAppSelector(state => state.ratingReducer);
+  const { isModalOpen } = useAppSelector(state => state.backdropReducer);
   const { user } = useAppSelector(state => state.authReducer);
   const authUser = isUserLoggIn(user);
-
-  const [userRating, setUserRating] = useState(0);
-  const [totalRating, setTotalRating] = useState(0);
-  const [numberOfRatings, setNumberOfRatings] = useState(0);
-  const [isOpenModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(reset());
@@ -121,6 +120,7 @@ const MoviePage = () => {
     duration,
     description,
     displayGenres,
+    // numberOfRatings,
     originCountries,
     audioLanguages,
     subtitleLanguages,
@@ -135,15 +135,15 @@ const MoviePage = () => {
       className="MoviePage"
       // style={authForm ? { position: "absolute" } : {}}
     >
-      {loading ? (
+      {isLoading ? (
         <ContentLoader className="Loader" />
       ) : (
         <>
           <section
             className="FirstSection"
-            style={setBackgroundAction(movie[MovieFormFileds.background])}
+            style={setBackgroundAction(movie[MovieFormFileds.BACKGROUND])}
           >
-            {authUser && user.roles.includes(USER_ROLES.ADMIN) &&
+            {!!(authUser && user.roles.includes(USER_ROLES.ADMIN)) &&
               <div className="general-info__action-buttons action-buttons">
                 <div className="action-buttons__update-icon">
                   <Button
@@ -184,30 +184,18 @@ const MoviePage = () => {
                   </div>
                 </div>
               </div>
-              {isOpenModal ? (
-                <Backdrop isOpenModal={isOpenModal}>
-                  <RatingList 
-                    isOpenModal={isOpenModal} 
-                    setOpenModal={setOpenModal} 
-                    movieId={id}
-                    userRating={userRating}
-                    setUserRating={setUserRating}
-                    setTotalRating={setTotalRating}
-                    totalRating={totalRating}
-                    setNumberOfRatings={setNumberOfRatings}
-                  />
+              {isModalOpen &&
+                <Backdrop>
+                  { authUser ? <RatingList movieId={id} /> : <Login /> }
                 </Backdrop>
-              ) : null}
+              }
               <div className="total-rating">
                 <div className="caption">Ваше общее впечатление: </div>
-                <RatingItem
-                  movieId={id}
-                  userRating={userRating}
-                  setOpenModal={setOpenModal}
-                  setUserRating={setUserRating}
-                  setTotalRating={setTotalRating}
-                  totalRating={totalRating}
-                  setNumberOfRatings={setNumberOfRatings}
+                <RatingItem 
+                  movieId={id} 
+                  score={ratings[0].score}
+                  ratingId={ratings[0].id}
+                  type={ratings[0].type}
                 />
               </div>
               <div className="Time">{duration}</div>
@@ -265,16 +253,23 @@ const MoviePage = () => {
                     Прочитать отзывы
                   </ScrollLink>
                 </div>
+                <div className="detail-scores">
+                  <Button 
+                    type="submit"
+                    onClick={() => dispatch(openModal())}
+                  >
+                    Детальная оценка &#9734;
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="totalRatingBlock">
               <div className="totalRating" title="Общий рейтинг">
-                8.8
-                {/* {totalRating.toFixed(2)} */}
+                {ratings[0].averageScore.toFixed(2)}
               </div>
               <div className="numberOfRatings" title="Количество пользователей">
                 {/* {numberOfRatings} оценок */}
-                12 оценок
+                0 оценок
               </div>
             </div>
           </section>

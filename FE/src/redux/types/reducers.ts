@@ -3,4 +3,6 @@ export const REDUCER = {
 	MOVIE: 'movie',
 	AUTH: 'auth',
 	PERSON: 'person',
+	RATING: 'rating',
+	BACKDROP: 'backdrop',
 };
