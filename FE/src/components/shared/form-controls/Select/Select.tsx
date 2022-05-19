@@ -18,7 +18,7 @@ interface SelectControl {
   shouldValidate?: boolean;
   noOptionsMessage?: (obj: { inputValue: string }) => ReactNode;
   isClearable?: boolean;
-  defaultValue?: string;
+  defaultValue?: any;
   errorMessage?: string;
   onChange?: any;
 }

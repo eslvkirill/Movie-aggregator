@@ -60,7 +60,7 @@ const MovieCard = ({ movieId, poster, year, totalRating, engTitle, rusTitle, bac
                 длительность: <div>{ durationValue || duration}</div>
               </div>
               <div className="director-section">
-                режиссёр: {renderPersons(directors, id)}
+                режиссёр: {!!directors && renderPersons(directors, id)}
               </div>
             </div>
             <div className="linkToMoviePage">➤ к фильму</div>
