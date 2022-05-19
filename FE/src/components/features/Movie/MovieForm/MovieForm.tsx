@@ -36,7 +36,7 @@ const MovieForm = () => {
   };
 
   const onInputChangeHandler = (event: any, controlName: string) => {
-    const isInputFileField = ([MovieFormFileds.poster, MovieFormFileds.background] as string[]).includes(controlName);
+    const isInputFileField = ([MovieFormFileds.POSTER, MovieFormFileds.BACKGROUND] as string[]).includes(controlName);
     const value = isInputFileField ? event.target.files[0] : event.target.value;
 
     dispatch(onChangeEventCreator({ value, controlName, isInputFileField }));

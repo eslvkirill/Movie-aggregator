@@ -112,7 +112,7 @@ const updateMovieCreator = createAsyncThunk(
 			const { movie } = (thunkAPI.getState() as any).movieReducer;
 
 			const formData = Object.keys(movie).reduce((formData, name) => {
-				if (name !== MovieFormFileds.id) {
+				if (name !== MovieFormFileds.ID) {
 					formData.append(name, movie[name]);
 				}
 				return formData;

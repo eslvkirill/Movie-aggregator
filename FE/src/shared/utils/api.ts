@@ -47,6 +47,7 @@ class Api {
 		url: string[],
 		data: any,
 		isFormData?: boolean,
+		noNeedResponseJSON?: boolean,
 		method: string = REQUEST.PUT
 	): Promise<Response> => {
 		const response = await fetch(
@@ -58,7 +59,7 @@ class Api {
 			throw Error('Bad request: ' + response.json());
 		}
 
-		return isFormData ? response : response.json();
+		return isFormData || noNeedResponseJSON ? response : response.json();
 	};
 
 	delete = async (url: string[]): Promise<Response> =>

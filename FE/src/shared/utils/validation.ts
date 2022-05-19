@@ -120,7 +120,7 @@ function validateInputs(formControls: any) {
 	Object.keys(formControls).forEach((name) => {
 		isFormValid =
 			!(
-				[MovieFormFileds.background, MovieFormFileds.poster] as string[]
+				[MovieFormFileds.BACKGROUND, MovieFormFileds.POSTER] as string[]
 			).includes(name) &&
 			formControls[name].valid &&
 			formControls[name].value !== '' &&

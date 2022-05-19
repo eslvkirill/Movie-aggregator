@@ -6,12 +6,14 @@ import Button from 'components/shared/form-controls/Button/Button';
 import Input from 'components/shared/form-controls/Input/Input';
 import { onChangeInputEvent } from 'redux/reducers/authReducer';
 import { loginCreator } from 'redux/creators/authCreator';
-import './Login.scss';
+import { closeModal } from 'redux/reducers/backdropReducer';
 import { StateName } from '../auth.enum';
+import './Login.scss';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const { formControls, isFormValid, isLoading, user, error } = useAppSelector(state => state.authReducer);
+  const { isModalOpen } = useAppSelector(state => state.backdropReducer);
 
   const submitHandler = (event: any) => event.preventDefault();
 
@@ -19,7 +21,7 @@ const Login = () => {
     dispatch(onChangeInputEvent({event, stateName: StateName.login, controlName}))
 
   const renderInputs = () => {
-    return Object.keys(formControls[StateName.login]).map((controlName, index) => {
+    return Object.keys(formControls[StateName.login]).map((controlName) => {
       const control = formControls[StateName.login][controlName];
 
       return (
@@ -70,6 +72,7 @@ const Login = () => {
           <Link 
             to="/registration" 
             className="buttons__registration-form"
+            onClick={() => isModalOpen && dispatch(closeModal())}
           >
             Регистрация
           </Link>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { movieConstructor } from 'shared/utils/common';
-import MovieList from 'components/features/Movie/MovieList/MovieList';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
+import MovieList from 'components/features/Movie/MovieList/MovieList';
 import './HomePage.scss';
 
 const HomePage = () => {
   const [movies, setMovies] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(true);
+  const [isLoading, setLoading] = useState<any>(true);
   const [numberOfElements, setNumberOfElements] = useState<any>(0);
   const [totalElements, setTotalElements] = useState<any>(0);
   const [currentPage, setCurrentPage] = useState<any>(1);
@@ -19,26 +19,27 @@ const HomePage = () => {
   const [filterContent, setFilterContent] = useState<any>({});
   
   const sortOptions = [
-    { value: 'id', label: 'Умолчанию' },
-    { value: 'rusTitle', label: 'Русскому названию' },
-    { value: 'engTitle', label: 'Оригинальному названию' },
-    { value: 'year', label: 'Году создания' },
-    { value: 'totalRating', label: 'Рейтингу' },
-    { value: 'price', label: 'Цене' },
+    { value: MovieFormFileds.ID, label: 'Умолчанию' },
+    { value: MovieFormFileds.RUS_TITLE, label: 'Русскому названию' },
+    { value: MovieFormFileds.ENG_TITLE, label: 'Оригинальному названию' },
+    { value: MovieFormFileds.YEAR, label: 'Году создания' },
+    { value: MovieFormFileds.TOTAL_RATING, label: 'Рейтингу' },
   ];
 
   const paginate = async (pageNumber: number, sortFieldName: any, sortDirection: string) => {
     try {
+      const paginationSize = 3;
+
       const filtersQuery = `
-        ${filterContent[MovieFormFileds.genres] && `&${MovieFormFileds.genres}=${filterContent[MovieFormFileds.genres]}`}
-        ${filterContent[MovieFormFileds.originCountries] && `&${MovieFormFileds.originCountries}=${filterContent[MovieFormFileds.originCountries]}`}
-        ${filterContent[MovieFormFileds.directors] && `&${MovieFormFileds.directors}=${filterContent[MovieFormFileds.directors]}`}
+        ${filterContent[MovieFormFileds.GENRES] && `&${MovieFormFileds.GENRES}=${filterContent[MovieFormFileds.GENRES]}`}
+        ${filterContent[MovieFormFileds.ORIGIN_COUNTRIES] && `&${MovieFormFileds.ORIGIN_COUNTRIES}=${filterContent[MovieFormFileds.ORIGIN_COUNTRIES]}`}
+        ${filterContent[MovieFormFileds.DIRECTORS] && `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}`}
       `;
 
       const sortQuery = sortFieldName && `&sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
 
       await axios
-        .get(`/api/v1/movies?page=${pageNumber - 1}${filtersQuery}${sortQuery}`)
+        .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}`) // ${filtersQuery}${sortQuery}
           .then((response) => {
             if (sortFieldName === undefined) {
               if (response.data.last === false) setActiveButton(false);
@@ -120,7 +121,7 @@ const HomePage = () => {
         sortValue={sortValue}
         setMovies={setMovies}
         movies={movies}
-        loading={loading}
+        isLoading={isLoading}
         numberOfElements={numberOfElements}
         totalElements={totalElements}
         currentPage={currentPage}

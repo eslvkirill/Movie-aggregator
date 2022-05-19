@@ -2,14 +2,20 @@ import { API, ENDPOINT, URL, VERSION } from 'shared/constants/api';
 import Api from 'shared/utils/api';
 
 const api = new Api([URL, API, VERSION]);
-const endpoint = ENDPOINT.RATINGS;
+const endpoint = (movieId: string, ratingId?: string) => [
+	`${ENDPOINT.MOVIES}/${movieId}/${ENDPOINT.RATINGS}${
+		ratingId ? '/' + ratingId : ''
+	}`,
+];
 
 const RatingService = {
-	setRating: (data: any) => api.post([endpoint], data),
+	addRating: (movieId: string, data: any) => api.post(endpoint(movieId), data),
 
-	// editGenre: (genreId: string, data: any) => api.put([endpoint, genreId], data),
+	updateRating: (movieId: string, ratingId: string, data: any) =>
+		api.put(endpoint(movieId, ratingId), data, false, true),
 
-	// deleteGenre: (genreId: string) => api.delete([endpoint, genreId]),
+	deleteRating: (movieId: string, ratingId: string) =>
+		api.delete(endpoint(movieId, ratingId)),
 };
 
 export default RatingService;

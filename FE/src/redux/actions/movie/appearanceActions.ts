@@ -24,33 +24,33 @@ const sortAggregatorsAction = (aggregators: any) => {
 
 const setDefaultFieldsAppearanceAction = (movie: any) => {
 	const personFieldNames: string[] = [
-		MovieFormFileds.genres,
-		MovieFormFileds.actors,
-		MovieFormFileds.directors,
+		MovieFormFileds.GENRES,
+		MovieFormFileds.ACTORS,
+		MovieFormFileds.DIRECTORS,
+	];
+
+	const exludedFields: string[] = [
+		MovieFormFileds.AVERAGE_RATINGS,
+		MovieFormFileds.USER_RATINGS,
+		MovieFormFileds.EXTERNAL_AGGREGATORS_INFO,
 	];
 
 	Object.keys(movie).map((name) => {
-		if (
-			Array.isArray(movie[name]) &&
-			name !== MovieFormFileds.externalAggregatorsInfo
-		) {
+		if (Array.isArray(movie[name]) && !exludedFields.includes(name)) {
 			const movieFieldValue = movie[name].map((field: any) => field);
 
 			movie[name] = personFieldNames.includes(name)
 				? movieFieldValue
 				: movieFieldValue.join(', ');
 
-			movie.displayGenres = movie[MovieFormFileds.genres]
+			movie.displayGenres = movie[MovieFormFileds.GENRES]
 				.map((field: any) => field.name)
 				.join(', ');
-		} else if (name === MovieFormFileds.duration) {
+		} else if (name === MovieFormFileds.DURATION) {
 			const durationParts = movie[name].split(':');
 
 			movie[name] = `${durationParts[0]}ч ${durationParts[1]}м`;
 		}
-		// else if (name === 'userRating' && movie[name] !== null) {
-		// 	movie[name] = movie[name].value;
-		// }
 		return movie[name];
 	});
 };

@@ -1,12 +1,11 @@
 import Button from 'components/shared/form-controls/Button/Button';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';
-import { setDefaultFieldsAppearanceAction } from 'redux/actions/movie/appearanceActions';
 import MovieCard from '../MovieCard/MovieCard';
 import './MovieList.scss';
 
 const MovieList = (props: any) => {
-  const { activeButton, isFetch, paginate, currentPage, sortValue, arrowDirection, setFetch, loading, movies, user, setMovies, numberOfElements, totalElements } = props;
+  const { activeButton, isFetch, paginate, currentPage, sortValue, arrowDirection, setFetch, isLoading, movies, user, setMovies, numberOfElements, totalElements } = props;
 
   const renderOnLoadButton = () => {
     if (!activeButton && !isFetch) {
@@ -36,7 +35,7 @@ const MovieList = (props: any) => {
 
   return (
     <section className="AllMovies">
-      {loading ? (
+      {isLoading ? (
         <ContentLoader className="Loader" />
       ) : (
         <ul>
@@ -56,7 +55,7 @@ const MovieList = (props: any) => {
                   year={year}
                   directors={directors}
                   movie={movie}
-                  rating={totalRating}
+                  totalRating={totalRating}
                   backgroundColor={primaryPageColor}
                   operation={operation}
                   user={user}

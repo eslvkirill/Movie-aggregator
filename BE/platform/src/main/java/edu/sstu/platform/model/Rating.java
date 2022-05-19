@@ -1,6 +1,8 @@
 package edu.sstu.platform.model;
 
+import java.io.Serializable;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,13 +18,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "RATINGS")
-public class Rating {
+public class Rating implements Serializable {
 
   @Id
   @GeneratedValue
   private UUID id;
 
+  @Column(name = "movie_id")
   private UUID movieId;
+
+  @Column(name = "user_id")
   private UUID userId;
 
   @Enumerated(EnumType.STRING)

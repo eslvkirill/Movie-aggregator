@@ -215,7 +215,7 @@
 
 				.caption {
 					margin-left: 12px;
-					width: 218px;
+					width: 236px;
 					font-weight: 600;
 					font-size: 28px;
 					color: #fff8e0;
@@ -233,10 +233,41 @@
 
 			.BottomOfSection {
 				@include flexible();
+				align-items: center;
 				justify-content: space-between;
-				align-items: flex-end;
+				justify-content: flex-start;
 				width: 100%;
 				margin-top: 1.6%;
+
+				.detail-scores {
+					margin: 0 28px;
+
+					.submit {
+						font-family: 'Amatic SC', sans-serif;
+						opacity: 0.95;
+						background: #5f10c774;
+						border: 3px outset;
+						border-radius: 15px;
+						color: #fafafa;
+						font-weight: bold;
+						font-size: 26px;
+						padding: 16.5px 48px;
+						text-decoration: none;
+						transition: 0.3s;
+
+						&:hover {
+							transition: 0.3s;
+							transform: scale(0.99);
+							background: #3c008ad2;
+							opacity: 0.9;
+						}
+
+						&:active {
+							transform: scale(0.97);
+							transition: 0.3s;
+						}
+					}
+				}
 
 				.Links {
 					display: flex;
