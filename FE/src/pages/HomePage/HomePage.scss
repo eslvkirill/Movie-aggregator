@@ -2,6 +2,17 @@
 	padding-top: 4rem;
 	margin-top: 106px;
 
+	.operations-section {
+		display: flex;
+		width: 90%;
+		height: 100%;
+		justify-content: space-around;
+		align-items: flex-end;
+		margin: auto;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+	}
+
 	&__description-wrapper {
 		text-align: center;
 		margin-top: -3%;

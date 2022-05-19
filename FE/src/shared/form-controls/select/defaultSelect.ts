@@ -16,7 +16,7 @@ const createCustomizeSelect = (
 
 export const createDefaultSelect = (
 	placeholder: string,
-	errorMessage: string,
+	errorMessage?: string,
 	isMulti: boolean = true,
 	closeMenuOnSelect: boolean = false
 ) =>
