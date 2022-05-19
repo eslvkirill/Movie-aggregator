@@ -4,6 +4,8 @@ import { movieConstructor } from 'shared/utils/common';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import MovieList from 'components/features/Movie/MovieList/MovieList';
 import './HomePage.scss';
+import Sort from 'components/features/Sort/Sort';
+import Filter from 'components/features/Filter/Filter';
 
 const HomePage = () => {
   const [movies, setMovies] = useState<any>([]);
@@ -36,10 +38,10 @@ const HomePage = () => {
         ${filterContent[MovieFormFileds.DIRECTORS] && `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}`}
       `;
 
-      const sortQuery = sortFieldName && `&sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
+      const sortQuery = sortFieldName && `sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
 
       await axios
-        .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}`) // ${filtersQuery}${sortQuery}
+        .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}&${sortQuery}`) // ${filtersQuery}${sortQuery}
           .then((response) => {
             if (sortFieldName === undefined) {
               if (response.data.last === false) setActiveButton(false);
@@ -117,6 +119,32 @@ const HomePage = () => {
         <hr className="description-wrapper_second-line hr-line" />
       </div>
 
+      <section className="operations-section">
+        <Filter
+          sortValue={sortValue}
+          filterContent={filterContent}
+          setFilterContent={setFilterContent}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          paginate={paginate}
+          arrowDirection={arrowDirection}
+          isFetch={isFetch}
+          setFetch={setFetch}
+          setLoading={setLoading}
+        />
+        <Sort
+          options={sortOptions}
+          sortValue={sortValue}
+          arrowDirection={arrowDirection}
+          setArrowDirection={setArrowDirection}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          paginate={paginate}
+          isFetch={isFetch}
+          setFetch={setFetch}
+          setLoading={setLoading}
+        />
+      </section>
       <MovieList 
         sortValue={sortValue}
         setMovies={setMovies}
