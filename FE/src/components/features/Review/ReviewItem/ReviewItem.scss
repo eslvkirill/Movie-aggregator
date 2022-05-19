@@ -20,8 +20,22 @@
 			justify-content: space-between;
 			margin-bottom: 15px;
 
-			.reviewAuthorName {
-				font-weight: bold;
+			.leftSide {
+				display: flex;
+				align-items: center;
+
+				.reviewAuthorName {
+					font-size: 18px;
+					font-weight: bold;
+				}
+
+				.user-rating {
+					margin-left: 7px;
+					font-size: 17px;
+					border: 3px ridge #ffdd00;
+					border-radius: 32%;
+					padding: 0 6px;
+				}
 			}
 
 			.rightSide {

@@ -19,11 +19,21 @@ const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChang
         >
           <div className="reviewCard">
             <div className="reviewHead">
-              <div
-                className="reviewAuthorName"
-                style={{ color: primaryPageColor }}
-              >
-                {review.username}
+              <div className="leftSide">
+                <div
+                  className="reviewAuthorName"
+                  style={{ color: primaryPageColor }}
+                >
+                  {review.username}
+                </div>
+                {!!review.userRating && 
+                  <div 
+                    className="user-rating"
+                    title={`Рейтинг пользователя '${review.username}' равен ${review.userRating}`}
+                  >
+                    {review.userRating}
+                  </div>
+                }
               </div>
               <div className="rightSide">
                 <div className="reviewDate">{review.creationDate}</div>
