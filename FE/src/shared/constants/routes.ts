@@ -5,6 +5,7 @@ export const ROUTE = {
 	GENRES: 'genres',
 	MOVIES: 'movies',
 	PERSONS: 'persons',
+	COLLECTION: 'my-collection',
 	MOVIE_PAGE: 'movies/:id',
 	PERSON_PAGE: 'person/:id',
 	LOGIN: 'login',

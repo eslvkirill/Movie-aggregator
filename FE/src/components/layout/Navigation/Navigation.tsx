@@ -17,11 +17,11 @@ const Navigation = () => {
       label: user.username,
       visible: false,
     },
-    // authUser && { 
-    //   to: '/my-collection', 
-    //   label: 'Моя коллекция', 
-    //   visible: true 
-    // },
+    authUser && { 
+      to: '/my-collection', 
+      label: 'Моя коллекция', 
+      visible: true 
+    },
     authUser && {
       to: '/admin-panel',
       label: 'Панель администратора',
