@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,8 +50,12 @@ public class ReviewService {
 
   @Transactional(readOnly = true)
   public Page<ReviewResponseDto> findReviews(UUID movieId, Pageable pageable) {
-    var reviews = reviewRepo.findAll(qReview.movieId.eq(movieId), pageable);
+    var unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+    var reviewIdPage = reviewRepo.findReviewIdsByMovieId(movieId, unsortedPageable);
+    var reviewIds = reviewIdPage.getContent();
+    var reviews = reviewRepo.findByIdIn(reviewIds, pageable.getSort());
+    var ReviewDtoList = reviewMapper.toDto(reviews);
 
-    return reviewMapper.toDto(reviews);
+    return new PageImpl<>(ReviewDtoList, pageable, reviewIdPage.getTotalElements());
   }
 }
