@@ -1,11 +1,10 @@
 import { CSSTransition } from 'react-transition-group';
 import Button from 'components/shared/form-controls/Button/Button';
 import Input from 'components/shared/form-controls/Input/Input';
-import { Genre, GenresProperties } from '../genre.interface';
-import './GenreItem.scss';
+import './CategoryItem.scss';
 
-const GenreItem = (props: GenresProperties) => {
-  const { dropdown, genres, updateGenre, saveAction, editAction, disabled, deleteGenre } = props;
+const CategoryItem = (props: any) => {
+  const { dropdown, categories, updateCategory, saveAction, editAction, disabled, deleteCategory } = props;
 
   return (
     <CSSTransition 
@@ -19,16 +18,18 @@ const GenreItem = (props: GenresProperties) => {
         exit: 200,
       }}
     >
-      <ul className="genre-item">
-        {genres.map((genre: Genre) => {
-          const { id, name, open } = genre; 
+      <ul className="category-item">
+        {categories.map((category: any) => {
+          const {id,
+            name,
+            open} = category;
 
           return (
             <li key={id}>
               <Input
                 id={id}
                 value={name}
-                onChange={(event) => updateGenre(event, id)}
+                onChange={(event) => updateCategory(event, id)}
                 disabled={!open}
                 // autocomplete="off"
               />
@@ -40,7 +41,7 @@ const GenreItem = (props: GenresProperties) => {
               >
                 {open ? 'Сохранить' : 'Редактировать'}
               </Button>
-              <Button type="submit" onClick={() => deleteGenre(id)}>
+              <Button type="submit" onClick={() => deleteCategory(id)}>
                 Удалить
               </Button>
             </li>
@@ -51,4 +52,4 @@ const GenreItem = (props: GenresProperties) => {
   )
 };
 
-export default GenreItem;
+export default CategoryItem;

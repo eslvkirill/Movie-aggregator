@@ -6,6 +6,7 @@ export const ROUTE = {
 	MOVIES: 'movies',
 	PERSONS: 'persons',
 	COLLECTION: 'my-collection',
+	CATEGORIES: 'my-collection/categories',
 	MOVIE_PAGE: 'movies/:id',
 	PERSON_PAGE: 'person/:id',
 	LOGIN: 'login',

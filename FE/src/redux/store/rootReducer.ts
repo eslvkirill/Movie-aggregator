@@ -5,6 +5,7 @@ import genreReducer from 'redux/reducers/genreReducer';
 import personReducer from 'redux/reducers/personReducer';
 import ratingReducer from 'redux/reducers/ratingReducer';
 import backdropReducer from 'redux/reducers/backdropReducer';
+import categoryReducer from 'redux/reducers/categoryReducer';
 
 const rootReducer = combineReducers({
 	genreReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	personReducer,
 	ratingReducer,
 	backdropReducer,
+	categoryReducer,
 });
 
 export default rootReducer;

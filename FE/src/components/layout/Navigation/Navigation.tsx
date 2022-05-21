@@ -14,7 +14,7 @@ const Navigation = () => {
   const links = [
     authUser && {
       to: '/personal-account',
-      label: user.username,
+      label: `Профиль ${user.username}`,
       visible: false,
     },
     authUser && { 
