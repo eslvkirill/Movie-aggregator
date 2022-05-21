@@ -1,37 +1,70 @@
 import { useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import axios from 'axios';
 import { createDefaultSelect } from 'shared/form-controls/select/defaultSelect';
 import selectStyles from 'shared/form-controls/select/styles';
+import { getAllMovieYears } from 'shared/utils/common';
+import GenreService from 'components/features/Genre/genre.service';
+import YearFilter from 'components/features/Filter/YearFilter/YearFilter';
 import Button from 'components/shared/form-controls/Button/Button';
 import Select from 'components/shared/form-controls/Select/Select';
+import PersonService from '../Person/person.service';
+import { MovieFormFileds } from '../Movie/movie.enum';
+import MovieService from '../Movie/movie.service';
 import './Filter.scss';
 
 const createSelectControls = {
-  genres: createDefaultSelect('По жанрам'),
-  countries: createDefaultSelect('По странам'),
-  directors: createDefaultSelect('По режиссёру', '', false, true),
+  [MovieFormFileds.GENRES]: createDefaultSelect('По жанрам'),
+  [MovieFormFileds.ORIGIN_COUNTRIES]: createDefaultSelect('По странам'),
+  [MovieFormFileds.ACTORS]: createDefaultSelect('По aктёру'),
+  [MovieFormFileds.DIRECTORS]: createDefaultSelect('По режиссёру', '', false, true),
+}
+
+const yearSelectControls: any = {
+  from: createDefaultSelect('C ....', '', false, true),
+  to: createDefaultSelect('По ....', '', false, true),
 }
 
 const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPage, setCurrentPage, arrowDirection, paginate, setLoading, setFetch }: any) => {
   const [dropup, setDropup] = useState<any>(false);
-
   const [selectControls, setSelectControls] = useState<any>(createSelectControls);
+  const [yearControls, setYearControls] = useState<any>(yearSelectControls);
+
+  const personService = PersonService;
+  const genreService = GenreService;
+  const movieService = MovieService;
 
   useEffect(() => {
     const loadSelectContent = async () => {
       try {
-        await axios.get('/api/movies/filters').then((response) => {
-          Object.keys(response.data).map((dataName) => {
-            const data = response.data[dataName];
+        const persons = await personService.getAllPersons();
+        const genres = await genreService.getGenres();
+        const originCountries = await movieService.getOriginCountries();
+        const years = getAllMovieYears(2023);
+        
+        const response: any = { 
+          actors: persons, 
+          directors: persons,
+          to: years, 
+          from: years,
+          genres,
+          originCountries 
+        };
+
+          Object.keys(response).map((dataName) => {
+            const data = response[dataName];
+            const customMovieFields: string[] = [
+              MovieFormFileds.GENRES, 
+              MovieFormFileds.ACTORS, 
+              MovieFormFileds.DIRECTORS
+            ];
 
             let initialState = data.map((data: any, index: number) => ({
               label: data,
               value: index,
             }));
 
-            if (dataName === 'genres' || dataName === 'directors') {
-              initialState = response.data[dataName].map((content: any) => ({
+            if (customMovieFields.includes(dataName)) {
+              initialState = response[dataName].map((content: any) => ({
                 label: content.name,
                 value: content.id,
               }));
@@ -39,14 +72,29 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
 
             Object.keys(selectControls).map((controlName) => {
               const control = selectControls[controlName];
-              if (dataName === controlName) control.options = initialState;
+
+              if (dataName === controlName) {
+                control.options = initialState
+              };
+
               return selectControls;
+            });
+
+            Object.keys(yearControls).map((controlName) => {
+              const control = yearControls[controlName];
+
+              if (dataName === controlName) {
+                control.options = initialState
+              };
+
+              return yearControls;
             });
 
             return initialState;
           });
+
           setSelectControls(selectControls);
-        });
+          setYearControls(yearControls);
       } catch (e) {
         console.log(e);
       }
@@ -55,6 +103,13 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
     loadSelectContent();
   }, []);
 
+  const resetFilters = () => {
+    setDropup(!dropup)
+    setFilterContent({});
+    Object.values(selectControls).map((fieldName: any) => fieldName.value = '');
+    Object.values(yearControls).map((fieldName: any) => fieldName.value = '');
+  }
+
   const onChangeSelectHandler = (event: any, controlName: string) => {
     const control = { ...selectControls[controlName] };
     control.value = event;
@@ -62,12 +117,12 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
     if (control.isMulti === false && control.value !== null) {
       // eslint-disable-next-line prefer-destructuring
       filterContent[controlName] = Object.values(control.value)[1];
-    }
-    if (control.isMulti === true && control.value !== null) {
+    } else if (control.isMulti === true && control.value !== null) {
       filterContent[controlName] = control.value.map((selectValue: any) =>
-        controlName === 'countries' ? selectValue.label : selectValue.value
+        controlName === MovieFormFileds.ORIGIN_COUNTRIES ? selectValue.label : selectValue.value
       );
     }
+
     selectControls[controlName] = control;
 
     setFilterContent(filterContent);
@@ -87,15 +142,15 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
     setFetch(true);
   };
 
-  
-  const renderSelects = () => {
+  const renderSelects = (onChangeFunction: any, selectControls: any) => {
     return Object.keys(selectControls).map((controlName) => {
       const control = selectControls[controlName];
+      
       return (
         <Select
           key={controlName}
           options={control.options}
-          onChange={(event: any) => onChangeSelectHandler(event, controlName)}
+          onChange={(event: any) => onChangeFunction(event, controlName)}
           isMulti={control.isMulti}
           isSearchable={control.isSearchable}
           isClearable={control.isClearable}
@@ -170,10 +225,23 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
         }}
       >
         <div className="dropupBlock">
-          {renderSelects()}
+          {renderSelects(onChangeSelectHandler, selectControls)}
+          <YearFilter 
+            yearControls={yearControls}
+            setYearControls={setYearControls}
+            renderSelects={renderSelects}
+            setCurrentPage={setCurrentPage}
+            paginate={paginate}
+            setLoading={setLoading}
+            setFetch={setFetch}
+            sortValue={sortValue}
+            arrowDirection={arrowDirection}
+            filterContent={filterContent} 
+            setFilterContent={setFilterContent} 
+          />
           <div
             className="closeDropup"
-            onClick={() => setDropup(!dropup)}
+            onClick={resetFilters}
           >
             ✖
           </div>

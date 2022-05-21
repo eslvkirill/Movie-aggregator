@@ -31,7 +31,7 @@ const ratingState = [
 		score: 0,
 		averageScore: 0,
 		name: 'Съёмка',
-		description: 'Операторская работа, монтаж ',
+		description: 'Операторская работа, монтаж',
 	},
 	{
 		id: '',

@@ -32,4 +32,14 @@ const getImageFileByUrl = async (url: string) => {
 	});
 };
 
-export { isUserLoggIn, movieConstructor, getImageFileByUrl };
+const getAllMovieYears = (year: number) => {
+	const years = [];
+
+	for (let i = 1888; i <= year; ++i) {
+		years.push(i);
+	}
+
+	return years.sort((a, b) => b - a);
+};
+
+export { isUserLoggIn, movieConstructor, getImageFileByUrl, getAllMovieYears };

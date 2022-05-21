@@ -3,29 +3,33 @@ import axios from 'axios';
 import { movieConstructor } from 'shared/utils/common';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import MovieList from 'components/features/Movie/MovieList/MovieList';
-import './HomePage.scss';
 import Sort from 'components/features/Sort/Sort';
 import Filter from 'components/features/Filter/Filter';
+import './HomePage.scss';
+import { RATING } from 'redux/initial-state/ratingState/rating.enum';
 
 const HomePage = () => {
   const [movies, setMovies] = useState<any>([]);
-  const [isLoading, setLoading] = useState<any>(true);
-  const [numberOfElements, setNumberOfElements] = useState<any>(0);
-  const [totalElements, setTotalElements] = useState<any>(0);
-  const [currentPage, setCurrentPage] = useState<any>(1);
-  const [activeButton, setActiveButton] = useState<any>(true);
-  const [isFetch, setFetch] = useState<any>(true);
+  const [isLoading, setLoading] = useState(true);
+  const [numberOfElements, setNumberOfElements] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeButton, setActiveButton] = useState(true);
+  const [isFetch, setFetch] = useState(true);
 
   const [arrowDirection, setArrowDirection] = useState<any>(true);
   const [sortValue, setSortValue] = useState<any>();
   const [filterContent, setFilterContent] = useState<any>({});
   
   const sortOptions = [
-    { value: MovieFormFileds.ID, label: 'Умолчанию' },
-    { value: MovieFormFileds.RUS_TITLE, label: 'Русскому названию' },
-    { value: MovieFormFileds.ENG_TITLE, label: 'Оригинальному названию' },
-    { value: MovieFormFileds.YEAR, label: 'Году создания' },
-    { value: MovieFormFileds.TOTAL_RATING, label: 'Рейтингу' },
+    { value: RATING.TOTAL, label: 'Общему рейтингу (по умолчанию)' },
+    { value: RATING.SCREENPLAY, label: 'Рейтингу за сценарий' },
+    { value: RATING.ACTING, label: 'Рейтингу по актёрской игре' },
+    { value: RATING.SHOOTING, label: 'Рейтингу за операторскую работу' },
+    { value: RATING.DECORATION, label: 'Рейтингу по худ. оформлению' },
+    { value: RATING.SOUNDTRACK, label: 'Рейтингу по звуку и музыке' },
+    { value: RATING.SPECIAL_EFFECTS, label: 'Рейтингу за спецэффекты' },
+    { value: RATING.ATMOSPHERE, label: 'Рейтингу по атмосферности' },
   ];
 
   const paginate = async (pageNumber: number, sortFieldName: any, sortDirection: string) => {
@@ -33,15 +37,17 @@ const HomePage = () => {
       const paginationSize = 3;
 
       const filtersQuery = `
-        ${filterContent[MovieFormFileds.GENRES] && `&${MovieFormFileds.GENRES}=${filterContent[MovieFormFileds.GENRES]}`}
-        ${filterContent[MovieFormFileds.ORIGIN_COUNTRIES] && `&${MovieFormFileds.ORIGIN_COUNTRIES}=${filterContent[MovieFormFileds.ORIGIN_COUNTRIES]}`}
-        ${filterContent[MovieFormFileds.DIRECTORS] && `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}`}
+        ${filterContent[MovieFormFileds.GENRES] ? `&${MovieFormFileds.GENRES}=${filterContent[MovieFormFileds.GENRES]}` : ''}
+        ${filterContent[MovieFormFileds.ORIGIN_COUNTRIES] ? `&${MovieFormFileds.ORIGIN_COUNTRIES}=${filterContent[MovieFormFileds.ORIGIN_COUNTRIES]}` : ''}
+        ${filterContent[MovieFormFileds.ACTORS] ? `&${MovieFormFileds.ACTORS}=${filterContent[MovieFormFileds.ACTORS]}` : ''}
+        ${filterContent[MovieFormFileds.DIRECTORS] ? `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}` : ''}
+        ${filterContent.from && filterContent.to ? `&from=${filterContent.from}&to=${filterContent.to}` : ''}
       `;
 
       const sortQuery = sortFieldName && `sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
 
       await axios
-        .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}&${sortQuery}`) // ${filtersQuery}${sortQuery}
+        .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}&${sortQuery}${filtersQuery}`)
           .then((response) => {
             if (sortFieldName === undefined) {
               if (response.data.last === false) setActiveButton(false);
