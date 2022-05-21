@@ -55,7 +55,8 @@
 	}
 
 	.render-result {
-		display: flex;
+		// display: flex;
+		display: none;
 		flex-direction: column;
 		margin-top: -29px;
 		border-radius: 16px;

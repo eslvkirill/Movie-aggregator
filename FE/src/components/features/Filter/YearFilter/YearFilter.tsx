@@ -22,15 +22,17 @@ const YearFilter = ({ yearControls, setYearControls, filterContent, setFilterCon
   };
 
   const yearFilterClick = () => {
-    setFilterContent(filterContent);
-    setCurrentPage(1);
-    paginate(
-      1,
-      sortValue === undefined ? '' : sortValue,
-      arrowDirection
-    );
-    setLoading(true);
-    setFetch(true);
+    if (filterContent.to && filterContent.from) {
+      setFilterContent(filterContent);
+      setCurrentPage(1);
+      paginate(
+        1,
+        sortValue === undefined ? '' : sortValue,
+        arrowDirection
+      );
+      setLoading(true);
+      setFetch(true);
+    }
   }
 
   return (

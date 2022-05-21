@@ -12,6 +12,7 @@ import AuthPage from 'pages/AuthPage/AuthPage';
 import AdminPage from 'pages/AdminPage/AdminPage';
 import Registration from 'components/features/Auth/Registration/Registration';
 import CollectionPage from 'pages/CollectionPage/CollectionPage';
+import CategoryPage from 'pages/CategoryPage/CategoryPage';
 import GenreList from 'components/features/Genre/GenreList/GenreList';
 import PersonForm from 'components/features/Person/PersonForm/PersonForm';
 import MovieForm from 'components/features/Movie/MovieForm/MovieForm';
@@ -29,6 +30,7 @@ const App = () => (
         <Route path={ROUTE.MOVIE_PAGE} element={<MoviePage />} />
         <Route path={ROUTE.PERSON_PAGE} element={<PersonPage />} />
         <Route path={ROUTE.COLLECTION} element={<CollectionPage />} />
+        <Route path={ROUTE.CATEGORIES} element={<CategoryPage />} />
         <Route path={ROUTE.ADMIN} element={<AdminPage />}>
           <Route path={ROUTE.GENRES} element={<GenreList />} />
           <Route path={ROUTE.PERSONS} element={<PersonForm />} />

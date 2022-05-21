@@ -11,6 +11,7 @@ const ENDPOINT = {
 	COUNTRIES: 'countries',
 	PERSON: 'people',
 	RATINGS: 'ratings',
+	CATEGORIES: 'categories',
 };
 
 const REQUEST = {

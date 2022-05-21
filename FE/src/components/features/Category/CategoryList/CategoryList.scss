@@ -1,0 +1,118 @@
+$primary-color: #fceddc;
+
+.category-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 260px 0 auto;
+	width: 60%;
+
+	h2 {
+		margin-bottom: 1.5rem;
+		color: #fceddc;
+	}
+
+	form {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	Input {
+		width: 22rem;
+		height: 48.8px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+
+		&::placeholder {
+			color: #a89176;
+			transition: 0.3s;
+		}
+
+		&:focus {
+			background: #fff4e8;
+			transition: 0.3s;
+		}
+
+		+ span {
+			width: 100%;
+			font-size: 0.78rem;
+		}
+	}
+
+	Button {
+		cursor: pointer;
+		border: none;
+		outline: none;
+		margin-left: 0.7rem;
+		background: #c06b0a;
+		color: $primary-color;
+		transition: 0.3s;
+		height: 42px;
+		margin-bottom: 8px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-family: 'Nunito', serif;
+		font-weight: 600;
+		font-size: 19px;
+		letter-spacing: 0.1rem;
+
+		&:hover {
+			background: #a35b09;
+			transition: 0.3s;
+		}
+	}
+
+	hr {
+		background: $primary-color;
+		width: 55%;
+		margin-top: 1rem;
+		border-width: 2px;
+	}
+
+	> Button.success {
+		margin-top: 0.5rem;
+		width: 23rem;
+		font-size: 19px;
+		padding: 24px 4px;
+		background: #924f02;
+		border: 2.5px solid #fafafa8a;
+		box-shadow: none;
+		border-radius: 5px;
+		color: #fff4e8;
+		display: flex;
+		align-items: top;
+		justify-content: center;
+
+		&:hover {
+			background: #aa5c02;
+			border: 2.5px solid #fafafaab;
+			color: #fff8f1;
+		}
+
+		&:active {
+			transform: scale(0.98);
+		}
+
+		span {
+			display: flex;
+			margin-left: 0.27rem;
+			margin-top: 0.07rem;
+			font-weight: bold;
+			transition: 0.3s;
+			font-size: 13px;
+		}
+
+		.down {
+			transform: rotate(270deg);
+			transition: 0.3s;
+		}
+
+		.up {
+			transform: rotate(90deg);
+			transition: 0.2s;
+		}
+	}
+}

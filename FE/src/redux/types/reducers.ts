@@ -5,4 +5,5 @@ export const REDUCER = {
 	PERSON: 'person',
 	RATING: 'rating',
 	BACKDROP: 'backdrop',
+	CATEGORY: 'category',
 };
