@@ -38,7 +38,10 @@ const GenreList = () => {
 
   const onEditAction = (genreId: string) => dispatch(editGenre(genreId));
 
-  const onSaveAction = async (genreId: string) => dispatch(editGenreCreator(genreId));
+  const onSaveAction = async (genreId: string) => {
+    dispatch(editGenre(genreId));
+    dispatch(editGenreCreator(genreId));
+  }
 
   const onSubmitAction = (event: React.FormEvent) => {
     event.preventDefault();
