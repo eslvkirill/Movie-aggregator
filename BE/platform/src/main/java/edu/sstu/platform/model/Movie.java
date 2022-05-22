@@ -118,6 +118,11 @@ public class Movie {
   @Where(clause = "person_role = 'DIRECTOR'")
   private Set<MoviesToPeopleRelation> directorRelations = new HashSet<>();
 
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @OneToMany(mappedBy = "movie")
+  private Set<Rating> ratings = new HashSet<>();
+
   public void addExternalAggregatorInfo(ExternalAggregatorInfo info) {
     if (externalAggregatorInfos.contains(info)) {
       externalAggregatorInfos.stream()

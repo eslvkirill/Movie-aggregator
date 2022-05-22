@@ -11,6 +11,7 @@ import static java.util.Optional.ofNullable;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.sstu.platform.dto.request.MoviePageableRequestDto;
 import edu.sstu.platform.dto.request.MovieRequestDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
@@ -32,6 +33,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,9 +43,8 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -201,13 +203,25 @@ public class MovieService {
   }
 
   @Transactional(readOnly = true)
-  public Page<MovieViewResponseDto> findMovies(Pageable pageable) {
-    var movieIdPage = movieRepo.findMovieIds(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
+  public Page<MovieViewResponseDto> findMovies(Specification<Movie> movieSpec,
+      MoviePageableRequestDto pageableRequest) {
+    var movieIdPage = movieRepo.findAllIds(movieSpec, pageableRequest);
     var movieIds = movieIdPage.getContent();
-    var movies = movieRepo.findByIdIn(movieIds, Sort.by(toDotPath(qMovie.creationDate)));
+    var movies = movieRepo.findByIdIn(movieIds);
+    movies = reorderByIdsOrdering(movieIds, movies);
     var ratingsByMovieId = ratingService.findRatingsByMovieIds(movieIds, TOTAL);
     var movieDtoList = movieMapper.toViewDto(movies, ratingsByMovieId);
 
-    return new PageImpl<>(movieDtoList, pageable, movieIdPage.getTotalElements());
+    return new PageImpl<>(movieDtoList, movieIdPage.getPageable(), movieIdPage.getTotalElements());
+  }
+
+  private List<Movie> reorderByIdsOrdering(List<UUID> ids, List<Movie> movies) {
+    var movieById = movies.stream()
+        .collect(Collectors.toMap(Movie::getId, Function.identity()));
+
+    return ids.stream()
+        .map(movieById::get)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 }

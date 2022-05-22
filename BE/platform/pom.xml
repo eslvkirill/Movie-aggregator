@@ -23,6 +23,8 @@
     <querydsl.version>5.0.0</querydsl.version>
     <apt.maven.plugin.version>1.1.3</apt.maven.plugin.version>
     <hibernate.types.version>2.16.2</hibernate.types.version>
+    <specification.arg.resolver.version>2.6.2</specification.arg.resolver.version>
+    <hibernate.version>5.6.7.Final</hibernate.version>
   </properties>
 
   <dependencies>
@@ -114,6 +116,19 @@
       <groupId>com.vladmihalcea</groupId>
       <artifactId>hibernate-types-55</artifactId>
       <version>${hibernate.types.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.kaczmarzyk</groupId>
+      <artifactId>specification-arg-resolver</artifactId>
+      <version>${specification.arg.resolver.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <version>${hibernate.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

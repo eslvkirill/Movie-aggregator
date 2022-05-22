@@ -8,7 +8,7 @@ import edu.sstu.platform.config.properties.ValidationProperties;
 import edu.sstu.platform.dto.request.PersonRequestDto;
 import edu.sstu.platform.exception.ValidationException;
 import edu.sstu.platform.model.QPerson;
-import edu.sstu.platform.service.PersonRepo;
+import edu.sstu.platform.repo.PersonRepo;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
