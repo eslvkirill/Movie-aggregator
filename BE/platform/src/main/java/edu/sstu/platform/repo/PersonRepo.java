@@ -1,4 +1,4 @@
-package edu.sstu.platform.service;
+package edu.sstu.platform.repo;
 
 import edu.sstu.platform.model.Person;
 import java.util.Optional;

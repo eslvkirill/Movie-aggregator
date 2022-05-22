@@ -9,6 +9,7 @@ import edu.sstu.platform.dto.response.PersonViewResponseDto;
 import edu.sstu.platform.mapper.PersonMapper;
 import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.QPerson;
+import edu.sstu.platform.repo.PersonRepo;
 import edu.sstu.platform.validator.PersonValidator;
 import java.util.List;
 import java.util.UUID;

@@ -8,7 +8,7 @@ import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.PersonRole;
 import edu.sstu.platform.model.Rating;
 import edu.sstu.platform.model.projection.RatingMapping;
-import edu.sstu.platform.service.PersonRepo;
+import edu.sstu.platform.repo.PersonRepo;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,8 @@ public abstract class MovieMapper {
       @Mapping(target = "id", ignore = true),
       @Mapping(target = "oscars", ignore = true),
       @Mapping(target = "externalAggregatorInfos", ignore = true),
-      @Mapping(target = "genres", ignore = true)
+      @Mapping(target = "genres", ignore = true),
+      @Mapping(target = "ratings", ignore = true)
   })
   public abstract Movie toEntity(MovieRequestDto movieRequestDto);
 
@@ -66,7 +67,8 @@ public abstract class MovieMapper {
       @Mapping(target = "externalAggregatorInfos", ignore = true),
       @Mapping(target = "actorRelations", ignore = true),
       @Mapping(target = "directorRelations", ignore = true),
-      @Mapping(target = "creationDate", ignore = true)
+      @Mapping(target = "creationDate", ignore = true),
+      @Mapping(target = "ratings", ignore = true)
   })
   public abstract void update(MovieRequestDto movieRequestDto, @MappingTarget Movie movie);
 
