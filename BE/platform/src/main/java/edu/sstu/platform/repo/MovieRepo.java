@@ -1,6 +1,7 @@
 package edu.sstu.platform.repo;
 
 import edu.sstu.platform.model.Movie;
+import edu.sstu.platform.model.projection.MovieSearchResultMapping;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,4 +37,12 @@ public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicate
   @Modifying
   @Query(value = "update movies set active = not active where id = ?1", nativeQuery = true)
   Integer updateActivityById(UUID id);
+
+  @Query("select m.id as id, m.engTitle as engTitle, m.rusTitle as rusTitle,"
+      + "   m.year as year, m.poster as poster, coalesce(avg(r.score), 0) as totalRating"
+      + " from Movie m"
+      + " left join m.ratings r"
+      + " where m.id in (?1)"
+      + " group by m.id")
+  List<MovieSearchResultMapping> findSearchResultMappingsByIdIn(List<UUID> ids);
 }

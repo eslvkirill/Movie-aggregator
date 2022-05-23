@@ -25,6 +25,7 @@
     <hibernate.types.version>2.16.2</hibernate.types.version>
     <specification.arg.resolver.version>2.6.2</specification.arg.resolver.version>
     <hibernate.version>5.6.7.Final</hibernate.version>
+    <hibernate.search.version>6.1.5.Final</hibernate.search.version>
   </properties>
 
   <dependencies>
@@ -125,10 +126,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-jpamodelgen</artifactId>
-      <version>${hibernate.version}</version>
-      <scope>provided</scope>
+      <groupId>org.hibernate.search</groupId>
+      <artifactId>hibernate-search-mapper-orm</artifactId>
+      <version>${hibernate.search.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate.search</groupId>
+      <artifactId>hibernate-search-backend-lucene</artifactId>
+      <version>${hibernate.search.version}</version>
     </dependency>
   </dependencies>
 
@@ -163,6 +169,11 @@
               <artifactId>mapstruct-processor</artifactId>
               <version>${mapstruct.version}</version>
             </path>
+            <dependency>
+              <groupId>org.hibernate</groupId>
+              <artifactId>hibernate-jpamodelgen</artifactId>
+              <version>${hibernate.version}</version>
+            </dependency>
           </annotationProcessorPaths>
           <compilerArgs>
             <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>

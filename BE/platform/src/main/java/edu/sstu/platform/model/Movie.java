@@ -31,20 +31,27 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Where;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "MOVIES")
+@Indexed(index = "MOVIES")
 public class Movie {
 
   @Id
   @GeneratedValue
   private UUID id;
 
+  @FullTextField
   private String engTitle;
+
+  @FullTextField
   private String rusTitle;
+
   private int year;
 
   @Lob
