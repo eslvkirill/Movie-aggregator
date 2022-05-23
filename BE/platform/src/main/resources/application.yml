@@ -3,6 +3,8 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/movie-aggregator}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
+    hikari:
+      auto-commit: false
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
@@ -10,6 +12,10 @@ spring:
     properties:
       hibernate:
         dialect: edu.sstu.platform.config.CustomPostgreSQL95Dialect
+        search:
+          backend:
+            directory:
+              root: ${user.dir}/BE/platform/lucene/indexes
   servlet:
     multipart:
       max-file-size: 10MB

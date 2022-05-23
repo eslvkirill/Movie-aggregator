@@ -2,11 +2,13 @@ package edu.sstu.platform.mapper;
 
 import edu.sstu.platform.dto.request.MovieRequestDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
+import edu.sstu.platform.dto.response.MovieSearchResultResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
 import edu.sstu.platform.model.Movie;
 import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.PersonRole;
 import edu.sstu.platform.model.Rating;
+import edu.sstu.platform.model.projection.MovieSearchResultMapping;
 import edu.sstu.platform.model.projection.RatingMapping;
 import edu.sstu.platform.repo.PersonRepo;
 import java.time.LocalDateTime;
@@ -99,4 +101,8 @@ public abstract class MovieMapper {
         .map(rating -> rating.get(0).getAverageScore())
         .orElse(0.0);
   }
+
+  public abstract MovieSearchResultResponseDto toSearchResultDto(MovieSearchResultMapping searchResult);
+
+  public abstract List<MovieSearchResultResponseDto> toSearchResultDto(List<MovieSearchResultMapping> searchResults);
 }

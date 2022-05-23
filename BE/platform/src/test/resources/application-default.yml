@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        search:
+          backend:
+            directory:
+              root: ${user.dir}/lucene/indexes
