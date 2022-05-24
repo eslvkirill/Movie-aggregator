@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAppDispatch } from 'hooks/redux';
+import { reset } from 'redux/reducers/searchReducer';
 import { movieConstructor } from 'shared/utils/common';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import MovieList from 'components/features/Movie/MovieList/MovieList';
@@ -9,6 +11,8 @@ import './HomePage.scss';
 import { RATING } from 'redux/initial-state/ratingState/rating.enum';
 
 const HomePage = () => {
+  const dispatch = useAppDispatch();
+
   const [movies, setMovies] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
   const [numberOfElements, setNumberOfElements] = useState(0);
@@ -17,34 +21,28 @@ const HomePage = () => {
   const [activeButton, setActiveButton] = useState(true);
   const [isFetch, setFetch] = useState(true);
 
-  const [arrowDirection, setArrowDirection] = useState<any>(true);
+  const [arrowDirection, setArrowDirection] = useState<any>(false);
   const [sortValue, setSortValue] = useState<any>();
   const [filterContent, setFilterContent] = useState<any>({});
   
   const sortOptions = [
-    { value: RATING.TOTAL, label: 'Общему рейтингу (по умолчанию)' },
-    { value: RATING.SCREENPLAY, label: 'Рейтингу за сценарий' },
-    { value: RATING.ACTING, label: 'Рейтингу по актёрской игре' },
-    { value: RATING.SHOOTING, label: 'Рейтингу за операторскую работу' },
-    { value: RATING.DECORATION, label: 'Рейтингу по худ. оформлению' },
-    { value: RATING.SOUNDTRACK, label: 'Рейтингу по звуку и музыке' },
-    { value: RATING.SPECIAL_EFFECTS, label: 'Рейтингу за спецэффекты' },
-    { value: RATING.ATMOSPHERE, label: 'Рейтингу по атмосферности' },
+    { value: `${RATING.TOTAL}_RATING`, label: 'Общему рейтингу (по умолчанию)' },
+    { value: `${RATING.SCREENPLAY}_RATING`, label: 'Рейтингу за сценарий' },
+    { value: `${RATING.ACTING}_RATING`, label: 'Рейтингу по актёрской игре' },
+    { value: `${RATING.SHOOTING}_RATING`, label: 'Рейтингу за операторскую работу' },
+    { value: `${RATING.DECORATION}_RATING`, label: 'Рейтингу по худ. оформлению' },
+    { value: `${RATING.SOUNDTRACK}_RATING`, label: 'Рейтингу по звуку и музыке' },
+    { value: `${RATING.SPECIAL_EFFECTS}_RATING`, label: 'Рейтингу за спецэффекты' },
+    { value: `${RATING.ATMOSPHERE}_RATING`, label: 'Рейтингу по атмосферности' },
   ];
 
   const paginate = async (pageNumber: number, sortFieldName: any, sortDirection: string) => {
     try {
       const paginationSize = 3;
 
-      const filtersQuery = `
-        ${filterContent[MovieFormFileds.GENRES] ? `&${MovieFormFileds.GENRES}=${filterContent[MovieFormFileds.GENRES]}` : ''}
-        ${filterContent[MovieFormFileds.ORIGIN_COUNTRIES] ? `&${MovieFormFileds.ORIGIN_COUNTRIES}=${filterContent[MovieFormFileds.ORIGIN_COUNTRIES]}` : ''}
-        ${filterContent[MovieFormFileds.ACTORS] ? `&${MovieFormFileds.ACTORS}=${filterContent[MovieFormFileds.ACTORS]}` : ''}
-        ${filterContent[MovieFormFileds.DIRECTORS] ? `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}` : ''}
-        ${filterContent.from && filterContent.to ? `&from=${filterContent.from}&to=${filterContent.to}` : ''}
-      `;
+      const filtersQuery = `${filterContent[MovieFormFileds.GENRES] ? `&${MovieFormFileds.GENRES}=${filterContent[MovieFormFileds.GENRES]}` : ''}${filterContent[MovieFormFileds.FILTER_COUNTRIES] ? `&${MovieFormFileds.FILTER_COUNTRIES}=${filterContent[MovieFormFileds.FILTER_COUNTRIES]}` : ''}${filterContent[MovieFormFileds.ACTORS] ? `&${MovieFormFileds.ACTORS}=${filterContent[MovieFormFileds.ACTORS]}` : ''}${filterContent[MovieFormFileds.DIRECTORS] ? `&${MovieFormFileds.DIRECTORS}=${filterContent[MovieFormFileds.DIRECTORS]}` : ''}${filterContent.fromYear && filterContent.toYear ? `&fromYear=${filterContent.fromYear}&toYear=${filterContent.toYear}` : ''}`;
 
-      const sortQuery = sortFieldName && `sort=${sortFieldName.value},${sortDirection ? 'asc' : 'desc'}`;
+      const sortQuery = sortFieldName && `sort=${sortFieldName.value},${sortDirection ? 'ASC' : 'DESC'}`;
 
       await axios
         .get(`/api/v1/movies?size=${paginationSize}&page=${pageNumber - 1}&${sortQuery}${filtersQuery}`)
@@ -109,6 +107,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    dispatch(reset());
     paginate(currentPage, sortOptions[0], arrowDirection);
   }, []);
   

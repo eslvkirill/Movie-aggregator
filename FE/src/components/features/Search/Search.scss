@@ -9,15 +9,17 @@
 		padding: 5px 10px 5px 13px;
 		box-shadow: 1px 5px 10px -5px black;
 
-		&:hover > &__btn {
-			background: white;
-			color: #bd5a31;
-			box-shadow: 1px 5px 10px -5px black;
+		&:hover {
+			.search__btn {
+				background: #fceddc;
+				color: #bd5a31;
+				box-shadow: 1px 5px 10px -5px black;
+			}
 		}
 
 		&__input input {
-			width: 240px;
-			color: white;
+			width: 300px;
+			color: #fceddc;
 			height: 16px;
 			caret-color: #481d61;
 			background: transparent;
@@ -27,7 +29,7 @@
 		}
 
 		&__btn {
-			color: white;
+			color: #fceddc;
 			float: right;
 			width: 44px;
 			height: 43px;
@@ -55,25 +57,32 @@
 	}
 
 	.render-result {
-		// display: flex;
-		display: none;
+		display: flex;
 		flex-direction: column;
 		margin-top: -29px;
 		border-radius: 16px;
 
 		.movie {
+			text-decoration: none;
+			color: #fceddc;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 0 25px;
+			padding: 0 20px;
 			height: 72px;
 			cursor: pointer;
 			background: #ad4a21;
 			border-radius: 16px;
 
+			.poster {
+				border-radius: 8px;
+				width: 79px;
+				height: 55px;
+			}
+
 			&:not(:last-child) {
 				margin-bottom: 6px;
-				border-bottom: 2px outset #ffffff;
+				border-bottom: 2px outset #fceddc;
 			}
 
 			.movie-info {
@@ -81,7 +90,7 @@
 				align-items: center;
 
 				.left-section {
-					margin-left: 10px;
+					margin: 0 15px 0 25px;
 
 					.english-title {
 						font-size: 19px;

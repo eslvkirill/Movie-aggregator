@@ -18,6 +18,7 @@ enum MovieFormFileds {
 	ACTORS = 'actors',
 	DIRECTORS = 'directors',
 	ORIGIN_COUNTRIES = 'originCountries',
+	FILTER_COUNTRIES = 'countries',
 	AUDIO_LANGUAGES = 'audioLanguages',
 	SUBTITLE_LANGUAGES = 'subtitleLanguages',
 	AGE_RATING = 'ageRating',

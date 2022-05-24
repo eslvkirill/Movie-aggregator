@@ -5,6 +5,7 @@ const MAIN_CREATORS = {
 	PERSON: 'person/',
 	RATING: 'rating/',
 	CATEGORY: 'category/',
+	SEARCH: 'search/',
 };
 
 const GENRE_CREATOR = {
@@ -49,11 +50,16 @@ const CATEGORY_CREATOR = {
 	DELETE: `${MAIN_CREATORS.CATEGORY}delete`,
 };
 
+const SEARCH_CREATOR = {
+	SET_VALUE: `${MAIN_CREATORS.SEARCH}setValue`,
+};
+
 export {
 	GENRE_CREATOR,
 	AUTH_CREATOR,
 	MOVIE_CREATOR,
 	PERSON_CREATOR,
 	RATING_CREATOR,
+	SEARCH_CREATOR,
 	CATEGORY_CREATOR,
 };

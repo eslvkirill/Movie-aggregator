@@ -19,7 +19,12 @@ const RatingList = (props: any) => {
         return (
           <div key={type} className="rating-form__line line">
             <div className="line__left-section left-section">
-              <div className="average-rating">{averageScore.toFixed(2)}</div>
+              <div 
+                className="average-rating" 
+                title="Средняя оценка"
+              >
+                {averageScore.toFixed(2)}
+              </div>
               <div className="line__name">{name}: </div>
               <RatingItem
                 movieId={movieId}

@@ -39,7 +39,7 @@ const MovieList = (props: any) => {
         <ContentLoader className="Loader" />
       ) : (
         <ul>
-          {movies.map((movie: any) => {
+          {movies.length > 0 ? movies.map((movie: any) => {
             const { id, rusTitle, engTitle, poster, price, duration, genres, year, directors, totalRating, primaryPageColor, operation } = movie;
 
             return (
@@ -63,8 +63,8 @@ const MovieList = (props: any) => {
                 />
               </li>
             );
-          })}
-          {totalElements && movies.length !== 0 ? (
+          }) : <div className="emptyMovies">Ничего не найдено</div>}
+          {!!(totalElements && movies.length !== 0) && (
             <div className="buttonSection">
               <p>
                 Вы просмотрели{' '}
@@ -75,8 +75,7 @@ const MovieList = (props: any) => {
               <progress value={numberOfElements} max={totalElements} />
               {renderOnLoadButton()}
             </div>
-          ) : (
-            totalElements && <div className="emptyMovies">Ничего не найдено</div>
+            // totalElements && <div className="emptyMovies">Ничего не найдено</div>
           )}
         </ul>
       )}

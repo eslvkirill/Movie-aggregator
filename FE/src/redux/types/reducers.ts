@@ -6,4 +6,5 @@ export const REDUCER = {
 	RATING: 'rating',
 	BACKDROP: 'backdrop',
 	CATEGORY: 'category',
+	SEARCH: 'search',
 };

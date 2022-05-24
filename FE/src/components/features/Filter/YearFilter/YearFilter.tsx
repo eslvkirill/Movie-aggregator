@@ -22,7 +22,7 @@ const YearFilter = ({ yearControls, setYearControls, filterContent, setFilterCon
   };
 
   const yearFilterClick = () => {
-    if (filterContent.to && filterContent.from) {
+    if (filterContent.toYear && filterContent.fromYear) {
       setFilterContent(filterContent);
       setCurrentPage(1);
       paginate(
