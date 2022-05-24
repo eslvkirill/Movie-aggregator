@@ -5,29 +5,21 @@ import selectStyles from 'shared/form-controls/select/styles';
 import MovieCard from 'components/features/Movie/MovieCard/MovieCard';
 import Select from 'components/shared/form-controls/Select/Select';
 import Button from 'components/shared/form-controls/Button/Button';
-import './CollectionPage.scss';
 import { getCategoriesCreator } from 'redux/creators/categoryCreator';
+import './CollectionPage.scss';
 
 const CollectionPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.authReducer);
+  const { categoryList } = useAppSelector(state => state.categoryReducer);
 
   useEffect(() => {
-    const ccc = dispatch(getCategoriesCreator(user.id));
-    console.log(ccc)
+    dispatch(getCategoriesCreator(user.id));
+    console.log(categoryList)
   }, []);
-  
-  const options = [
-    { value: 'loved', label: 'Любимые фильмы' },
-    { value: 'watchList', label: 'Буду смотреть' },
-    { value: 'favourite', label: 'Избранное' },
-  ];
 
-  const updateCollection = () => {
-    console.log('ss')
-    navigate('/my-collection/categories');
-  }
+  const updateCollection = () => navigate('/my-collection/categories');
 
   return (
     <main className="filmCatalog">
@@ -37,8 +29,8 @@ const CollectionPage = () => {
           <Select
             isMulti={false}
             isSearchable={false}
-            options={options}
-            defaultValue={options[0]}
+            options={categoryList}
+            defaultValue={!!categoryList.length && categoryList[0]}
             onChange={(event: any) => {
               // props.setCurrentPage(1);
               // props.paginate(1, event, props.arrowDirection);

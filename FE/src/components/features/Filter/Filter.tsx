@@ -14,14 +14,14 @@ import './Filter.scss';
 
 const createSelectControls = {
   [MovieFormFileds.GENRES]: createDefaultSelect('По жанрам'),
-  [MovieFormFileds.ORIGIN_COUNTRIES]: createDefaultSelect('По странам'),
+  [MovieFormFileds.FILTER_COUNTRIES]: createDefaultSelect('По странам'),
   [MovieFormFileds.ACTORS]: createDefaultSelect('По aктёру'),
   [MovieFormFileds.DIRECTORS]: createDefaultSelect('По режиссёру', '', false, true),
 }
 
 const yearSelectControls: any = {
-  from: createDefaultSelect('C ....', '', false, true),
-  to: createDefaultSelect('По ....', '', false, true),
+  fromYear: createDefaultSelect('C ....', '', false, true),
+  toYear: createDefaultSelect('По ....', '', false, true),
 }
 
 const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPage, setCurrentPage, arrowDirection, paginate, setLoading, setFetch }: any) => {
@@ -38,16 +38,16 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
       try {
         const persons = await personService.getAllPersons();
         const genres = await genreService.getGenres();
-        const originCountries = await movieService.getOriginCountries();
+        const countries = await movieService.getOriginCountries();
         const years = getAllMovieYears(2023);
         
         const response: any = { 
           actors: persons, 
           directors: persons,
-          to: years, 
-          from: years,
+          fromYear: years,
+          toYear: years,
           genres,
-          originCountries 
+          countries 
         };
 
           Object.keys(response).map((dataName) => {
@@ -104,6 +104,7 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
   }, []);
 
   const resetFilters = () => {
+    // TODO: Рендер стартовой странице с обнулением фильтров и сохранением сортирвки
     setDropup(!dropup)
     setFilterContent({});
     Object.values(selectControls).map((fieldName: any) => fieldName.value = '');
@@ -119,7 +120,7 @@ const Filter = ({ isFetch, sortValue, filterContent, setFilterContent, currentPa
       filterContent[controlName] = Object.values(control.value)[1];
     } else if (control.isMulti === true && control.value !== null) {
       filterContent[controlName] = control.value.map((selectValue: any) =>
-        controlName === MovieFormFileds.ORIGIN_COUNTRIES ? selectValue.label : selectValue.value
+        controlName === MovieFormFileds.FILTER_COUNTRIES ? selectValue.label : selectValue.value
       );
     }
 

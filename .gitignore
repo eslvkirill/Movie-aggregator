@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 BE/platform/lucene
+BE/platform/BE/platform/lucene
 
 ### STS ###
 .apt_generated

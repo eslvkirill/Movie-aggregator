@@ -10,6 +10,7 @@ import { REDUCER } from '../types/reducers';
 
 const initialState: any = {
 	categories: [],
+	categoryList: [],
 	isLoading: true,
 	error: '',
 };
@@ -30,9 +31,19 @@ const categoryReducer = createSlice({
 				(state, action: PayloadAction<any>) => {
 					const categories = action.payload;
 					categories.map((category: any) => (category.open = false));
+					state.categoryList = [];
 
 					state.isLoading = false;
 					state.categories = categories;
+
+					Object.keys(action.payload).map((category) => {
+						state.categoryList.push({
+							value: action.payload[category].id,
+							label: action.payload[category].name,
+						});
+
+						return state.categoryList;
+					});
 				}
 			)
 			.addCase(getCategoriesCreator.pending.type, (state) => {
