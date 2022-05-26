@@ -5,6 +5,7 @@ import edu.sstu.platform.dto.response.CategoryResponseDto;
 import edu.sstu.platform.service.CategoryService;
 import edu.sstu.platform.service.UserPrincipalService;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,11 @@ public class CategoryRestController {
   @GetMapping("/owner/{userId}")
   public List<CategoryResponseDto> getCategories(@PathVariable UUID userId) {
     return categoryService.findCategories(userId);
+  }
+
+  @GetMapping("/check/{movieId}")
+  public Map<String, Boolean> getCategoryToMovieRelations(@PathVariable UUID movieId) {
+    return categoryService.findCategoryToMovieRelations(movieId,
+        userPrincipalService.getCurrentUserOrElseThrow().getId());
   }
 }
