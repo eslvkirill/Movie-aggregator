@@ -1,12 +1,14 @@
 package edu.sstu.platform.api;
 
 import edu.sstu.platform.dto.request.UserRequestDto;
+import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
 import edu.sstu.platform.service.UserPrincipalService;
 import edu.sstu.platform.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +33,11 @@ public class UserRestController {
   @ResponseStatus(HttpStatus.CREATED)
   public void createUser(@RequestBody @Valid UserRequestDto userRequestDto) {
     userService.createUser(userRequestDto);
+  }
+
+  @PostMapping("/roles")
+  @PreAuthorize("hasRole('ADMIN')")
+  public void manageRole(@RequestBody @Valid UserRoleManagementRequestDto dto) {
+    userService.manageRole(dto);
   }
 }

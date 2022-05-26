@@ -19,4 +19,9 @@
       <column name="role" value="ADMIN"/>
     </insert>
   </changeSet>
+
+  <changeSet id="drop_roles_table" author="Befors">
+    <dropForeignKeyConstraint baseTableName="user_roles" constraintName="user_roles_to_roles_fk"/>
+    <dropTable tableName="roles"/>
+  </changeSet>
 </databaseChangeLog>

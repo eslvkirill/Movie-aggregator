@@ -3,6 +3,7 @@ package edu.sstu.platform.service;
 import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.UserRequestDto;
+import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
 import edu.sstu.platform.mapper.CategoryMapper;
 import edu.sstu.platform.mapper.UserMapper;
@@ -62,5 +63,23 @@ public class UserService {
 
     user.setCategories(categories);
     userPrincipalService.autoLogin(user, rawPassword);
+  }
+
+  @Transactional
+  public void manageRole(UserRoleManagementRequestDto dto) {
+    var predicate = qUser.email.startsWithIgnoreCase(dto.getUserEmail());
+    var user = userRepo.findBy(predicate, ffq -> ffq.project(toDotPath(qUser.roles)).stream().findFirst())
+        .orElseThrow(() -> new EntityNotFoundException("User by email: " + dto.getUserEmail() + " doesn't exists"));
+
+    switch (dto.getOperation()) {
+      case GRANT:
+        user.addRole(dto.getRole());
+        break;
+      case REVOKE:
+        user.removeRole(dto.getRole());
+        break;
+      default:
+        throw new UnsupportedOperationException();
+    }
   }
 }
