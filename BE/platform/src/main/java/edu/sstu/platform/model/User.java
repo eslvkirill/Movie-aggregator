@@ -1,17 +1,20 @@
 package edu.sstu.platform.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,19 +41,18 @@ public class User implements UserDetails {
   private String username;
   private boolean active;
 
-  @ManyToMany
-  @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role"))
-  private Set<Role> roles = new HashSet<>();
+  @ElementCollection
+  @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+  @Column(name = "role")
+  @Enumerated(EnumType.STRING)
+  private Set<UserRole> roles = new HashSet<>();
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Category> categories;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles.stream()
-        .map(Role::getRole)
-        .collect(Collectors.toList());
+    return new ArrayList<>(roles);
   }
 
   @Override
@@ -71,5 +73,17 @@ public class User implements UserDetails {
   @Override
   public boolean isEnabled() {
     return active;
+  }
+
+  public boolean containsRole(UserRole role) {
+    return roles.contains(role);
+  }
+
+  public void addRole(UserRole role) {
+    roles.add(role);
+  }
+
+  public void removeRole(UserRole role) {
+    roles.remove(role);
   }
 }
