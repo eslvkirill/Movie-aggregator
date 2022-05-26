@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -28,13 +30,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
+@Indexed(index = "USERS")
 public class User implements UserDetails {
 
   @Id
   @GeneratedValue
   private UUID id;
 
+  @FullTextField
   private String email;
+
   private String password;
   private String firstName;
   private String lastName;

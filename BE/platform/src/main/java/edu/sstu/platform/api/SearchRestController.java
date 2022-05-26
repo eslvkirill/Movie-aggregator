@@ -17,6 +17,6 @@ public class SearchRestController {
 
   @GetMapping
   public SearchResultsResponseDto search(@RequestParam String query) {
-    return searchService.search(query);
+    return searchService.globalSearch(query);
   }
 }
