@@ -36,4 +36,8 @@ public class CategoryItem {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "movie_id", insertable = false, updatable = false)
   private Movie movie;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id", insertable = false, updatable = false)
+  private Category category;
 }
