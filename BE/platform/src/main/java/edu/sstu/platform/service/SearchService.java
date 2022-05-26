@@ -2,8 +2,10 @@ package edu.sstu.platform.service;
 
 import edu.sstu.platform.dto.response.SearchResultsResponseDto;
 import edu.sstu.platform.mapper.SearchResultsMapper;
+import edu.sstu.platform.model.User;
 import edu.sstu.platform.repo.SearchRepo;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class SearchService {
   private final SearchRepo searchRepo;
   private final SearchResultsMapper searchResultsMapper;
 
-  public SearchResultsResponseDto search(String query) {
+  public SearchResultsResponseDto globalSearch(String query) {
     var searchResults = searchRepo.search(prepareUserQuery(query));
 
     return searchResultsMapper.toDto(searchResults);
@@ -29,5 +31,9 @@ public class SearchService {
     return Arrays.stream(terms)
         .map(term -> String.join("", term, "*"))
         .collect(Collectors.joining(" "));
+  }
+
+  public List<User> searchUsers(String query) {
+    return searchRepo.searchUsers(prepareUserQuery(query));
   }
 }

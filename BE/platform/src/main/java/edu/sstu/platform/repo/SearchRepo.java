@@ -2,9 +2,11 @@ package edu.sstu.platform.repo;
 
 import static edu.sstu.platform.model.Movie_.ENG_TITLE;
 import static edu.sstu.platform.model.Movie_.RUS_TITLE;
+import static edu.sstu.platform.model.User_.EMAIL;
 import static edu.sstu.platform.repo.SearchRepo.SearchCriteria.MOVIE;
 
 import edu.sstu.platform.model.Movie;
+import edu.sstu.platform.model.User;
 import edu.sstu.platform.model.projection.MovieSearchResultMapping;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,15 @@ public class SearchRepo {
     return movieIds.stream()
         .map(searchResultById::get)
         .collect(Collectors.toList());
+  }
+
+  public List<User> searchUsers(String query) {
+    return searchSession.search(User.class)
+        .where(f -> f.simpleQueryString()
+            .field(EMAIL)
+            .matching(query))
+        .sort(SearchSortFactory::score)
+        .fetchAllHits();
   }
 
   public enum SearchCriteria {

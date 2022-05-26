@@ -2,14 +2,19 @@ package edu.sstu.platform.api;
 
 import edu.sstu.platform.dto.request.UserRequestDto;
 import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
+import edu.sstu.platform.dto.response.RoleManagementUserSummaryResponseDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
+import edu.sstu.platform.dto.response.UserSearchBasicResultResponseDto;
 import edu.sstu.platform.service.UserPrincipalService;
 import edu.sstu.platform.service.UserService;
+import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +40,21 @@ public class UserRestController {
     userService.createUser(userRequestDto);
   }
 
-  @PostMapping("/roles")
+  @PostMapping("/{id}/roles")
   @PreAuthorize("hasRole('ADMIN')")
-  public void manageRole(@RequestBody @Valid UserRoleManagementRequestDto dto) {
-    userService.manageRole(dto);
+  public void manageRole(@PathVariable UUID id, @RequestBody @Valid UserRoleManagementRequestDto dto) {
+    userService.manageRole(id, dto);
+  }
+
+  @GetMapping("/search")
+  @PreAuthorize("hasRole('ADMIN')")
+  public List<UserSearchBasicResultResponseDto> searchUsers(String query) {
+    return userService.searchUsers(query);
+  }
+
+  @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
+  public RoleManagementUserSummaryResponseDto getUserById(@PathVariable UUID id) {
+    return userService.findUserById(id);
   }
 }
