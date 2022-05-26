@@ -3,6 +3,7 @@ package edu.sstu.platform.mapper;
 import edu.sstu.platform.dto.request.MovieReviewRequestDto;
 import edu.sstu.platform.dto.response.ReviewResponseDto;
 import edu.sstu.platform.model.Review;
+import edu.sstu.platform.model.UserRole;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
-@Mapper(imports = {LocalDateTime.class})
+@Mapper(imports = {LocalDateTime.class, UserRole.class})
 public interface ReviewMapper {
 
   @Mappings({
@@ -36,7 +37,8 @@ public interface ReviewMapper {
 
   @Mappings({
       @Mapping(target = "username", source = "user.username"),
-      @Mapping(target = "userRating", source = "rating.score")
+      @Mapping(target = "userRating", source = "rating.score"),
+      @Mapping(target = "critic", expression = "java(review.getUser().getRoles().contains(UserRole.CRITIC))")
   })
   ReviewResponseDto toDto(Review review);
 

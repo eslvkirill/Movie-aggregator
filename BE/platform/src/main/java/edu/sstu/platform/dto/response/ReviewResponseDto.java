@@ -21,4 +21,5 @@ public class ReviewResponseDto {
 
   private String username;
   private float userRating;
+  private boolean critic;
 }
