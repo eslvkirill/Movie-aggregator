@@ -37,6 +37,11 @@ public class ExternalAggregatorInfo {
     return id.aggregator;
   }
 
+  public void updateProps(ExternalAggregatorInfo other) {
+    this.url = other.url;
+    this.rating = other.rating;
+  }
+
   @Data
   @AllArgsConstructor
   @NoArgsConstructor
@@ -52,10 +57,5 @@ public class ExternalAggregatorInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
-  }
-
-  public void updateProps(ExternalAggregatorInfo other) {
-    this.url = other.url;
-    this.rating = other.rating;
   }
 }
