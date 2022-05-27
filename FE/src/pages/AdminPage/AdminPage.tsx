@@ -11,6 +11,7 @@ const AdminPage = () => {
     { to: ROUTE.GENRES, label: 'Создание жанров' },
     { to: ROUTE.PERSONS, label: `${isPersonEdit ? 'Редактирование актёра / режиссёра'  : 'Создание актёров / режиссёров'}` },
     { to: ROUTE.MOVIES, label: `${isMovieEdit ? 'Редактирование фильма'  : 'Создание фильмов'}` },
+    { to: ROUTE.ROLES, label: 'Редактирование ролей' },
   ];
 
   return (

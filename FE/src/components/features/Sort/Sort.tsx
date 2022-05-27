@@ -180,7 +180,7 @@ const Sort = ({ isFetch, setCurrentPage, setArrowDirection, paginate, setFetch, 
           '#b3752f81',
           '#4d0477b9',
           '17px',
-          310,
+          347,
           '12%',
           -8,
           'hidden'

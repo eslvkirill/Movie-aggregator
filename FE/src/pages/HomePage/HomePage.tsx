@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { reset } from 'redux/reducers/searchReducer';
 import { movieConstructor } from 'shared/utils/common';
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
@@ -9,9 +9,11 @@ import Sort from 'components/features/Sort/Sort';
 import Filter from 'components/features/Filter/Filter';
 import './HomePage.scss';
 import { RATING } from 'redux/initial-state/ratingState/rating.enum';
+import { getCategoriesCreator } from 'redux/creators/categoryCreator';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector(state => state.authReducer);
 
   const [movies, setMovies] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
@@ -27,6 +29,7 @@ const HomePage = () => {
   
   const sortOptions = [
     { value: `${RATING.TOTAL}_RATING`, label: 'Общему рейтингу (по умолчанию)' },
+    { value: 'POPULARITY', label: 'Популярности' },
     { value: `${RATING.SCREENPLAY}_RATING`, label: 'Рейтингу за сценарий' },
     { value: `${RATING.ACTING}_RATING`, label: 'Рейтингу по актёрской игре' },
     { value: `${RATING.SHOOTING}_RATING`, label: 'Рейтингу за операторскую работу' },
@@ -108,6 +111,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(reset());
+    dispatch(getCategoriesCreator(user.id));
     paginate(currentPage, sortOptions[0], arrowDirection);
   }, []);
   

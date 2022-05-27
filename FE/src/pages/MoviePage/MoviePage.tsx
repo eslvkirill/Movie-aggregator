@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { deleteMovieCreator, getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { setBackgroundAction } from 'redux/actions/movie/appearanceActions';
 import { makeMovieEditable, reset } from 'redux/reducers/movieReducer';
+import { openModal } from 'redux/reducers/backdropReducer';
 import { renderPersons } from 'shared/utils/render';
 import { isUserLoggIn } from 'shared/utils/common';
 import { USER_ROLES } from 'shared/constants/common';
@@ -21,7 +22,6 @@ import RatingList from 'components/features/Rating/RatingList/RatingList';
 import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
-import { openModal } from 'redux/reducers/backdropReducer';
 
 const MoviePage = () => {
   const { id } = useParams() as { id: string };
@@ -190,7 +190,7 @@ const MoviePage = () => {
                 </Backdrop>
               }
               <div className="total-rating">
-                <div className="caption">Ваше общее впечатление: </div>
+                <div className="caption">{authUser ? 'Ваше общее впечатление:' : 'Оцените фильм:' }</div>
                 <RatingItem 
                   movieId={id} 
                   score={ratings[0].score}

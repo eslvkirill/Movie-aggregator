@@ -13,8 +13,8 @@ const Navigation = () => {
 
   const links = [
     authUser && {
-      to: '/personal-account',
-      label: `Профиль ${user.username}`,
+      to: '/',
+      label: `${user.username}`,
       visible: false,
     },
     authUser && { 
@@ -77,7 +77,7 @@ const Navigation = () => {
                       boxShadow: '1px 5px 10px -5px black',
                       borderRadius: '10px 0 0 10px',
                     }
-                  : to === '/personal-account'
+                  : to === '/'
                   ? {
                       textTransform: 'none',
                       backgroundColor: '#b101b1',

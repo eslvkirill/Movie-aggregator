@@ -7,4 +7,5 @@ export const REDUCER = {
 	BACKDROP: 'backdrop',
 	CATEGORY: 'category',
 	SEARCH: 'search',
+	USER_ROLE: 'iuser-role',
 };
