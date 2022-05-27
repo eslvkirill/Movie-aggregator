@@ -19,7 +19,7 @@ public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicate
       + " join fetch m.audioLanguages"
       + " join fetch m.subtitleLanguages"
       + " join fetch m.genres"
-      + " join fetch m.externalAggregatorInfos"
+      + " left join fetch m.externalAggregatorInfos"
       + " left join fetch m.actorRelations actorRel"
       + " left join fetch actorRel.person actor"
       + " left join fetch m.directorRelations directorRel"
@@ -45,4 +45,8 @@ public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicate
       + " where m.id in (?1)"
       + " group by m.id")
   List<MovieSearchResultMapping> findSearchResultMappingsByIdIn(List<UUID> ids);
+
+  @Query("select distinct m from Movie m"
+      + " left join fetch m.externalAggregatorInfos")
+  List<Movie> findWithExternalAggregatorInfos();
 }

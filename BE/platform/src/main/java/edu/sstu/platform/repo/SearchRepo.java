@@ -19,7 +19,7 @@ import org.hibernate.search.engine.search.common.BooleanOperator;
 import org.hibernate.search.engine.search.sort.dsl.SearchSortFactory;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Repository;
 
@@ -37,8 +37,8 @@ public class SearchRepo {
   }
 
   @SneakyThrows
-  @EventListener
-  public void buildIndexes(ApplicationReadyEvent event) {
+  @EventListener(ContextRefreshedEvent.class)
+  public void buildIndexes() {
     searchSession.massIndexer().startAndWait();
   }
 

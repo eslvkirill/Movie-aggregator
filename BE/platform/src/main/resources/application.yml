@@ -35,3 +35,8 @@ app:
   url-pattern:
     metacritic: https://www.metacritic.com/movie/%s/
   default-categories: ${DEFAULT_CATEGORIES:Буду смотреть, Любимое}
+
+job:
+  movie-external-info-refresh:
+    cron: ${MOVIE_EXTERNAL_INFO_REFRESH_JOB_CRON:0 0 * * * *}
+    enabled: ${MOVIE_EXTERNAL_INFO_REFRESH_JOB_ENABLED:true}

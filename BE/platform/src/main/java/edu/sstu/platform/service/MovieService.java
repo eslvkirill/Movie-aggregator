@@ -40,6 +40,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -54,6 +55,7 @@ import org.xml.sax.InputSource;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MovieService {
 
   private static final String TITLE_NODE = "Title";
@@ -223,5 +225,26 @@ public class MovieService {
         .map(movieById::get)
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
+  }
+
+  @Transactional(readOnly = true)
+  public void refreshMoviesExternalInfo() {
+    movieRepo.findWithExternalAggregatorInfos()
+        .forEach(this::refreshMovieExternalInfo);
+  }
+
+  private void refreshMovieExternalInfo(Movie movie) {
+    var externalAggregatorInfos = movie.getExternalAggregatorInfoAsMap();
+    var movieRequestDto = MovieRequestDto.builder()
+        .imdbUrl(externalAggregatorInfos.get(IMDB).getUrl())
+        .kinopoiskUrl(externalAggregatorInfos.get(KINOPOISK).getUrl())
+        .build();
+
+    try {
+      populateOmdbData(movie, movieRequestDto);
+      populateKinopoiskData(movie, movieRequestDto);
+    } catch (Exception e) {
+      log.error("Throw an exception during movie external ratings refresh", e);
+    }
   }
 }
