@@ -22,4 +22,9 @@ const USER_ROLES = {
 	CRITIC: 'CRITIC',
 };
 
-export { REGEXP, USER_ROLES };
+const USER_OPERATIONS = {
+	GRANT: 'GRANT',
+	REVOKE: 'REVOKE',
+};
+
+export { REGEXP, USER_ROLES, USER_OPERATIONS };

@@ -1,0 +1,95 @@
+.admin-page {
+	.search-wrapper {
+		margin: 20px 100px 0;
+		height: 300px;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+
+		.search-caption {
+			font-size: 35px;
+		}
+
+		.search {
+			border-radius: 5px;
+			background-color: #eedeff;
+
+			&:hover {
+				.search__btn {
+					background-color: #30002d;
+					color: #eedeff;
+					box-shadow: 1px 5px 10px -5px black;
+				}
+			}
+
+			&__btn {
+				color: #30002d;
+				background-color: #eedeff;
+			}
+
+			&__input input {
+				color: #30002d;
+			}
+		}
+	}
+
+	.render-result {
+		width: 30%;
+
+		.user {
+			border-radius: 0;
+			border-bottom: 1px solid;
+
+			&__email {
+				font-size: 20px;
+				text-align: center;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.render-info {
+		display: flex;
+		justify-content: center;
+		margin-top: 38px;
+		font-size: 23px;
+		width: 100%;
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.info-block {
+				margin: 0 45px;
+
+				.user {
+					&__name {
+						text-align: center;
+						margin-bottom: 5px;
+						border-bottom: 1px solid #eedeff;
+						width: 92%;
+						margin: 0 auto 7px;
+					}
+				}
+			}
+
+			.user {
+				&__roles {
+					display: flex;
+
+					.role {
+						margin: 0 16px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+
+						input {
+							width: 30px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -6,6 +6,7 @@ const MAIN_CREATORS = {
 	RATING: 'rating/',
 	CATEGORY: 'category/',
 	SEARCH: 'search/',
+	USER_ROLE: 'userRole/',
 };
 
 const GENRE_CREATOR = {
@@ -54,6 +55,12 @@ const SEARCH_CREATOR = {
 	SET_VALUE: `${MAIN_CREATORS.SEARCH}setValue`,
 };
 
+const USER_ROLE_CREATOR = {
+	SET_VALUE: `${MAIN_CREATORS.USER_ROLE}setValue`,
+	GET_DATA: `${MAIN_CREATORS.USER_ROLE}getData`,
+	UPDATE: `${MAIN_CREATORS.USER_ROLE}update`,
+};
+
 export {
 	GENRE_CREATOR,
 	AUTH_CREATOR,
@@ -62,4 +69,5 @@ export {
 	RATING_CREATOR,
 	SEARCH_CREATOR,
 	CATEGORY_CREATOR,
+	USER_ROLE_CREATOR,
 };

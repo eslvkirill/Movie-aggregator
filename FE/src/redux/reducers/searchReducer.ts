@@ -15,7 +15,6 @@ const searchReducer = createSlice({
 	reducers: {
 		reset: () => initialState,
 		onChange: (state, action) => {
-			console.log(action);
 			state.value = action.payload;
 		},
 	},

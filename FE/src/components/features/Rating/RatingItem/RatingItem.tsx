@@ -8,7 +8,7 @@ import { getMovieByIdCreator } from 'redux/creators/movieCreator';
 import { openModal } from 'redux/reducers/backdropReducer';
 
 const RatingItem = (props: any) => {
-  const { movieId, type, score, ratingId } = props;
+  const { movieId, type, score, ratingId, disabled } = props;
 
   const { user } = useAppSelector(state => state.authReducer);
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const RatingItem = (props: any) => {
   })(MaterialUIRating);
 
   const setNewRating = (newValue: number) => {
-    if (authUser && newValue) {
+    if (newValue) {
       if (!score) {
         const data = {
           movieId,
@@ -39,10 +39,12 @@ const RatingItem = (props: any) => {
           }
         }
 
-        dispatch(setRatingCreator(data));
-        dispatch(getMovieByIdCreator(movieId));
-        setTimeout(() => dispatch(openModal()), 800);
-      } else {
+        if (authUser) {
+          dispatch(setRatingCreator(data));
+          dispatch(getMovieByIdCreator(movieId));
+        }
+        setTimeout(() => dispatch(openModal()), authUser ? 800 : 0);
+      } else if (authUser) {
         dispatch(updateRatingCreator({ movieId, ratingId, score: newValue }));
         dispatch(getMovieByIdCreator(movieId));
       }
@@ -57,12 +59,21 @@ const RatingItem = (props: any) => {
   }
 
   return (
-    <div className="rating">
+    <div 
+      className="rating" 
+      style={!authUser && !disabled ? {
+        position: 'relative',
+        right: '212px',
+        bottom: '2px',
+        } : {}
+      }
+    >
       <StyledRating
         className="styledRating"
         name={type}
         size="large"
         max={10}
+        disabled={disabled || false}
         precision={1}
         value={score}
         onChange={(_, newValue: any) => setNewRating(newValue)}
@@ -75,7 +86,7 @@ const RatingItem = (props: any) => {
           : {}
         }
       >
-        {authUser ? (
+        {authUser && type ? (
           <div
             className="removeRating"
             title={score ? 'Удалить оценку' : ''}
@@ -95,7 +106,7 @@ const RatingItem = (props: any) => {
           {!score ? 'Оценить ➤' : '✖'}
         </div>
         ) : ''} 
-        {authUser ? (
+        {authUser && type ? (
           <div
             className="rating"
             title={`Ваша оценка: ${score}`}

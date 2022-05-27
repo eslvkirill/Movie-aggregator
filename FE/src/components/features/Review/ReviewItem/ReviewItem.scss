@@ -25,16 +25,33 @@
 				align-items: center;
 
 				.reviewAuthorName {
-					font-size: 18px;
+					cursor: pointer;
+					font-size: 19px;
 					font-weight: bold;
+					text-decoration: none;
+
+					.critic {
+						margin-right: 1px;
+					}
 				}
 
 				.user-rating {
-					margin-left: 7px;
 					font-size: 17px;
-					border: 3px ridge #ffdd00;
-					border-radius: 32%;
-					padding: 0 6px;
+					display: flex;
+					margin-left: 7px;
+					align-items: center;
+
+					.rating {
+						margin-top: -8px;
+					}
+
+					.review-rating {
+						opacity: 0.95;
+						font-size: 21px;
+						padding: 1px 9px;
+						border: 3px ridge #dfc101e8;
+						border-radius: 32%;
+					}
 				}
 			}
 

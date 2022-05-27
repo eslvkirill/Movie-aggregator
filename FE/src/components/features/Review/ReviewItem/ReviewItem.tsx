@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useAppSelector } from 'hooks/redux';
 import { isUserLoggIn } from 'shared/utils/common';
 import Input from 'components/shared/form-controls/Input/Input';
 import Textarea from 'components/shared/form-controls/Textarea/Textarea';
 import './ReviewItem.scss';
+import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 
 const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChange, onEditTextareaChange, onOpenClick, onSaveClick }: any) => {  
   const { user } = useAppSelector(state => state.authReducer);
@@ -20,18 +22,27 @@ const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChang
           <div className="reviewCard">
             <div className="reviewHead">
               <div className="leftSide">
-                <div
+                <Link
+                  to={'/profile/' + review.id}
                   className="reviewAuthorName"
                   style={{ color: primaryPageColor }}
                 >
-                  {review.username}
-                </div>
+                  {review.critic && 
+                    <span 
+                      className="critic"
+                      title="Пользователь является критиком"
+                    >
+                      &#128081;
+                    </span>
+                  }{review.username}
+                </Link>
                 {!!review.userRating && 
                   <div 
                     className="user-rating"
                     title={`Рейтинг пользователя '${review.username}' равен ${review.userRating}`}
                   >
-                    {review.userRating}
+                    <RatingItem score={review.userRating} disabled />
+                    <div className="review-rating">{review.userRating}</div>
                   </div>
                 }
               </div>

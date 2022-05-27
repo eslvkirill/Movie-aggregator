@@ -13,6 +13,7 @@ const ENDPOINT = {
 	RATINGS: 'ratings',
 	CATEGORIES: 'categories',
 	SEARCH: 'search',
+	ROLES: 'roles',
 };
 
 const REQUEST = {

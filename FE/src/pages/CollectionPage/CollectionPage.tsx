@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import selectStyles from 'shared/form-controls/select/styles';
 import MovieCard from 'components/features/Movie/MovieCard/MovieCard';
@@ -11,11 +11,12 @@ import './CollectionPage.scss';
 const CollectionPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { id } = useParams() as { id: string };
   const { user } = useAppSelector(state => state.authReducer);
   const { categoryList } = useAppSelector(state => state.categoryReducer);
 
   useEffect(() => {
-    dispatch(getCategoriesCreator(user.id));
+    dispatch(getCategoriesCreator(id || user.id));
     console.log(categoryList)
   }, []);
 
