@@ -80,10 +80,6 @@ public class User implements UserDetails {
     return active;
   }
 
-  public boolean containsRole(UserRole role) {
-    return roles.contains(role);
-  }
-
   public void addRole(UserRole role) {
     roles.add(role);
   }

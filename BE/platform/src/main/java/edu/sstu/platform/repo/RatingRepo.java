@@ -17,4 +17,13 @@ public interface RatingRepo extends JpaRepository<Rating, UUID>, QuerydslPredica
       + " group by r.movieId, r.ratingType, r.rank"
       + " order by r.rank")
   List<RatingMapping> findByMovieIdsAndRatingTypes(List<UUID> movieIds, List<RatingType> ratingTypes);
+
+  @Query("select distinct r from Rating r"
+      + " join fetch r.movie m"
+      + " join fetch m.genres"
+      + " join fetch m.directorRelations directorRel"
+      + " join fetch directorRel.person"
+      + " where r.userId = ?1 and r.ratingType = edu.sstu.platform.model.RatingType.TOTAL"
+      + " order by r.modificationDate desc")
+  List<Rating> findByUserId(UUID userId);
 }

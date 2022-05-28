@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class MovieSearchResultResponseDto extends MovieResponseDto {
 
   private byte[] poster;
+  private double totalRating;
 }

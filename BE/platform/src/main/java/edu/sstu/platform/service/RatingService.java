@@ -2,6 +2,7 @@ package edu.sstu.platform.service;
 
 import edu.sstu.platform.dto.request.CreateRatingRequestDto;
 import edu.sstu.platform.dto.request.UpdateRatingRequestDto;
+import edu.sstu.platform.dto.response.RatingHistoryItemResponseDto;
 import edu.sstu.platform.mapper.RatingMapper;
 import edu.sstu.platform.model.RatingType;
 import edu.sstu.platform.model.projection.RatingMapping;
@@ -51,10 +52,17 @@ public class RatingService {
     ratingRepo.delete(rating);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Map<UUID, List<RatingMapping>> findRatingsByMovieIds(List<UUID> movieIds, RatingType... ratingTypes) {
     return ratingRepo.findByMovieIdsAndRatingTypes(movieIds, List.of(ratingTypes))
         .stream()
         .collect(Collectors.groupingBy(RatingMapping::getMovieId));
+  }
+
+  @Transactional(readOnly = true)
+  public List<RatingHistoryItemResponseDto> findUserRatingHistory(UUID userId) {
+    var userRatings = ratingRepo.findByUserId(userId);
+
+    return ratingMapper.toHistoryItemDto(userRatings);
   }
 }

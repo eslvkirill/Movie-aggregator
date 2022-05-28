@@ -1,6 +1,5 @@
 package edu.sstu.platform.dto.response;
 
-import java.time.LocalTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieViewResponseDto extends MovieResponseDto {
+public class RatedMovieResponseDto extends MovieResponseDto {
 
   private byte[] poster;
-  private String primaryPageColor;
   private Set<GenreResponseDto> genres;
-  private LocalTime duration;
   private Set<PersonViewResponseDto> directors;
-  private double totalRating;
 }

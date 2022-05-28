@@ -4,6 +4,7 @@ import edu.sstu.platform.dto.request.MovieRequestDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
 import edu.sstu.platform.dto.response.MovieSearchResultResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
+import edu.sstu.platform.dto.response.RatedMovieResponseDto;
 import edu.sstu.platform.model.Movie;
 import edu.sstu.platform.model.MoviesToPeopleRelation;
 import edu.sstu.platform.model.PersonRole;
@@ -77,8 +78,7 @@ public abstract class MovieMapper {
   @Mappings({
       @Mapping(target = "externalAggregatorsInfo", source = "movie.externalAggregatorInfos"),
       @Mapping(target = "actors", source = "movie.actorRelations"),
-      @Mapping(target = "directors", source = "movie.directorRelations"),
-      @Mapping(target = "totalRating", ignore = true)
+      @Mapping(target = "directors", source = "movie.directorRelations")
   })
   public abstract MovieInfoResponseDto toInfoDto(Movie movie, List<RatingMapping> averageRatings,
       List<Rating> userRatings);
@@ -105,4 +105,9 @@ public abstract class MovieMapper {
   public abstract MovieSearchResultResponseDto toSearchResultDto(MovieSearchResultMapping searchResult);
 
   public abstract List<MovieSearchResultResponseDto> toSearchResultDto(List<MovieSearchResultMapping> searchResults);
+
+  @Mappings({
+      @Mapping(target = "directors", source = "movie.directorRelations")
+  })
+  public abstract RatedMovieResponseDto toRatedDto(Movie movie);
 }
