@@ -5,20 +5,17 @@ import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 import edu.sstu.platform.dto.request.CategoryRequestDto;
 import edu.sstu.platform.dto.response.CategoryItemResponseDto;
 import edu.sstu.platform.dto.response.CategoryResponseDto;
+import edu.sstu.platform.dto.response.CategoryToMovieRelationResponseDto;
 import edu.sstu.platform.mapper.CategoryItemMapper;
 import edu.sstu.platform.mapper.CategoryMapper;
 import edu.sstu.platform.model.QCategory;
 import edu.sstu.platform.model.QCategoryItem;
-import edu.sstu.platform.model.projection.CategoryToMovieRelationMapping;
 import edu.sstu.platform.repo.CategoryItemRepo;
 import edu.sstu.platform.repo.CategoryRepo;
 import edu.sstu.platform.validator.CategoryItemValidator;
 import edu.sstu.platform.validator.CategoryValidator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -78,11 +75,10 @@ public class CategoryService {
   }
 
   @Transactional(readOnly = true)
-  public Map<String, Boolean> findCategoryToMovieRelations(UUID movieId, UUID userId) {
-    return categoryRepo.findCategoryToMovieRelationMappings(movieId, userId)
-        .stream()
-        .collect(Collectors.toMap(CategoryToMovieRelationMapping::getCategoryName,
-            CategoryToMovieRelationMapping::getContains, (m1, m2) -> m1, LinkedHashMap::new));
+  public List<CategoryToMovieRelationResponseDto> findCategoryToMovieRelations(UUID movieId, UUID userId) {
+    var relationMappings = categoryRepo.findCategoryToMovieRelationMappings(movieId, userId);
+
+    return categoryMapper.toRelationDto(relationMappings);
   }
 
   @Transactional
