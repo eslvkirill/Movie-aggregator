@@ -94,6 +94,17 @@ const getMovieByIdCreator = createAsyncThunk(
 	}
 );
 
+const getMovieCategoriesCreator = createAsyncThunk(
+	MOVIE_CREATOR.GET_CATEGORIES,
+	async (movieId: string, thunkAPI) => {
+		try {
+			return movieService.getMovieCategories(movieId);
+		} catch (e) {
+			return thunkAPI.rejectWithValue('Не удалось загрузить категории фильма');
+		}
+	}
+);
+
 const deleteMovieCreator = createAsyncThunk(
 	MOVIE_CREATOR.DELETE,
 	async (movieId: string, thunkAPI) => {
@@ -157,4 +168,5 @@ export {
 	updateMovieCreator,
 	setImageFilesCreator,
 	prefillMovieFormCreator,
+	getMovieCategoriesCreator,
 };

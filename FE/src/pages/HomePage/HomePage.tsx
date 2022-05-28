@@ -13,7 +13,7 @@ import { getCategoriesCreator } from 'redux/creators/categoryCreator';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
 
   const [movies, setMovies] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);

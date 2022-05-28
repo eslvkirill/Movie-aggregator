@@ -17,6 +17,7 @@ import {
 import {
 	addMovieCreator,
 	getMovieByIdCreator,
+	getMovieCategoriesCreator,
 	getMovieFormDataCreator,
 	setImageFilesCreator,
 } from 'redux/creators/movieCreator';
@@ -37,6 +38,8 @@ const initialState: any = {
 	notificationMessage: '',
 	isLoading: true,
 	isEdit: false,
+	categories: [],
+	gradeList: [],
 };
 
 const movieReducer = createSlice({
@@ -112,6 +115,12 @@ const movieReducer = createSlice({
 					sortAggregatorsAction(aggregators);
 					setDefaultFieldsAppearanceAction(state.movie);
 					setBackgroundAction(state.movie.background);
+				}
+			)
+			.addCase(
+				getMovieCategoriesCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					console.log(action.payload);
 				}
 			);
 	},

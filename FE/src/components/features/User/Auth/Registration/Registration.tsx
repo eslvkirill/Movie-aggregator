@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { onChangeInputEvent, reset } from 'redux/reducers/authReducer';
+import { onChangeInputEvent, reset } from 'redux/reducers/userReducer';
 import { isUserLoggIn } from 'shared/utils/common';
 import Input from 'components/shared/form-controls/Input/Input';
 import { Link, Navigate } from 'react-router-dom';
 import Button from 'components/shared/form-controls/Button/Button';
-import { registrationCreator } from 'redux/creators/authCreator';
+import { registrationCreator } from 'redux/creators/userCreator';
 import { StateName } from '../auth.enum';
 import './Registration.scss';
 
 const Registration = () => {
   const dispatch = useAppDispatch();
-  const { formControls, isFormValid, user, error } = useAppSelector(state => state.authReducer);
+  const { formControls, isFormValid, user, error } = useAppSelector(state => state.userReducer);
   
   useEffect(() => { 
     dispatch(reset());

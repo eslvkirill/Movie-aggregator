@@ -12,7 +12,7 @@ import './ReviewList.scss';
 const ReviewList = (props: any) => {
   const { movieId, secondaryPageColor, primaryPageColor, rusTitle } = props;
 
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
 
   const [reviews, setReviews] = useState<any>([]);

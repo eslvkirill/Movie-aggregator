@@ -1,10 +1,20 @@
-import MovieGradeList from 'components/features/Movie/MovieGradeList/MovieGradeList';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import Button from 'components/shared/form-controls/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import MovieGradeList from 'components/features/Movie/MovieGradeList/MovieGradeList';
 import './GradeHistoryPage.scss';
+import { getUserGradeHistoryCreator } from 'redux/creators/userCreator';
 
 const GradeHistoryPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { id } = useParams() as { id: string };
+  const { user, gradeHistoryMovies } = useAppSelector(state => state.userReducer);
+
+  useEffect(() => {
+    dispatch(getUserGradeHistoryCreator(id || user.id))
+  }, [])
   
   return (
     <div className="grade-history-page">
@@ -14,7 +24,7 @@ const GradeHistoryPage = () => {
       >
         {'<- Назад'}
       </Button>
-      <MovieGradeList movies={[]}/>
+      <MovieGradeList movies={gradeHistoryMovies}/>
     </div>
   )
 }

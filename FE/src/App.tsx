@@ -10,14 +10,14 @@ import HomePage from 'pages/HomePage/HomePage';
 import ErrorPage from 'pages/ErrorPage/ErrorPage';
 import AuthPage from 'pages/AuthPage/AuthPage';
 import AdminPage from 'pages/AdminPage/AdminPage';
-import Registration from 'components/features/Auth/Registration/Registration';
+import Registration from 'components/features/User/Auth/Registration/Registration';
 import CollectionPage from 'pages/CollectionPage/CollectionPage';
 import CategoryPage from 'pages/CategoryPage/CategoryPage';
 import GradeHistoryPage from 'pages/GradeHistoryPage/GradeHistoryPage';
 import GenreList from 'components/features/Genre/GenreList/GenreList';
 import PersonForm from 'components/features/Person/PersonForm/PersonForm';
 import MovieForm from 'components/features/Movie/MovieForm/MovieForm';
-import UserRole from 'components/features/UserRole/UserRole';
+import UserRole from 'components/features/User/UserRole/UserRole';
 
 const store = setupStore();
 

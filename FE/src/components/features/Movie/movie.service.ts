@@ -8,12 +8,15 @@ const MovieService = {
 
 	addMovie: (data: any) => api.post([ENDPOINT.MOVIES], data, true),
 
-	getMovieById: (movieId: string) => api.get([ENDPOINT.MOVIES].concat(movieId)),
+	getMovieById: (movieId: string) => api.get([ENDPOINT.MOVIES, movieId]),
 
-	deleteMovie: (movieId: string) => api.post([ENDPOINT.MOVIES].concat(movieId)),
+	deleteMovie: (movieId: string) => api.post([ENDPOINT.MOVIES, movieId]),
 
 	updateMovie: (movieId: string, data: any) =>
 		api.put([ENDPOINT.MOVIES].concat(movieId), data, true),
+
+	getMovieCategories: (movieId: string) =>
+		api.get([ENDPOINT.CATEGORIES, ENDPOINT.CHECK, movieId]),
 };
 
 export default MovieService;
