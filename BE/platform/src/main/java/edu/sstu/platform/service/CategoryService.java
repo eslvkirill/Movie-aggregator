@@ -1,5 +1,6 @@
 package edu.sstu.platform.service;
 
+import static edu.sstu.platform.model.RatingType.TOTAL;
 import static edu.sstu.platform.util.QuerydslUtils.toDotPath;
 
 import edu.sstu.platform.dto.request.CategoryRequestDto;
@@ -8,6 +9,7 @@ import edu.sstu.platform.dto.response.CategoryResponseDto;
 import edu.sstu.platform.dto.response.CategoryToMovieRelationResponseDto;
 import edu.sstu.platform.mapper.CategoryItemMapper;
 import edu.sstu.platform.mapper.CategoryMapper;
+import edu.sstu.platform.model.CategoryItem;
 import edu.sstu.platform.model.QCategory;
 import edu.sstu.platform.model.QCategoryItem;
 import edu.sstu.platform.repo.CategoryItemRepo;
@@ -16,6 +18,7 @@ import edu.sstu.platform.validator.CategoryItemValidator;
 import edu.sstu.platform.validator.CategoryValidator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -27,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CategoryService {
 
+  private final RatingService ratingService;
   private final CategoryRepo categoryRepo;
   private final CategoryItemRepo categoryItemRepo;
   private final CategoryMapper categoryMapper;
@@ -104,10 +108,12 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public List<CategoryItemResponseDto> findCategoryItems(UUID categoryId) {
-    var sort = Sort.by(toDotPath(qCategoryItem.creationDate)).descending();
-    var categoryItems = categoryItemRepo.findBy(qCategoryItem.categoryId.eq(categoryId),
-        query -> query.project(toDotPath(qCategoryItem.movie)).sortBy(sort).all());
+    var categoryItems = categoryItemRepo.findByCategoryId(categoryId);
+    var movieIds = categoryItems.stream()
+        .map(CategoryItem::getMovieId)
+        .collect(Collectors.toList());
+    var ratingsByMovieId = ratingService.findRatingsByMovieIds(movieIds, TOTAL);
 
-    return categoryItemMapper.toDto(categoryItems);
+    return categoryItemMapper.toDto(categoryItems, ratingsByMovieId);
   }
 }

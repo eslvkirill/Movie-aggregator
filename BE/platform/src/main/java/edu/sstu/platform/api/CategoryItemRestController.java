@@ -34,7 +34,6 @@ public class CategoryItemRestController {
   }
 
   @GetMapping
-  @ResponseStatus(HttpStatus.NO_CONTENT)
   public List<CategoryItemResponseDto> getCategoryItems(@PathVariable UUID categoryId) {
     return categoryService.findCategoryItems(categoryId);
   }
