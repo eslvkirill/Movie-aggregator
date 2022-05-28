@@ -32,12 +32,17 @@ const Navigation = () => {
       : { to: '/login', label: '➤  Войти', visible: true },
   ];
 
-  const clickHandler = async () => {   
+  const clickLogoutHandler = async () => {   
     try { 
       await axios.post('/logout').then(() => dispatch(logout()));
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
+    }
+  }
+
+  const onClickHandler = (to: string) => {
+    if (to === '/logout') {
+      clickLogoutHandler();
     }
   }
 
@@ -51,11 +56,7 @@ const Navigation = () => {
 
         if (!user.roles.includes(USER_ROLES.ADMIN) && to === '/admin-panel') {
           visible = false;
-        }
-
-        // else if (to === '/admin-panel') {
-        //   to = '/admin-panel/movies';
-        // }
+        } 
       }
 
       if (visible) {
@@ -86,9 +87,11 @@ const Navigation = () => {
                     }
                   : {}
               }
-              onClick={() => to === '/logout' && clickHandler()}
+              onClick={() => onClickHandler(to)}
             >
-              {label}
+              {!!(authUser && user.roles.includes(USER_ROLES.CRITIC) && to === '/') && 
+                <span>&#128081;</span>
+              } {label}
             </NavLink>
           </li>
         );

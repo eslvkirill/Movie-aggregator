@@ -107,7 +107,7 @@ const GenreList = () => {
             type="success"
             onClick={() => setDropdownOpen(!isDropdownOpen)}
           >
-            Развернуть список жанров
+            {isDropdownOpen ? 'Свернуть' : 'Развернуть'} список  жанров
             <span className={isDropdownOpen ? 'down' : 'up'}>➤</span>
           </Button>
           <GenreItem

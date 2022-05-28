@@ -7,6 +7,34 @@
 	height: 100%;
 	flex-wrap: wrap;
 
+	.grade {
+		transform: rotate(270deg);
+		font-size: 30px;
+		padding: 10px 32px;
+		position: absolute;
+		left: -57px;
+		top: 50%;
+		letter-spacing: 10px;
+		transition: 0.3s ease;
+		text-decoration: none;
+		box-shadow: 1px 5px 10px -5px black;
+		cursor: pointer;
+		font-weight: bold;
+		color: #230236;
+		background-color: #eedeff;
+
+		&:hover {
+			transition: 0.3s ease;
+			color: #230236;
+			background-color: #d2b9e1;
+			transform: rotate(275deg);
+		}
+	}
+
+	.collection {
+		margin-left: 50px;
+	}
+
 	.selectWrapper {
 		display: flex;
 		flex-direction: row;
