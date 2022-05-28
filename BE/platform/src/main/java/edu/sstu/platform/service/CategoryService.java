@@ -69,7 +69,7 @@ public class CategoryService {
   @Transactional(readOnly = true)
   public List<CategoryResponseDto> findCategories(UUID userId) {
     var sort = Sort.by(Order.by(toDotPath(qCategory.custom)), Order.desc(toDotPath(qCategory.creationDate)));
-    var categories = categoryRepo.findBy(qCategory.userId.eq(userId), ffq -> ffq.sortBy(sort).all());
+    var categories = categoryRepo.findBy(qCategory.userId.eq(userId), query -> query.sortBy(sort).all());
 
     return categoryMapper.toDto(categories);
   }
@@ -106,7 +106,7 @@ public class CategoryService {
   public List<CategoryItemResponseDto> findCategoryItems(UUID categoryId) {
     var sort = Sort.by(toDotPath(qCategoryItem.creationDate)).descending();
     var categoryItems = categoryItemRepo.findBy(qCategoryItem.categoryId.eq(categoryId),
-        ffq -> ffq.project(toDotPath(qCategoryItem.movie)).sortBy(sort).all());
+        query -> query.project(toDotPath(qCategoryItem.movie)).sortBy(sort).all());
 
     return categoryItemMapper.toDto(categoryItems);
   }

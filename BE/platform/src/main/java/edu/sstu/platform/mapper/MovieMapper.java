@@ -1,6 +1,7 @@
 package edu.sstu.platform.mapper;
 
 import edu.sstu.platform.dto.request.MovieRequestDto;
+import edu.sstu.platform.dto.response.MovieEditingResponseDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
 import edu.sstu.platform.dto.response.MovieSearchResultResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
@@ -110,4 +111,12 @@ public abstract class MovieMapper {
       @Mapping(target = "directors", source = "movie.directorRelations")
   })
   public abstract RatedMovieResponseDto toRatedDto(Movie movie);
+
+  @Mappings({
+      @Mapping(target = "actors", source = "movie.actorRelations"),
+      @Mapping(target = "directors", source = "movie.directorRelations"),
+      @Mapping(target = "imdbUrl", ignore = true),
+      @Mapping(target = "kinopoiskUrl", ignore = true)
+  })
+  public abstract MovieEditingResponseDto toEditingDto(Movie movie);
 }

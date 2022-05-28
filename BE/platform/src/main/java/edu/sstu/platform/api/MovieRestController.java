@@ -3,10 +3,10 @@ package edu.sstu.platform.api;
 import edu.sstu.platform.dto.request.MoviePageableRequestDto;
 import edu.sstu.platform.dto.request.MovieRequestDto;
 import edu.sstu.platform.dto.request.MovieSpecification;
-import edu.sstu.platform.dto.response.MovieInfoResponseDto;
+import edu.sstu.platform.dto.request.MoviePage;
+import edu.sstu.platform.dto.response.MovieResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
 import edu.sstu.platform.service.MovieService;
-import edu.sstu.platform.service.UserPrincipalService;
 import java.net.URI;
 import java.util.UUID;
 import javax.validation.Valid;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,7 +30,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class MovieRestController {
 
   private final MovieService movieService;
-  private final UserPrincipalService userPrincipalService;
 
   @PostMapping
   public ResponseEntity<Void> createMovie(@Valid MovieRequestDto movieRequestDto) {
@@ -52,12 +52,12 @@ public class MovieRestController {
   @PostMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteMovie(@PathVariable UUID id) {
-    movieService.updateMovieActivity(id);
+    movieService.safeDeleteMovie(id);
   }
 
   @GetMapping("/{id}")
-  public MovieInfoResponseDto getMovieById(@PathVariable UUID id) {
-    return movieService.findMovieById(id, userPrincipalService.getCurrentUserOrElse().getId());
+  public MovieResponseDto getMovieById(@PathVariable UUID id, @RequestParam MoviePage moviePage) {
+    return movieService.findMovieById(id, moviePage);
   }
 
   @GetMapping

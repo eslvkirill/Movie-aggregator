@@ -13,19 +13,23 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sstu.platform.dto.request.MoviePageableRequestDto;
 import edu.sstu.platform.dto.request.MovieRequestDto;
+import edu.sstu.platform.dto.request.MoviePage;
+import edu.sstu.platform.dto.response.MovieEditingResponseDto;
 import edu.sstu.platform.dto.response.MovieInfoResponseDto;
+import edu.sstu.platform.dto.response.MovieResponseDto;
 import edu.sstu.platform.dto.response.MovieViewResponseDto;
 import edu.sstu.platform.mapper.MovieMapper;
 import edu.sstu.platform.model.ExternalAggregator;
 import edu.sstu.platform.model.ExternalAggregatorInfo;
 import edu.sstu.platform.model.ExternalAggregatorInfo.IdClass;
 import edu.sstu.platform.model.Movie;
-import edu.sstu.platform.model.QMovie;
 import edu.sstu.platform.model.QRating;
+import edu.sstu.platform.model.QReview;
 import edu.sstu.platform.model.Rating;
 import edu.sstu.platform.model.RatingType;
 import edu.sstu.platform.repo.MovieRepo;
 import edu.sstu.platform.repo.RatingRepo;
+import edu.sstu.platform.repo.ReviewRepo;
 import edu.sstu.platform.validator.MovieValidator;
 import java.io.StringReader;
 import java.util.EnumMap;
@@ -69,14 +73,16 @@ public class MovieService {
   private static final String ID_REG_EXP = "[\\d]+";
 
   private final RatingService ratingService;
+  private final UserPrincipalService userPrincipalService;
   private final RatingRepo ratingRepo;
   private final MovieRepo movieRepo;
+  private final ReviewRepo reviewRepo;
   private final MovieMapper movieMapper;
   private final MovieValidator movieValidator;
   private final RestTemplate restClient;
   private final ObjectMapper objectMapper;
-  private final QMovie qMovie = QMovie.movie;
   private final QRating qRating = QRating.rating;
+  private final QReview qReview = QReview.review;
 
   @Value("${app.api.omdb}")
   public String omdbApi;
@@ -177,8 +183,8 @@ public class MovieService {
   }
 
   @Transactional
-  public void updateMovieActivity(UUID id) {
-    var updatedCount = movieRepo.updateActivityById(id);
+  public void safeDeleteMovie(UUID id) {
+    var updatedCount = movieRepo.safeDeleteById(id);
 
     if (updatedCount == 0) {
       throw entityNotFoundException(id);
@@ -186,22 +192,51 @@ public class MovieService {
   }
 
   @Transactional(readOnly = true)
-  public MovieInfoResponseDto findMovieById(UUID movieId, UUID userId) {
+  public MovieResponseDto findMovieById(UUID movieId, MoviePage moviePage) {
+    switch (moviePage) {
+      case PERSONAL:
+        return findMovieInfoById(movieId, userPrincipalService.getCurrentUserOrElse().getId());
+      case SAVE:
+        return findMovieEditableById(movieId);
+      default:
+        throw new IllegalArgumentException("Request from unknown movie page");
+    }
+  }
+
+  private MovieInfoResponseDto findMovieInfoById(UUID movieId, UUID userId) {
     var movie = movieRepo.findMovieById(movieId)
         .orElseThrow(() -> entityNotFoundException(movieId));
     var ratingsByMovieIds = ratingService.findRatingsByMovieIds(List.of(movieId), RatingType.values()).get(movieId);
+    var totalRatingCount = ratingRepo.count(qRating.movieId.eq(movieId)
+            .and(qRating.ratingType.eq(TOTAL)));
     var userRatings = List.<Rating>of();
+    var reviewedByUser = false;
 
     if (userId != null) {
-      var predicate = qRating.movieId.eq(movieId).and(qRating.userId.eq(userId));
-      userRatings = ratingRepo.findBy(predicate, ffq -> ffq.sortBy(Sort.by(toDotPath(qRating.rank))).all());
+      var userRatingsPredicate = qRating.movieId.eq(movieId)
+          .and(qRating.userId.eq(userId));
+      userRatings = ratingRepo.findBy(userRatingsPredicate,
+          query -> query.sortBy(Sort.by(toDotPath(qRating.rank))).all());
+      reviewedByUser = reviewRepo.exists(qReview.movieId.eq(movieId)
+          .and(qReview.userId.eq(userId)));
     }
 
-    return movieMapper.toInfoDto(movie, ratingsByMovieIds, userRatings);
+    var movieInfoResponseDto = movieMapper.toInfoDto(movie, ratingsByMovieIds, userRatings);
+    movieInfoResponseDto.setTotalRatingCount(totalRatingCount);
+    movieInfoResponseDto.setReviewedByUser(reviewedByUser);
+
+    return movieInfoResponseDto;
   }
 
   private EntityNotFoundException entityNotFoundException(UUID id) {
     return new EntityNotFoundException("Movie by id: " + id + " doesn't exist");
+  }
+
+  private MovieEditingResponseDto findMovieEditableById(UUID id) {
+    var movie = movieRepo.findMovieById(id)
+        .orElseThrow(() -> entityNotFoundException(id));
+
+    return movieMapper.toEditingDto(movie);
   }
 
   @Transactional(readOnly = true)

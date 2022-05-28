@@ -35,13 +35,13 @@ public interface MovieRepo extends JpaRepository<Movie, UUID>, QuerydslPredicate
   List<Movie> findByIdIn(List<UUID> ids);
 
   @Modifying
-  @Query(value = "update movies set active = not active where id = ?1", nativeQuery = true)
-  Integer updateActivityById(UUID id);
+  @Query("update Movie m set m.active = false where m.id = ?1")
+  Integer safeDeleteById(UUID id);
 
   @Query("select m.id as id, m.engTitle as engTitle, m.rusTitle as rusTitle,"
       + "   m.year as year, m.poster as poster, coalesce(avg(r.score), 0) as totalRating"
       + " from Movie m"
-      + " left join m.ratings r"
+      + " left join m.ratings r on r.ratingType = edu.sstu.platform.model.RatingType.TOTAL"
       + " where m.id in (?1)"
       + " group by m.id")
   List<MovieSearchResultMapping> findSearchResultMappingsByIdIn(List<UUID> ids);

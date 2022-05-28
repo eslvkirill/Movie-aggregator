@@ -24,8 +24,6 @@ public interface UserMapper {
   })
   User toEntity(UserRequestDto userRequestDto);
 
-  UserSearchBasicResultResponseDto toSearchBasicResultDto(User user);
-
   List<UserSearchBasicResultResponseDto> toSearchBasicResultDto(List<User> users);
 
   RoleManagementUserSummaryResponseDto toRoleManagementSummaryDto(User user);

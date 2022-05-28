@@ -6,7 +6,6 @@ import edu.sstu.platform.dto.request.UserRequestDto;
 import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
 import edu.sstu.platform.dto.response.RoleManagementUserSummaryResponseDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
-import edu.sstu.platform.dto.response.UserSearchBasicResultResponseDto;
 import edu.sstu.platform.mapper.CategoryMapper;
 import edu.sstu.platform.mapper.UserMapper;
 import edu.sstu.platform.model.QUser;
@@ -39,7 +38,7 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public UserInfoResponseDto findUserInfo(UUID id) {
-    var user = userRepo.findBy(qUser.id.eq(id), ffq -> ffq.project(toDotPath(qUser.roles))
+    var user = userRepo.findBy(qUser.id.eq(id), query -> query.project(toDotPath(qUser.roles))
         .stream()
         .findFirst()
         .orElseThrow(() -> entityNotFoundException(id)));
@@ -72,7 +71,7 @@ public class UserService {
   @Transactional
   public void manageRole(UUID id, UserRoleManagementRequestDto dto) {
     var predicate = qUser.id.eq(id);
-    var user = userRepo.findBy(predicate, ffq -> ffq.project(toDotPath(qUser.roles)).stream().findFirst())
+    var user = userRepo.findBy(predicate, query -> query.project(toDotPath(qUser.roles)).stream().findFirst())
         .orElseThrow(() -> entityNotFoundException(id));
     var role = UserRole.valueOf(dto.getRole().name());
 
@@ -89,13 +88,8 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public List<UserSearchBasicResultResponseDto> searchUsers(String query) {
-    return userMapper.toSearchBasicResultDto(searchService.searchUsers(query));
-  }
-
-  @Transactional(readOnly = true)
   public RoleManagementUserSummaryResponseDto findUserById(UUID id) {
-    var user = userRepo.findBy(qUser.id.eq(id), ffq -> ffq.project(toDotPath(qUser.roles))
+    var user = userRepo.findBy(qUser.id.eq(id), query -> query.project(toDotPath(qUser.roles))
         .stream()
         .findFirst()
         .orElseThrow(() -> entityNotFoundException(id)));

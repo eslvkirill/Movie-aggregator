@@ -1,6 +1,10 @@
 package edu.sstu.platform.mapper;
 
+import static edu.sstu.platform.model.ExternalAggregator.IMDB;
+import static edu.sstu.platform.model.ExternalAggregator.KINOPOISK;
+
 import edu.sstu.platform.dto.request.MovieRequestDto;
+import edu.sstu.platform.dto.response.MovieEditingResponseDto;
 import edu.sstu.platform.model.Movie;
 import edu.sstu.platform.model.PersonRole;
 import edu.sstu.platform.repo.GenreRepo;
@@ -36,5 +40,15 @@ public abstract class MovieMapperDecorator extends MovieMapper {
         .map(toEntity(movieRequestDto.getActors(), movie, PersonRole.ACTOR), movie.getActorRelations());
     jpaCollectionMapper
         .map(toEntity(movieRequestDto.getDirectors(), movie, PersonRole.DIRECTOR), movie.getDirectorRelations());
+  }
+
+  @Override
+  public MovieEditingResponseDto toEditingDto(Movie movie) {
+    var movieEditingResponseDto = delegate.toEditingDto(movie);
+    var externalAggregatorInfos = movie.getExternalAggregatorInfoAsMap();
+    movieEditingResponseDto.setImdbUrl(externalAggregatorInfos.get(IMDB).getUrl());
+    movieEditingResponseDto.setKinopoiskUrl(externalAggregatorInfos.get(KINOPOISK).getUrl());
+
+    return movieEditingResponseDto;
   }
 }
