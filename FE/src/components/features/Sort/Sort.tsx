@@ -183,7 +183,8 @@ const Sort = ({ isFetch, setCurrentPage, setArrowDirection, paginate, setFetch, 
           347,
           '12%',
           -8,
-          'hidden'
+          'hidden',
+          '#b3752f81',
         )}
       />
     </div>

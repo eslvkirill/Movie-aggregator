@@ -17,7 +17,7 @@ import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader
 import { MovieFormFileds } from 'components/features/Movie/movie.enum';
 import Backdrop from 'components/shared/pop-ups/Backdrop/Backdrop';
 import Button from 'components/shared/form-controls/Button/Button';
-import Login from 'components/features/Auth/Login/Login';
+import Login from 'components/features/User/Auth/Login/Login';
 import RatingList from 'components/features/Rating/RatingList/RatingList';
 import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 import ReviewList from 'components/features/Review/ReviewList/ReviewList';
@@ -31,7 +31,7 @@ const MoviePage = () => {
   const { movie, isLoading } = useAppSelector(state => state.movieReducer);
   const { ratings } = useAppSelector(state => state.ratingReducer);
   const { isModalOpen } = useAppSelector(state => state.backdropReducer);
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
 
   useEffect(() => {

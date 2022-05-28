@@ -1,0 +1,24 @@
+.movie-categories {
+	display: flex;
+	margin: 15px 20px 0;
+
+	&__btn {
+		width: 300px;
+		margin: 0 10px;
+		font-size: 19px;
+		padding: 11px;
+		background-color: #c37317;
+
+		&:hover {
+			background-color: #7f00c9;
+		}
+
+		&:active {
+			transform: translateY(5px);
+		}
+	}
+
+	.select {
+		margin: 0;
+	}
+}

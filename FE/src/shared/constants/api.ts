@@ -14,6 +14,7 @@ const ENDPOINT = {
 	CATEGORIES: 'categories',
 	SEARCH: 'search',
 	ROLES: 'roles',
+	CHECK: 'check',
 };
 
 const REQUEST = {

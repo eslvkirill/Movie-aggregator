@@ -12,7 +12,7 @@ const CollectionPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const { categoryList } = useAppSelector(state => state.categoryReducer);
 
   useEffect(() => {
@@ -75,7 +75,8 @@ const CollectionPage = () => {
                 230,
                 '12%',
                 -8,
-                'hidden'
+                'hidden',
+                '#b3752f81',
               )}
             />
             <div className="action-buttons__update-icon">

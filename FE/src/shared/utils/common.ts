@@ -42,4 +42,42 @@ const getAllMovieYears = (year: number) => {
 	return years.sort((a, b) => b - a);
 };
 
-export { isUserLoggIn, movieConstructor, getImageFileByUrl, getAllMovieYears };
+const fillDataFromControls = (control: any) => {
+	return Object.keys(control).reduce((authData: any, controlName: string) => {
+		authData[controlName] = control[controlName].value;
+
+		return authData;
+	}, {});
+};
+
+const month = [
+	'Января',
+	'Февраля',
+	'Марта',
+	'Апреля',
+	'Мая',
+	'Июня',
+	'Июля',
+	'Августа',
+	'Сентября',
+	'Октября',
+	'Ноября',
+	'Декабря',
+];
+
+const dateConverter = (date: string) => {
+	const newDate = new Date(date);
+
+	return `${newDate.getDate().toString().padStart(2, '0')} ${
+		month[newDate.getMonth()]
+	} ${newDate.getFullYear()} г.`;
+};
+
+export {
+	isUserLoggIn,
+	movieConstructor,
+	getImageFileByUrl,
+	getAllMovieYears,
+	fillDataFromControls,
+	dateConverter,
+};

@@ -16,7 +16,7 @@ const PersonPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { person, movies, visibleMovies, isLoading, isRedirect } = useAppSelector(state => state.personReducer);
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
 
   useEffect(() => {

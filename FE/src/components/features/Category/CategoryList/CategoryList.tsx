@@ -23,7 +23,7 @@ const CategoryList = () => {
 
   const dispatch = useAppDispatch();
   const { categories, isLoading, error } = useAppSelector(state => state.categoryReducer);
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
 
   useEffect(() => {
     dispatch(getCategoriesCreator(user.id))

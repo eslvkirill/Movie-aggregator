@@ -31,7 +31,8 @@ export default function selectStyles(
 	menuListMaxHeight = 180,
 	rightClearIndicator = '12%',
 	marginLeftInput = -8,
-	overflowYControl = 'auto'
+	overflowYControl = 'auto',
+	isSelectedBackgroundOption = color1
 ) {
 	return {
 		control: (provided: any) => ({
@@ -180,13 +181,25 @@ export default function selectStyles(
 			justifyContent: 'start',
 			alignItems: 'center',
 			cursor: 'pointer',
-			background: backgroundOption,
+			background: state.isSelected
+				? isSelectedBackgroundOption
+				: backgroundOption,
 			transition: '.2s',
 			fontSize: fontSizeOption,
 
 			':hover': {
 				background: backgroundHoverOption,
 				transition: '.2s',
+			},
+
+			':before': {
+				content:
+					state.isSelected && isSelectedBackgroundOption === '#363507'
+						? '"✓"'
+						: '" "',
+				position: 'relative',
+				top: 0,
+				left: 286,
 			},
 		}),
 		menu: (provided: any) => ({

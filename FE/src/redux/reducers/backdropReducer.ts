@@ -5,7 +5,7 @@ const initialState: any = {
 	isModalOpen: false,
 };
 
-const authReducer = createSlice({
+const backdropReducer = createSlice({
 	name: REDUCER.BACKDROP,
 	initialState,
 	reducers: {
@@ -16,6 +16,6 @@ const authReducer = createSlice({
 	},
 });
 
-export const { closeModal, openModal } = authReducer.actions;
+export const { closeModal, openModal } = backdropReducer.actions;
 
-export default authReducer.reducer;
+export default backdropReducer.reducer;

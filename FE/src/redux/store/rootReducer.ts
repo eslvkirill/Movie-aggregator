@@ -1,24 +1,22 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import movieReducer from 'redux/reducers/movieReducer';
-import authReducer from 'redux/reducers/authReducer';
+import userReducer from 'redux/reducers/userReducer';
 import genreReducer from 'redux/reducers/genreReducer';
 import personReducer from 'redux/reducers/personReducer';
 import ratingReducer from 'redux/reducers/ratingReducer';
 import backdropReducer from 'redux/reducers/backdropReducer';
 import categoryReducer from 'redux/reducers/categoryReducer';
 import searchReducer from 'redux/reducers/searchReducer';
-import userRoleReducer from 'redux/reducers/userRoleReducer';
 
 const rootReducer = combineReducers({
 	genreReducer,
 	movieReducer,
-	authReducer,
+	userReducer,
 	personReducer,
 	ratingReducer,
 	backdropReducer,
 	categoryReducer,
 	searchReducer,
-	userRoleReducer,
 });
 
 export default rootReducer;

@@ -1,14 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { logout } from 'redux/reducers/authReducer';
+import { logout } from 'redux/reducers/userReducer';
 import { USER_ROLES } from 'shared/constants/common';
 import { isUserLoggIn } from 'shared/utils/common';
 import './Navigation.scss';
 
 const Navigation = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
 
   const links = [

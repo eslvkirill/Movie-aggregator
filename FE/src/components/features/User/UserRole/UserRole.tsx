@@ -2,20 +2,19 @@ import { useEffect } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { getUserDataCreator, setUserSearchCreator, updateUserRoleCreator } from 'redux/creators/userRoleCreator';
-import { onChange, onChangeRole, reset } from 'redux/reducers/userRoleReducer';
+import { getUserDataCreator, setUserSearchCreator, updateUserRoleCreator } from 'redux/creators/userCreator';
+import { onChange, onChangeRole, resetRoles } from 'redux/reducers/userReducer';
 import { USER_OPERATIONS, USER_ROLES } from 'shared/constants/common';
 import Input from 'components/shared/form-controls/Input/Input';
 import './UserRole.scss';
 
 const UserRole = () => {
   const dispatch = useAppDispatch();
-  const { users, value, userInfo, isLoading, error } = useAppSelector(state => state.userRoleReducer);
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user, users, value, userInfo, isLoading, error } = useAppSelector(state => state.userReducer);
   let clickedUserId: string;
 
   useEffect(() => {
-    dispatch(reset());
+    dispatch(resetRoles());
   }, [])
 
   // TODO: Добавить Debounce
@@ -25,13 +24,11 @@ const UserRole = () => {
     if (event.target.value.length > 1) {
       dispatch(setUserSearchCreator());
     } else if (!event.target.value) {
-      dispatch(reset());
+      dispatch(resetRoles());
     }
   }
 
-  const onClickHandler = (userId: string) => {
-    dispatch(getUserDataCreator(userId));
-  }
+  const onClickHandler = (userId: string) => dispatch(getUserDataCreator(userId));
 
   const onChangeRoleHandler = (event: any, data: any) => {
     dispatch(onChangeRole({ checked: event.target.checked, role: data.body.role }))

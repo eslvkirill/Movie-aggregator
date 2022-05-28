@@ -8,7 +8,7 @@ import './ReviewItem.scss';
 import RatingItem from 'components/features/Rating/RatingItem/RatingItem';
 
 const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChange, onEditTextareaChange, onOpenClick, onSaveClick }: any) => {  
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
 
   return (

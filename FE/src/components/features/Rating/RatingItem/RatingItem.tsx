@@ -10,7 +10,7 @@ import { openModal } from 'redux/reducers/backdropReducer';
 const RatingItem = (props: any) => {
   const { movieId, type, score, ratingId, disabled } = props;
 
-  const { user } = useAppSelector(state => state.authReducer);
+  const { user } = useAppSelector(state => state.userReducer);
   const dispatch = useAppDispatch();
   const authUser = isUserLoggIn(user);
 

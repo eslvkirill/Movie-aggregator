@@ -1,11 +1,10 @@
 export const REDUCER = {
 	GENRE: 'genre',
 	MOVIE: 'movie',
-	AUTH: 'auth',
+	USER: 'user',
 	PERSON: 'person',
 	RATING: 'rating',
 	BACKDROP: 'backdrop',
 	CATEGORY: 'category',
 	SEARCH: 'search',
-	USER_ROLE: 'iuser-role',
 };

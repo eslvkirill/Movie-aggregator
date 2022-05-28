@@ -1,16 +1,15 @@
 .grade-history-page {
-	min-height: 100vh;
-	min-width: 100vw;
+	min-height: 70vh;
+	min-width: 94vw;
 	display: flex;
+	align-items: flex-start;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	margin: 190px auto 0;
 
 	&__button {
-		// position: relative;
-		// right: 600px;
 		background: orange;
 		font-size: 21px;
+		margin-bottom: 45px;
 		padding: 10px 22px;
 	}
 }
