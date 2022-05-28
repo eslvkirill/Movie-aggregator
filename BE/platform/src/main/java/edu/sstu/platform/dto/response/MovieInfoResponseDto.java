@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MovieInfoResponseDto extends MovieResponseDto {
 
+  private byte[] poster; // TODO: remove after front switching to the updated API version
   private byte[] background;
   private String primaryPageColor;
   private String secondaryPageColor;
