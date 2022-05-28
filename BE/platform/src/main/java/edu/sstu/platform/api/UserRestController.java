@@ -5,7 +5,6 @@ import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
 import edu.sstu.platform.dto.response.RatingHistoryItemResponseDto;
 import edu.sstu.platform.dto.response.RoleManagementUserSummaryResponseDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
-import edu.sstu.platform.dto.response.UserSearchBasicResultResponseDto;
 import edu.sstu.platform.service.RatingService;
 import edu.sstu.platform.service.UserPrincipalService;
 import edu.sstu.platform.service.UserService;
@@ -47,12 +46,6 @@ public class UserRestController {
   @PreAuthorize("hasRole('ADMIN')")
   public void manageRole(@PathVariable UUID id, @RequestBody @Valid UserRoleManagementRequestDto dto) {
     userService.manageRole(id, dto);
-  }
-
-  @GetMapping("/search")
-  @PreAuthorize("hasRole('ADMIN')")
-  public List<UserSearchBasicResultResponseDto> searchUsers(String query) {
-    return userService.searchUsers(query);
   }
 
   @GetMapping("/{id}")

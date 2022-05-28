@@ -39,6 +39,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 @NoArgsConstructor
 @Entity
 @Table(name = "MOVIES")
+@Where(clause = "active = true")
 @Indexed(index = "MOVIES")
 public class Movie {
 

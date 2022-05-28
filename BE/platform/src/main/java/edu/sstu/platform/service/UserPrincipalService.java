@@ -42,7 +42,7 @@ public class UserPrincipalService implements UserDetailsService {
     var predicate = qUser.email.eq(login)
         .or(qUser.username.eq(login));
 
-    return userRepo.findBy(predicate, ffq -> ffq.project(toDotPath(qUser.roles)).stream().findFirst())
+    return userRepo.findBy(predicate, query -> query.project(toDotPath(qUser.roles)).stream().findFirst())
         .orElseThrow(() -> new UsernameNotFoundException("Couldn't find user by login: " + login));
   }
 

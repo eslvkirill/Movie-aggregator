@@ -1,8 +1,8 @@
 package edu.sstu.platform.service;
 
 import edu.sstu.platform.dto.response.SearchResultsResponseDto;
+import edu.sstu.platform.dto.response.UserSearchBasicResultResponseDto;
 import edu.sstu.platform.mapper.SearchResultsMapper;
-import edu.sstu.platform.model.User;
 import edu.sstu.platform.repo.SearchRepo;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +33,9 @@ public class SearchService {
         .collect(Collectors.joining(" "));
   }
 
-  public List<User> searchUsers(String query) {
-    return searchRepo.searchUsers(prepareUserQuery(query));
+  public List<UserSearchBasicResultResponseDto> searchUsers(String query) {
+    var users = searchRepo.searchUsers(prepareUserQuery(query));
+
+    return searchResultsMapper.toUserSearchBasicResultDto(users);
   }
 }
