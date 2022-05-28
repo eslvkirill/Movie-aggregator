@@ -2,10 +2,10 @@ package edu.sstu.platform.api;
 
 import edu.sstu.platform.dto.request.CategoryRequestDto;
 import edu.sstu.platform.dto.response.CategoryResponseDto;
+import edu.sstu.platform.dto.response.CategoryToMovieRelationResponseDto;
 import edu.sstu.platform.service.CategoryService;
 import edu.sstu.platform.service.UserPrincipalService;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ public class CategoryRestController {
   }
 
   @GetMapping("/check/{movieId}")
-  public Map<String, Boolean> getCategoryToMovieRelations(@PathVariable UUID movieId) {
+  public List<CategoryToMovieRelationResponseDto> getCategoryToMovieRelations(@PathVariable UUID movieId) {
     return categoryService.findCategoryToMovieRelations(movieId,
         userPrincipalService.getCurrentUserOrElseThrow().getId());
   }

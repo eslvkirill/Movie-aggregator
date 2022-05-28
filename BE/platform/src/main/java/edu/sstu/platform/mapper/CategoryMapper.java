@@ -2,7 +2,9 @@ package edu.sstu.platform.mapper;
 
 import edu.sstu.platform.dto.request.CategoryRequestDto;
 import edu.sstu.platform.dto.response.CategoryResponseDto;
+import edu.sstu.platform.dto.response.CategoryToMovieRelationResponseDto;
 import edu.sstu.platform.model.Category;
+import edu.sstu.platform.model.projection.CategoryToMovieRelationMapping;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -40,4 +42,6 @@ public interface CategoryMapper {
   void update(CategoryRequestDto categoryRequestDto, @MappingTarget Category category);
 
   List<CategoryResponseDto> toDto(List<Category> categories);
+
+  List<CategoryToMovieRelationResponseDto> toRelationDto(List<CategoryToMovieRelationMapping> mappings);
 }
