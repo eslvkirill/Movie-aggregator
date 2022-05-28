@@ -25,4 +25,12 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="add_modification_date_column" author="Befors">
+    <addColumn tableName="ratings">
+      <column name="modification_date" type="timestamp" defaultValueComputed="now()">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

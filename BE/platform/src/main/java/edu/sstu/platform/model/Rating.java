@@ -1,6 +1,7 @@
 package edu.sstu.platform.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @AllArgsConstructor
@@ -39,7 +43,18 @@ public class Rating implements Serializable {
   private Float score;
   private int rank;
 
+  @UpdateTimestamp
+  private LocalDateTime modificationDate;
+
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "movie_id", insertable = false, updatable = false)
   private Movie movie;
+
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  private User user;
 }

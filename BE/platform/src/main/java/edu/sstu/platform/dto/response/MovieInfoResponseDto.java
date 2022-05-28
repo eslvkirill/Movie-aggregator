@@ -1,6 +1,5 @@
 package edu.sstu.platform.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.sstu.platform.model.AgeRating;
 import edu.sstu.platform.model.Language;
 import java.time.LocalTime;
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"totalRating"})
 public class MovieInfoResponseDto extends MovieResponseDto {
 
   private byte[] background;

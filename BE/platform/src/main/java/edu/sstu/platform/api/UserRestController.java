@@ -2,9 +2,11 @@ package edu.sstu.platform.api;
 
 import edu.sstu.platform.dto.request.UserRequestDto;
 import edu.sstu.platform.dto.request.UserRoleManagementRequestDto;
+import edu.sstu.platform.dto.response.RatingHistoryItemResponseDto;
 import edu.sstu.platform.dto.response.RoleManagementUserSummaryResponseDto;
 import edu.sstu.platform.dto.response.UserInfoResponseDto;
 import edu.sstu.platform.dto.response.UserSearchBasicResultResponseDto;
+import edu.sstu.platform.service.RatingService;
 import edu.sstu.platform.service.UserPrincipalService;
 import edu.sstu.platform.service.UserService;
 import java.util.List;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
 
   private final UserService userService;
+  private final RatingService ratingService;
   private final UserPrincipalService userPrincipalService;
 
   @GetMapping("/info")
@@ -56,5 +59,10 @@ public class UserRestController {
   @PreAuthorize("hasRole('ADMIN')")
   public RoleManagementUserSummaryResponseDto getUserById(@PathVariable UUID id) {
     return userService.findUserById(id);
+  }
+
+  @GetMapping("/{id}/ratings")
+  public List<RatingHistoryItemResponseDto> getUserRatingHistory(@PathVariable UUID id) {
+    return ratingService.findUserRatingHistory(id);
   }
 }

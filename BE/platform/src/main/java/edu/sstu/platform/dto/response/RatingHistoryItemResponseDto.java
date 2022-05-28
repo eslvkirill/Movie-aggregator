@@ -1,6 +1,6 @@
 package edu.sstu.platform.dto.response;
 
-import java.util.UUID;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class MovieResponseDto {
+public class RatingHistoryItemResponseDto {
 
-  private UUID id;
-  private String engTitle;
-  private String rusTitle;
-  private int year;
+  private RatedMovieResponseDto ratedMovie;
+  private double userRating;
+  private LocalDate ratingDate;
 }
