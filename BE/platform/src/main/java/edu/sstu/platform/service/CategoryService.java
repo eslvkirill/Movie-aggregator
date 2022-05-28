@@ -83,7 +83,7 @@ public class CategoryService {
 
   @Transactional
   public UUID createCategoryItem(UUID categoryId, UUID movieId) {
-    categoryItemValidator.validate(movieId);
+    categoryItemValidator.validate(categoryId, movieId);
 
     var categoryItem = categoryItemMapper.toEntity(categoryId, movieId);
 

@@ -18,9 +18,12 @@ public class CategoryItemValidator {
   private final ValidationProperties validationProperties;
   private final QCategoryItem qCategoryItem = QCategoryItem.categoryItem;
 
-  public void validate(UUID movieId) {
-    if (categoryItemRepo.exists(qCategoryItem.movieId.eq(movieId))) {
-      throw new ValidationException(ofSingleMessage(qCategoryItem.movieId, validationProperties::getDuplicateMessage));
+  public void validate(UUID categoryId, UUID movieId) {
+    var predicate = qCategoryItem.categoryId.eq(categoryId)
+        .and(qCategoryItem.movieId.eq(movieId));
+
+    if (categoryItemRepo.exists(predicate)) {
+      throw new ValidationException(ofSingleMessage(qCategoryItem, validationProperties::getDuplicateMessage));
     }
   }
 }
