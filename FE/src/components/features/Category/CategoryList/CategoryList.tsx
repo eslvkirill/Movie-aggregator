@@ -19,7 +19,7 @@ const CategoryList = () => {
   const [formControls, setFormControls] = useState<any>(inputState);
   const [categoryName, setCategoryName] = useState('');
   const [isFormValid, setFormValid] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(true);
 
   const dispatch = useAppDispatch();
   const { categories, isLoading, error } = useAppSelector(state => state.categoryReducer);
@@ -107,7 +107,7 @@ const CategoryList = () => {
             type="success"
             onClick={() => setDropdownOpen(!isDropdownOpen)}
           >
-            Развернуть список категорий
+            {isDropdownOpen ? 'Свернуть' : 'Развернуть'} список категорий
             <span className={isDropdownOpen ? 'down' : 'up'}>➤</span>
           </Button>
           <CategoryItem

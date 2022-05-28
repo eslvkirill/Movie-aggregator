@@ -8,6 +8,7 @@ export const ROUTE = {
 	PERSONS: 'persons',
 	COLLECTION: 'my-collection',
 	CATEGORIES: 'my-collection/categories',
+	GRADE_HISTORY: '/my-collection/grade-histroy',
 	PROFILE: 'profile/:id',
 	MOVIE_PAGE: 'movies/:id',
 	PERSON_PAGE: 'person/:id',

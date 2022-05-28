@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import './AdminPage.scss';
-import { ROUTE } from '../../shared/constants/routes';
 import { useAppSelector } from '../../hooks/redux';
+import { ROUTE } from '../../shared/constants/routes';
+import './AdminPage.scss';
 
 const AdminPage = () => {
   const isMovieEdit = useAppSelector(state => state.movieReducer.isEdit);
