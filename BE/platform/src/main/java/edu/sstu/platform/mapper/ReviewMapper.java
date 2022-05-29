@@ -36,6 +36,7 @@ public interface ReviewMapper {
   void update(MovieReviewRequestDto movieReviewRequestDto, @MappingTarget Review review);
 
   @Mappings({
+      @Mapping(target = "userId", source = "user.id"),
       @Mapping(target = "username", source = "user.username"),
       @Mapping(target = "userRating", source = "rating.score"),
       @Mapping(target = "critic", expression = "java(review.getUser().getRoles().contains(UserRole.CRITIC))")
