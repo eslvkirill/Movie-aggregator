@@ -20,7 +20,11 @@ const UserService = {
 	getUserInfo: () => api.get([...userEndpoint, ENDPOINT.INFO]),
 
 	setUserValue: (value: string) =>
-		api.get([...userEndpoint, `${ENDPOINT.SEARCH}?query=${value}`]),
+		api.get([
+			...userEndpoint.slice(0, -1),
+			ENDPOINT.SEARCH,
+			`${ENDPOINT.USERS}?query=${value}`,
+		]),
 
 	getUserDataById: (userId: string) => api.get([...userEndpoint, userId]),
 

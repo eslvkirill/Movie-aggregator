@@ -27,6 +27,12 @@ const categoryReducer = createSlice({
 		onChangeEvent: onChangeEventAction,
 		editCategory: editCategoryAction,
 		deleteCategory: deleteCategoryAction,
+		resetMovies: (state) => {
+			state.movies = [];
+		},
+		resetCalegoriesList: (state) => {
+			state.categoryList = [];
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -63,13 +69,21 @@ const categoryReducer = createSlice({
 			.addCase(
 				getCategoryMoviesCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
-					state.movies = action.payload;
+					action.payload.map((movie: any) =>
+						Object.values(movie).map((item) => state.movies.push(item))
+					);
 				}
 			);
 	},
 });
 
-export const { addCategory, onChangeEvent, editCategory, deleteCategory } =
-	categoryReducer.actions;
+export const {
+	addCategory,
+	onChangeEvent,
+	editCategory,
+	deleteCategory,
+	resetMovies,
+	resetCalegoriesList,
+} = categoryReducer.actions;
 
 export default categoryReducer.reducer;

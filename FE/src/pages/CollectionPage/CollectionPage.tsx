@@ -7,6 +7,8 @@ import Button from 'components/shared/form-controls/Button/Button';
 import { getCategoriesCreator, getCategoryMoviesCreator } from 'redux/creators/categoryCreator';
 import './CollectionPage.scss';
 import MovieList from 'components/features/Movie/MovieList/MovieList';
+import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
+import { resetCalegoriesList, resetMovies } from 'redux/reducers/categoryReducer';
 
 const CollectionPage = () => {
   const navigate = useNavigate();
@@ -16,38 +18,40 @@ const CollectionPage = () => {
   const { categoryList, movies } = useAppSelector(state => state.categoryReducer);
 
   useEffect(() => {
-    dispatch(getCategoryMoviesCreator(categoryList[0].value))
-    dispatch(getCategoriesCreator(id || user.id));
-    console.log(categoryList)
+    if (!movies.length || id) {
+      dispatch(resetCalegoriesList());
+      dispatch(resetMovies());
+      dispatch(getCategoriesCreator(id || user.id));
+      dispatch(getCategoryMoviesCreator(categoryList.length && categoryList[0].value));
+    }
   }, []);
 
   const updateCollection = () => navigate('/my-collection/categories');
 
+  const onChangeHandler = (category: any) => {
+    dispatch(resetMovies());
+    dispatch(getCategoryMoviesCreator(category.value));
+  }
+
+  // TODO: Добавить имя пользователя - (иконку критика)
   return (
     <main className="filmCatalog">
       <Link 
         className="grade" 
-        to='/my-collection/grade-histroy'
+        to={id ? `/profile/grade-histroy/${id}` : '/my-collection/grade-histroy'}
       >
         Оценки
       </Link>
       <div className="collection">
         <div className="selectWrapper">
-          <div className="category">Моя коллекция:</div>
+          <div className="category">{id ? 'Коллекция:' : 'Моя коллекция:'}</div>
           <div className="action-buttons">
             <Select
               isMulti={false}
               isSearchable={false}
-              options={categoryList}
-              defaultValue={!!categoryList.length && categoryList[0]}
-              onChange={(category: any) => {
-                console.log(category)
-                dispatch(getCategoryMoviesCreator(category.value))
-                // props.setCurrentPage(1);
-                // props.paginate(1, event, props.arrowDirection);
-                // props.setFetch(true);
-                // props.setLoading(true);
-              }}
+              options={categoryList.length && categoryList}
+              defaultValue={categoryList.length && categoryList[0]}
+              onChange={(category: any) => onChangeHandler(category)}
               noOptionsMessage={() => 'Список пуст'}
               styles={selectStyles(
                 '#b3752f81',
@@ -82,19 +86,26 @@ const CollectionPage = () => {
                 '#b3752f81',
               )}
             />
-            <div className="action-buttons__update-icon">
-              <Button
-                type="action-buttons__update-icon_submit update submit" 
-                onClick={updateCollection}
-                title="Редактирование"
-              >
-                &#9998;
-              </Button>
-            </div>
+            {!id &&
+              (
+                <div className="action-buttons__update-icon">
+                  <Button
+                    type="action-buttons__update-icon_submit update submit" 
+                    onClick={updateCollection}
+                    title="Редактирование"
+                  >
+                    &#9998;
+                  </Button>
+                </div>
+              )
+            }
           </div>
         </div>
         <div className="CardWrapper myFilms">
-          <MovieList movies={movies} />  
+          {movies.length 
+            ? <MovieList movies={movies} />  
+            : <ContentLoader />
+          }
         </div>
       </div>
     </main>
