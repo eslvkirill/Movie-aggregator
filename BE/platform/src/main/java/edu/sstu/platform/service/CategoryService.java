@@ -86,24 +86,26 @@ public class CategoryService {
   }
 
   @Transactional
-  public UUID createCategoryItem(UUID categoryId, UUID movieId) {
+  public void createCategoryItem(UUID categoryId, UUID movieId) {
     categoryItemValidator.validate(categoryId, movieId);
 
     var categoryItem = categoryItemMapper.toEntity(categoryId, movieId);
 
-    return categoryItemRepo.save(categoryItem).getId();
+    categoryItemRepo.save(categoryItem);
   }
 
   @Transactional
-  public void deleteCategoryItem(UUID categoryId, UUID itemId) {
-    var categoryItem = categoryItemRepo.findById(itemId)
-        .orElseThrow(() -> entityNotFoundException(categoryId, itemId));
+  public void deleteCategoryItem(UUID categoryId, UUID movieId) {
+    var predicate = qCategoryItem.categoryId.eq(categoryId)
+        .and(qCategoryItem.movieId.eq(movieId));
+    var categoryItem = categoryItemRepo.findOne(predicate)
+        .orElseThrow(() -> entityNotFoundException(categoryId, movieId));
 
     categoryItemRepo.delete(categoryItem);
   }
 
-  private EntityNotFoundException entityNotFoundException(UUID categoryId, UUID itemId) {
-    return new EntityNotFoundException("Category by id: " + categoryId + " doesn't contain item with id: " + itemId);
+  private EntityNotFoundException entityNotFoundException(UUID categoryId, UUID movieId) {
+    return new EntityNotFoundException("Category by id: " + categoryId + " doesn't contain movie with id: " + movieId);
   }
 
   @Transactional(readOnly = true)

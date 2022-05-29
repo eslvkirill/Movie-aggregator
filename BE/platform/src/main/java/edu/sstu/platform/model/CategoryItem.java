@@ -1,12 +1,13 @@
 package edu.sstu.platform.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,15 +20,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "CATEGORY_ITEMS")
+@IdClass(CategoryItem.IdClass.class)
 public class CategoryItem {
 
   @Id
-  @GeneratedValue
-  private UUID id;
-
   @Column(name = "category_id")
   private UUID categoryId;
 
+  @Id
   @Column(name = "movie_id")
   private UUID movieId;
 
@@ -40,4 +40,13 @@ public class CategoryItem {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", insertable = false, updatable = false)
   private Category category;
+
+  @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class IdClass implements Serializable {
+
+    private UUID categoryId;
+    private UUID movieId;
+  }
 }
