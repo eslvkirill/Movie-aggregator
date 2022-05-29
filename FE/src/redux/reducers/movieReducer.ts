@@ -15,6 +15,10 @@ import {
 	updateMovieAction,
 } from 'redux/actions/movie/formActions';
 import {
+	addMovieIntoCategoryCreator,
+	deleteMovieInCategoryCreator,
+} from 'redux/creators/categoryCreator';
+import {
 	addMovieCreator,
 	getMovieByIdCreator,
 	getMovieCategoriesCreator,
@@ -39,7 +43,7 @@ const initialState: any = {
 	isLoading: true,
 	isEdit: false,
 	categories: [],
-	gradeList: [],
+	containsCategories: [],
 };
 
 const movieReducer = createSlice({
@@ -56,6 +60,10 @@ const movieReducer = createSlice({
 		},
 		prefillMovieForm: prefillMovieFormAction,
 		updateMovie: updateMovieAction,
+		resetCategories: (state) => {
+			state.categories = [];
+			state.containsCategories = [];
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -99,7 +107,7 @@ const movieReducer = createSlice({
 					state.movie.background =
 						state.formControls.inputControls.background.value || action.payload;
 					state.movie.poster =
-						state.formControls.inputControls.background.value || action.payload; // TODO: state.formControls.inputControls.poster
+						state.formControls.inputControls.poster.value || action.payload;
 				}
 			)
 			.addCase(
@@ -120,7 +128,35 @@ const movieReducer = createSlice({
 			.addCase(
 				getMovieCategoriesCreator.fulfilled.type,
 				(state, action: PayloadAction<any>) => {
-					console.log(action.payload);
+					state.categories = action.payload.map((category: any) => ({
+						label: category.categoryName,
+						value: category.categoryId,
+					}));
+
+					action.payload.map((category: any) => {
+						if (category.contains) {
+							state.containsCategories.push({
+								label: category.categoryName,
+								value: category.categoryId,
+							});
+						}
+
+						return state.containsCategories;
+					});
+				}
+			)
+			.addCase(
+				addMovieIntoCategoryCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.containsCategories.push(action.payload);
+				}
+			)
+			.addCase(
+				deleteMovieInCategoryCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.containsCategories = state.containsCategories.filter(
+						(category: any) => category.value !== action.payload
+					);
 				}
 			);
 	},
@@ -135,6 +171,7 @@ export const {
 	makeMovieEditable,
 	prefillMovieForm,
 	updateMovie,
+	resetCategories,
 } = movieReducer.actions;
 
 export default movieReducer.reducer;

@@ -58,7 +58,7 @@ const Login = () => {
         )}
         <div className="login__buttons buttons">
           {isLoading 
-            ? <div className="buttons__loader">
+            ? <div className={!isLoading ? 'login-loader' : 'buttons__loader'}>
                 <PaginateLoader />
               </div>
             : <Button

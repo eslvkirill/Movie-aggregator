@@ -14,7 +14,9 @@ const ENDPOINT = {
 	CATEGORIES: 'categories',
 	SEARCH: 'search',
 	ROLES: 'roles',
+	OWNER: 'owner',
 	CHECK: 'check',
+	ITEMS: 'items',
 };
 
 const REQUEST = {

@@ -1,3 +1,5 @@
+import { useAppSelector } from 'hooks/redux';
+import { isUserLoggIn } from 'shared/utils/common';
 import Button from 'components/shared/form-controls/Button/Button';
 import ContentLoader from 'components/shared/loaders/ContentLoader/ContentLoader';
 import PaginateLoader from 'components/shared/loaders/PaginateLoader/PaginateLoader';
@@ -6,7 +8,10 @@ import MovieCategories from '../MovieCategories/MovieCategories';
 import './MovieList.scss';
 
 const MovieList = (props: any) => {
-  const { activeButton, isFetch, paginate, currentPage, sortValue, arrowDirection, setFetch, isLoading, movies, user, setMovies, numberOfElements, totalElements } = props;
+  const { activeButton, isFetch, paginate, currentPage, sortValue, arrowDirection, setFetch, isLoading, movies, setMovies, numberOfElements, totalElements } = props;
+  const { user } = useAppSelector(state => state.userReducer);
+  const authUser = isUserLoggIn(user);
+
 
   const renderOnLoadButton = () => {
     if (!activeButton && !isFetch) {
@@ -62,7 +67,7 @@ const MovieList = (props: any) => {
                   user={user}
                   setMovies={setMovies}
                 />
-                <MovieCategories movieId={id} />
+                { !!authUser && <MovieCategories movieId={id} key={id}/> }
               </li>
             );
           }) : <div className="emptyMovies">Ничего не найдено</div>}

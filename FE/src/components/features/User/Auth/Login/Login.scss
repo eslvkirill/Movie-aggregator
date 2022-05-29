@@ -9,6 +9,10 @@
 		display: flex;
 		justify-content: space-around;
 
+		.login-loader {
+			margin: 0 auto;
+		}
+
 		&__success {
 			margin-right: 0%;
 			width: 43%;

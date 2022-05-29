@@ -8,7 +8,8 @@ const MovieService = {
 
 	addMovie: (data: any) => api.post([ENDPOINT.MOVIES], data, true),
 
-	getMovieById: (movieId: string) => api.get([ENDPOINT.MOVIES, movieId]),
+	getMovieById: (movieId: string) =>
+		api.get([ENDPOINT.MOVIES, movieId].concat('?moviePage=PERSONAL')), // TODO: Для получения постера
 
 	deleteMovie: (movieId: string) => api.post([ENDPOINT.MOVIES, movieId]),
 

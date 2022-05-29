@@ -2,20 +2,21 @@ import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import selectStyles from 'shared/form-controls/select/styles';
-import MovieCard from 'components/features/Movie/MovieCard/MovieCard';
 import Select from 'components/shared/form-controls/Select/Select';
 import Button from 'components/shared/form-controls/Button/Button';
-import { getCategoriesCreator } from 'redux/creators/categoryCreator';
+import { getCategoriesCreator, getCategoryMoviesCreator } from 'redux/creators/categoryCreator';
 import './CollectionPage.scss';
+import MovieList from 'components/features/Movie/MovieList/MovieList';
 
 const CollectionPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams() as { id: string };
   const { user } = useAppSelector(state => state.userReducer);
-  const { categoryList } = useAppSelector(state => state.categoryReducer);
+  const { categoryList, movies } = useAppSelector(state => state.categoryReducer);
 
   useEffect(() => {
+    dispatch(getCategoryMoviesCreator(categoryList[0].value))
     dispatch(getCategoriesCreator(id || user.id));
     console.log(categoryList)
   }, []);
@@ -39,7 +40,9 @@ const CollectionPage = () => {
               isSearchable={false}
               options={categoryList}
               defaultValue={!!categoryList.length && categoryList[0]}
-              onChange={(event: any) => {
+              onChange={(category: any) => {
+                console.log(category)
+                dispatch(getCategoryMoviesCreator(category.value))
                 // props.setCurrentPage(1);
                 // props.paginate(1, event, props.arrowDirection);
                 // props.setFetch(true);
@@ -91,18 +94,7 @@ const CollectionPage = () => {
           </div>
         </div>
         <div className="CardWrapper myFilms">
-          <MovieCard
-            movieId='movie.id'
-            rusTitle='movie.rusTitle'
-            engTitle='movie.engTitle'
-            // poster='movie.poster'
-            duration='01:35:00'
-            // genres='movie.genres'
-            year={2011}
-            // directors='movie.directors'
-            totalRating={10}
-            backgroundColor='#fafafa'
-          />
+          <MovieList movies={movies} />  
         </div>
       </div>
     </main>

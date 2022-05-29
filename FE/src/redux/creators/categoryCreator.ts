@@ -67,9 +67,52 @@ const deleteCategoryCreator = createAsyncThunk(
 	}
 );
 
+const addMovieIntoCategoryCreator = createAsyncThunk(
+	CATEGORY_CREATOR.ADD_MOVIE,
+	async (data: any, thunkAPI) => {
+		try {
+			const { category, movieId } = data;
+
+			await service.addMovieIntoCategory(category.value, movieId);
+
+			return category;
+		} catch (e) {
+			return thunkAPI.rejectWithValue('Не удалось добавить фильм в категорию');
+		}
+	}
+);
+
+const getCategoryMoviesCreator = createAsyncThunk(
+	CATEGORY_CREATOR.GET_MOVIES,
+	async (categoryId: string, thunkAPI) => {
+		try {
+			console.log(categoryId);
+			return await service.getCategoryMovies(categoryId);
+		} catch (e) {
+			return thunkAPI.rejectWithValue('Не удалось удалить данные');
+		}
+	}
+);
+
+const deleteMovieInCategoryCreator = createAsyncThunk(
+	CATEGORY_CREATOR.DELETE_MOVIE,
+	async (ids: any, thunkAPI) => {
+		try {
+			await service.deleteMovieInCategory(ids.categoryId, ids.movieId);
+
+			return ids.categoryId;
+		} catch (e) {
+			return thunkAPI.rejectWithValue('Не удалось удалить данные');
+		}
+	}
+);
+
 export {
 	getCategoriesCreator,
 	addCategoryCreator,
 	editCategoryCreator,
 	deleteCategoryCreator,
+	addMovieIntoCategoryCreator,
+	getCategoryMoviesCreator,
+	deleteMovieInCategoryCreator,
 };

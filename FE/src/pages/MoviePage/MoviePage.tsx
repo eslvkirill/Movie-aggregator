@@ -24,10 +24,9 @@ import ReviewList from 'components/features/Review/ReviewList/ReviewList';
 import './MoviePage.scss';
 
 const MoviePage = () => {
-  const { id } = useParams() as { id: string };
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
+  const { id } = useParams() as { id: string };
   const { movie, isLoading } = useAppSelector(state => state.movieReducer);
   const { ratings } = useAppSelector(state => state.ratingReducer);
   const { isModalOpen } = useAppSelector(state => state.backdropReducer);
@@ -50,7 +49,7 @@ const MoviePage = () => {
   }
 
   const renderIcons = () =>
-    movie.externalAggregatorsInfo.map((agregator: any) => {
+    movie && movie.externalAggregatorsInfo.map((agregator: any) => {
       let icon!: IconProp;
 
       if (agregator.name === 'Metacritic') {
@@ -96,7 +95,7 @@ const MoviePage = () => {
     };
 
     const renderRatings = () =>
-      movie.externalAggregatorsInfo.map((aggregator: any) => (
+      (movie) && movie.externalAggregatorsInfo.map((aggregator: any) => (
         <div key={aggregator.name} className={`${aggregator.name}Stars`}>
           <div className="Rating">
             {aggregator.name} {aggregator.rating}
@@ -120,7 +119,8 @@ const MoviePage = () => {
     duration,
     description,
     displayGenres,
-    // numberOfRatings,
+    totalRatingCount,
+    reviewedByUser,
     originCountries,
     audioLanguages,
     subtitleLanguages,
@@ -132,6 +132,7 @@ const MoviePage = () => {
 
   return (
     <div
+      key={movie.id}
       className="MoviePage"
       // style={authForm ? { position: "absolute" } : {}}
     >
@@ -268,8 +269,7 @@ const MoviePage = () => {
                 {ratings[0].averageScore.toFixed(2)}
               </div>
               <div className="numberOfRatings" title="Количество пользователей">
-                {/* {numberOfRatings} оценок */}
-                0 оценок
+                {totalRatingCount} оценок
               </div>
             </div>
           </section>
@@ -326,6 +326,7 @@ const MoviePage = () => {
             movieId={id}
             rusTitle={rusTitle}
             engTitle={engTitle}
+            reviewedByUser={reviewedByUser}
             primaryPageColor={primaryPageColor}
             secondaryPageColor={secondaryPageColor}
           />
