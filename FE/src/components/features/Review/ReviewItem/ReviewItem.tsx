@@ -23,7 +23,7 @@ const ReviewItem = ({ reviews, primaryPageColor, onRemoveClick, onEditInputChang
             <div className="reviewHead">
               <div className="leftSide">
                 <Link
-                  to={'/profile/' + review.id}
+                  to={`/profile/collection/${review.userId}`}
                   className="reviewAuthorName"
                   style={{ color: primaryPageColor }}
                 >

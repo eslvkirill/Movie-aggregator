@@ -32,9 +32,10 @@ const App = () => (
         <Route path={ROUTE.MOVIE_PAGE} element={<MoviePage />} />
         <Route path={ROUTE.PERSON_PAGE} element={<PersonPage />} />
         <Route path={ROUTE.COLLECTION} element={<CollectionPage />} />
-        <Route path={ROUTE.PROFILE} element={<CollectionPage />} />
+        <Route path={ROUTE.PROFILE_COLLECTION} element={<CollectionPage />} />
         <Route path={ROUTE.CATEGORIES} element={<CategoryPage />} />
         <Route path={ROUTE.GRADE_HISTORY} element={<GradeHistoryPage />} />
+        <Route path={ROUTE.PROFILE_GRADE_HISTORY} element={<GradeHistoryPage />} />
         <Route path={ROUTE.ADMIN} element={<AdminPage />}>
           <Route path={ROUTE.GENRES} element={<GenreList />} />
           <Route path={ROUTE.PERSONS} element={<PersonForm />} />
