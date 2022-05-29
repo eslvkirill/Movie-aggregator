@@ -19,6 +19,8 @@ public class ReviewResponseDto {
   @JsonFormat(pattern = "dd MMM yyyy г., HH:mm")
   private LocalDateTime creationDate;
 
+  // TODO: wrap with UserResponseDto
+  private UUID userId;
   private String username;
   private float userRating;
   private boolean critic;

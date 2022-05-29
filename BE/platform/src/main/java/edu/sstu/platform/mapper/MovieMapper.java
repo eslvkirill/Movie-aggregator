@@ -79,7 +79,9 @@ public abstract class MovieMapper {
   @Mappings({
       @Mapping(target = "externalAggregatorsInfo", source = "movie.externalAggregatorInfos"),
       @Mapping(target = "actors", source = "movie.actorRelations"),
-      @Mapping(target = "directors", source = "movie.directorRelations")
+      @Mapping(target = "directors", source = "movie.directorRelations"),
+      @Mapping(target = "reviewedByUser", ignore = true),
+      @Mapping(target = "totalRatingCount", ignore = true)
   })
   public abstract MovieInfoResponseDto toInfoDto(Movie movie, List<RatingMapping> averageRatings,
       List<Rating> userRatings);
