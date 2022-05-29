@@ -5,12 +5,16 @@ import {
 	editCategoryAction,
 	deleteCategoryAction,
 } from 'redux/actions/categoryAction';
-import { getCategoriesCreator } from 'redux/creators/categoryCreator';
+import {
+	getCategoriesCreator,
+	getCategoryMoviesCreator,
+} from 'redux/creators/categoryCreator';
 import { REDUCER } from '../types/reducers';
 
 const initialState: any = {
 	categories: [],
 	categoryList: [],
+	movies: [],
 	isLoading: true,
 	error: '',
 };
@@ -54,6 +58,12 @@ const categoryReducer = createSlice({
 				(state, action: PayloadAction<string>) => {
 					state.isLoading = true;
 					state.error = action.payload;
+				}
+			)
+			.addCase(
+				getCategoryMoviesCreator.fulfilled.type,
+				(state, action: PayloadAction<any>) => {
+					state.movies = action.payload;
 				}
 			);
 	},

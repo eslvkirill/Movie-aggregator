@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { onChangeSelectEvent } from 'redux/reducers/movieReducer';
-import { resetCreator , onChangeEventCreator, prefillMovieFormCreator, getMovieFormDataCreator, addMovieCreator, updateMovieCreator } from 'redux/creators/movieCreator';
+import { resetCreator , onChangeEventCreator, prefillMovieFormCreator, getMovieFormDataCreator, addMovieCreator, updateMovieCreator, getMovieByIdCreator } from 'redux/creators/movieCreator';
 import selectStyles from 'shared/form-controls/select/styles';
 import Notification from 'components/shared/pop-ups/Notification/Notification';
 import Button from 'components/shared/form-controls/Button/Button';
@@ -11,6 +12,7 @@ import { MovieFormFileds } from '../movie.enum';
 import './MovieForm.scss';
 
 const MovieForm = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { formControls, isFormValid, notificationMessage, isEdit, movie } = useAppSelector(state => state.movieReducer);
 
@@ -27,7 +29,9 @@ const MovieForm = () => {
     dispatch(getMovieFormDataCreator());
   };
 
-  const updateMovie = () => dispatch(updateMovieCreator(movie.id));
+  const updateMovie = () => {
+    dispatch(updateMovieCreator(movie.id));
+  }
 
   const submitNewMovie = (event: any) => {
     event.preventDefault();

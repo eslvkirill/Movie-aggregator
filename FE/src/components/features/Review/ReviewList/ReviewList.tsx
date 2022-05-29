@@ -10,7 +10,7 @@ import ReviewItem from '../ReviewItem/ReviewItem';
 import './ReviewList.scss';
 
 const ReviewList = (props: any) => {
-  const { movieId, secondaryPageColor, primaryPageColor, rusTitle } = props;
+  const { movieId, secondaryPageColor, primaryPageColor, rusTitle, reviewedByUser } = props;
 
   const { user } = useAppSelector(state => state.userReducer);
   const authUser = isUserLoggIn(user);
@@ -28,8 +28,7 @@ const ReviewList = (props: any) => {
       `/api/v1/movies/${movieId}/reviews?size=4&page=${pageNumber - 1}`
     );
 
-    response.data.content.some((review: any) => setReviewButtonActive(!review.username && user.username !== review.username));
-
+    setReviewButtonActive(reviewedByUser);
     setReviews(response.data.content);
     setTotalElements(response.data.totalElements);
     setTotalPages(response.data.totalPages);

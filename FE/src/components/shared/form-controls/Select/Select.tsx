@@ -22,10 +22,11 @@ interface SelectControl {
   errorMessage?: string;
   onChange?: any;
   menuIsOpen?: boolean;
+  name?: any;
 }
 
 const CustomSelect = (props: SelectControl) => {
-  const { type, styles, options, onChange, isMulti, value, isSearchable, placeholder, closeMenuOnSelect, isClearable, defaultValue, errorMessage, menuIsOpen } = props;
+  const { type, styles, options, onChange, isMulti, value, isSearchable, placeholder, closeMenuOnSelect, isClearable, name, defaultValue, errorMessage, menuIsOpen } = props;
 
   const selectType = type || 'Select';
   const noOptionsMessage = () => 'Список пуст';
@@ -40,6 +41,7 @@ const CustomSelect = (props: SelectControl) => {
         onChange={onChange}
         isMulti={isMulti}
         value={value}
+        name={name}
         isSearchable={isSearchable}
         placeholder={placeholder}
         closeMenuOnSelect={closeMenuOnSelect}
