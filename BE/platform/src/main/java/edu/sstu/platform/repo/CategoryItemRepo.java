@@ -10,7 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 public interface CategoryItemRepo extends JpaRepository<CategoryItem, UUID>,
     QuerydslPredicateExecutor<CategoryItem> {
 
-  @Query("select ci from CategoryItem ci"
+  @Query("select distinct ci from CategoryItem ci"
       + " join fetch ci.movie m"
       + " join fetch m.genres"
       + " join fetch m.directorRelations directorRel"

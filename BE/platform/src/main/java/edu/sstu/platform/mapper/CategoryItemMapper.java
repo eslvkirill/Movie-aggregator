@@ -33,8 +33,8 @@ public abstract class CategoryItemMapper {
 
   @Mappings({
       @Mapping(target = "creationDate", expression = "java(LocalDateTime.now())"),
-      @Mapping(target = "id", ignore = true),
-      @Mapping(target = "movie", ignore = true)
+      @Mapping(target = "movie", ignore = true),
+      @Mapping(target = "category", ignore = true)
   })
   public abstract CategoryItem toEntity(UUID categoryId, UUID movieId);
 }

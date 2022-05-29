@@ -23,14 +23,14 @@ public class CategoryItemRestController {
 
   @PostMapping("/{movieId}")
   @ResponseStatus(HttpStatus.CREATED)
-  public UUID createCategoryItem(@PathVariable UUID categoryId, @PathVariable UUID movieId) {
-    return categoryService.createCategoryItem(categoryId, movieId);
+  public void createCategoryItem(@PathVariable UUID categoryId, @PathVariable UUID movieId) {
+    categoryService.createCategoryItem(categoryId, movieId);
   }
 
-  @DeleteMapping("/{itemId}")
+  @DeleteMapping("/{movieId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteCategoryItem(@PathVariable UUID categoryId, @PathVariable UUID itemId) {
-    categoryService.deleteCategoryItem(categoryId, itemId);
+  public void deleteCategoryItem(@PathVariable UUID categoryId, @PathVariable UUID movieId) {
+    categoryService.deleteCategoryItem(categoryId, movieId);
   }
 
   @GetMapping

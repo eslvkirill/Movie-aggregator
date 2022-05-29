@@ -21,4 +21,10 @@
       </column>
     </createTable>
   </changeSet>
+  
+  <changeSet id="replace_surrogate_pk_by_composite_pk_based_on_fks" author="Befors">
+    <dropPrimaryKey tableName="category_items"/>
+    <dropColumn tableName="category_items" columnName="id"/>
+    <addPrimaryKey tableName="category_items" columnNames="category_id,movie_id"/>
+  </changeSet>
 </databaseChangeLog>
