@@ -3,6 +3,7 @@ package edu.sstu.platform.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +39,6 @@ public class Category {
   @JoinColumn(name = "user_id", insertable = false, updatable = false)
   private User user;
 
-  @OneToMany(mappedBy = "category")
+  @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
   private List<CategoryItem> items;
 }
